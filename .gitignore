@@ -1,0 +1,5 @@
+node_modules
+.idea
+public/bower_components
+public/stylesheets/*.css
+public/stylesheets/*.map

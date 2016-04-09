@@ -1,14 +1,14 @@
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
-var logger = require('morgan');
+var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
-//var authRoutes = require('./routes/auth');
+var indexRoutes = require('./routes/index');
+var userRoutes = require('./routes/users');
+//var authRoutes = require('./indexRoutes/auth');
 
 //var passport = require('passport');
 //var LocalStrategy = require('passport-local').Strategy;
@@ -20,7 +20,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
@@ -28,7 +28,7 @@ app.use(session({
   rolling: true,
   resave: false,
   saveUninitialized: false,
-  secret: 'timeTOfish'
+  secret: 'timeTO0fish'
 }));
 app.use(require('node-sass-middleware')({
   src: path.join(__dirname, 'public'),
@@ -52,12 +52,12 @@ app.use(passport.session());
 */
 
 // Main Page
-app.use('/', routes);
+app.use('/', indexRoutes);
 
 
 // API
 //app.use('/api/auth', authRoutes);
-app.use('/api/users', users);
+app.use('/api/users', userRoutes);
 
 
 // catch 404 and forward to error handler

@@ -4,7 +4,13 @@
  * Module dependencies.
  */
 
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
+var mongoose = require('../config/mongoose');
+var db = mongoose();
+
 var app = require('../app');
+
 var debug = require('debug')('timeToFish:server');
 var http = require('http');
 

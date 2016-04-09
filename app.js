@@ -11,7 +11,7 @@ var userRoutes = require('./routes/users');
 var authRoutes = require('./routes/auth');
 
 var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
+var localStrategy = require('./config/strategies/local');
 
 var app = express();
 
@@ -39,13 +39,8 @@ app.use(require('node-sass-middleware')({
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Authentication
-passport.use(
-    new LocalStrategy(
-        function (username, password, done) {
-          // Find user, return done(null, user) or done(err) on failure
-          // done(null, false) is an appropriate failure (not authenticated)
-          return done(null, false);
-        }));
+passport.use(localStrategy());
+
 app.use(passport.initialize());
 app.use(passport.session());
 

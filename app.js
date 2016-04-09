@@ -8,10 +8,10 @@ var session = require('express-session');
 
 var indexRoutes = require('./routes/index');
 var userRoutes = require('./routes/users');
-//var authRoutes = require('./indexRoutes/auth');
+var authRoutes = require('./routes/auth');
 
-//var passport = require('passport');
-//var LocalStrategy = require('passport-local').Strategy;
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 
 var app = express();
 
@@ -39,7 +39,6 @@ app.use(require('node-sass-middleware')({
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Authentication
-/*
 passport.use(
     new LocalStrategy(
         function (username, password, done) {
@@ -49,14 +48,13 @@ passport.use(
         }));
 app.use(passport.initialize());
 app.use(passport.session());
-*/
 
 // Main Page
 app.use('/', indexRoutes);
 
 
 // API
-//app.use('/api/auth', authRoutes);
+app.use('/api/authenticate', authRoutes);
 app.use('/api/users', userRoutes);
 
 

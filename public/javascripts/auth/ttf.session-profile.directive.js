@@ -16,5 +16,5 @@
   ng.module('ttfSession')
       .directive('sessionProfile', sessionProfileDirective);
 
-})(window.angular)
+})(window.angular);
 

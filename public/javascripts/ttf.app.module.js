@@ -1,7 +1,10 @@
 (function (ng) {
 
   var dependencies = [
-      'ttfSession'
+    'environment',
+    'ttfSession',
+    'ui.router',
+    'ttfPrepare'
   ];
 
   ng.module('ttfApp', dependencies);

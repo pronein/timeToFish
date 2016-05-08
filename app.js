@@ -44,14 +44,12 @@ passport.use(localStrategy());
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Main Page
-app.use('/', indexRoutes);
-
-
 // API
 app.use('/api/authenticate', authRoutes);
 app.use('/api/users', userRoutes);
 
+// Main Page
+app.use('/', indexRoutes);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

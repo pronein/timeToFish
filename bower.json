@@ -16,6 +16,9 @@
   ],
   "dependencies": {
     "angular": "~1.5.0",
-    "bootstrap-sass": "bootstrap-sass-official#~3.3.6"
+    "bootstrap-sass": "bootstrap-sass-official#~3.3.6",
+    "angular-environment": "~1.0.3",
+    "moment": "~2.13.0",
+    "angular-ui-router": "^0.2.18"
   }
 }

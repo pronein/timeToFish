@@ -13,6 +13,7 @@
       lastName: '',
       middleName: '',
       roles: [],
+      menu: [],
       isAuthenticated: isAuthenticated,
       signIn: signIn,
       logOut: logOut,
@@ -33,6 +34,9 @@
       service.lastName = userData.lastName;
       service.middleName = userData.middleName;
       service.roles = userData.roles;
+      service.menu = userData.menu;
+
+      service.menu = [{id: 1, stateName: 'one', displayName: 'One (1)'}, {id: 2, stateName: 'two', displayName: 'Two (2)'}, {id: 3, stateName: 'three', displayName: 'Three (3)'}];
     }
 
     function isAuthenticated() {
@@ -59,7 +63,7 @@
       return request.then(function (response) {
         setUser(response.data);
         _isAuthenticated = true;
-      }).catch(function (error) {
+      }).catch(function () {
         _isAuthenticated = false;
       });
     }

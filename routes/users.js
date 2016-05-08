@@ -9,4 +9,6 @@ router.get('/', function(req, res, next) {
 
 router.post('/', userController.create);
 
+router.get('/current', userController.getCurrent);
+
 module.exports = router;

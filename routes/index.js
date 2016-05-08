@@ -27,9 +27,7 @@ router.get('/*', function (req, res) {
       '/javascripts/prepare/ttf.prepare.directive.js'
     ],
     styles: [
-      '/stylesheets/style.css',
-      '/javascripts/prepare/prepare.css',
-      '/javascripts/auth/auth.css',
+      '/stylesheets/main.css',
       'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css'
     ]
   });

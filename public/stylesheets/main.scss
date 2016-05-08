@@ -1,0 +1,13 @@
+$fontstack: "Lucida Grande", Helvetica, Arial, sans-serif;
+
+body {
+  padding-top: 70px;
+  padding-bottom: 30px;
+  font: 14px $fontstack
+}
+
+a {
+  color: #01b8ef;
+}
+
+@import '../bower_components/bootstrap-sass/assets/stylesheets/bootstrap';

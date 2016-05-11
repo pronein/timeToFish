@@ -1,10 +1,11 @@
-var User = require('mongoose').model('User');
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
+
 var log = require('../auxiliary/logger');
-var passport = require('passport');
 
 module.exports = {
   create: createUser,
-  getCurrent: getCurrentUser
+  setSessionUser: setSessionUser
 };
 
 function createUser(req, res, next) {
@@ -22,18 +23,18 @@ function createUser(req, res, next) {
   });
 }
 
-function getCurrentUser(req, res, next) {
+function setSessionUser(req, res, next) {
   var session = req.session;
 
-  if(!session || !session.passport || !session.passport.user) {
-    res.sendStatus(204);
+  if (session && session.passport && session.passport.user) {
+    User.findById(session.passport.user, function (err, user) {
+      if (!err) {
+        req.user = user;
+      }
+
+      next();
+    });
+  } else {
+    next();
   }
-
-  User.findById(session.passport.user, function(err, user) {
-    if (err) {
-      res.sendStatus(204);
-    }
-
-    res.status(200).send(user);
-  });
 }

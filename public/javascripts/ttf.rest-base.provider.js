@@ -58,7 +58,7 @@
     RestBaseService.prototype.urls = {
       authenticate: '/api/authenticate',
       logout: '/api/authenticate/release',
-      getUser: '/api/users/current'
+      getUserMenuFor: '/api/users/current/menu'
     };
   }
 

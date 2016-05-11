@@ -8,7 +8,7 @@
     var _activeItem = 0;
 
     ctrl.menu = {
-      items: [], //{id: #, stateName: '', displayName: ''}
+      items: [], //{menuId: #, name: {state: '', display: ''}}
       isActiveItem: isActiveItem,
       setActiveItem: setActiveItem
     };
@@ -16,7 +16,7 @@
     init();
     
     function init(){
-      userService.refresh().then(function() {
+      userService.loadMenuFor('prepare').then(function() {
         ctrl.menu.items.splice(0);
 
         if (userService.menu) {

@@ -16,6 +16,8 @@ This application is a full-stack MEAN implementation of my personal website. The
     - __permissions__: [] (ObjectId of permission) <-- Populate
 * db.permissions
     - __name__: String
+    - __description__: String
+    - __category__: String
 * db.menuItems
     - __menuId__: Number
     - __permissionRequired__: ObjectId (permission) <-- Populate

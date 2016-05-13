@@ -23,13 +23,12 @@ router.get('/*', function (req, res) {
       '/javascripts/ttf.user.service.js',
       '/javascripts/menu/ttf.menu.controller.js',
       '/javascripts/prepare/ttf.prepare.module.js',
+      '/javascripts/prepare/ttf.prepare.config.js',
       '/javascripts/prepare/ttf.prepare.controller.js',
       '/javascripts/prepare/ttf.prepare.directive.js'
     ],
     styles: [
-      '/stylesheets/style.css',
-      '/javascripts/prepare/prepare.css',
-      '/javascripts/auth/auth.css',
+      '/stylesheets/main.css',
       'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css'
     ]
   });

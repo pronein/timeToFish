@@ -5,6 +5,8 @@ var User = require('mongoose').model('User');
 
 var router = express.Router();
 
+module.exports = router;
+
 router.post('/', function (req, res, next) {
   var session = req.session;
 
@@ -48,5 +50,3 @@ function tryAuthenticate(req, res, next) {
     signIn(req, res, user, next);
   })(req, res, next);
 }
-
-module.exports = router;

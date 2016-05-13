@@ -10,6 +10,8 @@ var indexRoutes = require('./routes/index');
 var userRoutes = require('./routes/users');
 var authRoutes = require('./routes/auth');
 
+var userController = require('./controllers/user.server.controller');
+
 var passport = require('passport');
 var localStrategy = require('./config/strategies/local');
 
@@ -43,6 +45,8 @@ passport.use(localStrategy());
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(userController.setSessionUser);
 
 // API
 app.use('/api/authenticate', authRoutes);

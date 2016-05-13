@@ -4,25 +4,33 @@
 
   function PrepareController(userService) {
     var ctrl = this;
-    
+
+    var _activeItem = 0;
+
     ctrl.menu = {
-      items: [], //{id: #, stateName: ''}
-      isActiveItem: isActiveItem
+      items: [], //{menuId: #, name: {state: '', display: ''}}
+      isActiveItem: isActiveItem,
+      setActiveItem: setActiveItem
     };
     
     init();
     
     function init(){
-      var user = userService.
+      userService.loadMenuFor('prepare').then(function() {
+        ctrl.menu.items.splice(0);
+
+        if (userService.menu) {
+          ctrl.menu.items = ctrl.menu.items.concat(userService.menu);
+        }
+      });
     }
     
     function isActiveItem(id){
-      for(var i = 0, iLen = ctrl.menu.items.length; i < iLen; i++){
-        var item = ctrl.menu.items[i];
-        if (item.id === id) return true;
-      }
+      return _activeItem === id;
+    }
 
-      return false;
+    function setActiveItem(id) {
+      _activeItem = id;
     }
   }
 

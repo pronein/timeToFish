@@ -12,27 +12,20 @@
       firstName: '',
       lastName: '',
       middleName: '',
-      roles: [],
+      
+      menu: [],
+      
       isAuthenticated: isAuthenticated,
       signIn: signIn,
       logOut: logOut,
-      refresh: loadUser
+      loadMenuFor: loadMenu
     };
 
     return service;
 
-    function loadUser() {
-      var request = restBase.get(restBase.urls.getUser);
-      return _handleUserResponse(request);
-    }
-
-    function setUser(userData) {
-      service.username = userData.username;
-      service.email = userData.email;
-      service.firstName = userData.firstName;
-      service.lastName = userData.lastName;
-      service.middleName = userData.middleName;
-      service.roles = userData.roles;
+    function loadMenu(stateName) {
+      var request = restBase.get(restBase.urls.getUserMenuFor, {ownerState: stateName});
+      return _handleMenuResponse(request);
     }
 
     function isAuthenticated() {
@@ -55,12 +48,37 @@
           });
     }
 
+    function _setUser(userData) {
+      service.username = userData.username;
+      service.email = userData.email;
+      service.firstName = userData.firstName;
+      service.lastName = userData.lastName;
+      service.middleName = userData.middleName;
+    }
+
+    function _setMenu(menuItems) {
+      service.menu = menuItems;
+    }
+
     function _handleUserResponse(request) {
       return request.then(function (response) {
-        setUser(response.data);
-        _isAuthenticated = true;
-      }).catch(function (error) {
+        if(response.status === 200) {
+          _setUser(response.data);
+          _isAuthenticated = true;
+        }
+      }).catch(function (err) {
+        console.log('_handleUserResponse: ' + err);
         _isAuthenticated = false;
+      });
+    }
+
+    function _handleMenuResponse(request) {
+      return request.then(function(response){
+        if(response.status === 200) {
+          _setMenu(response.data);
+        }
+      }).catch(function(err){
+        console.log('_handleMenuResponse: ' + err);
       });
     }
   }

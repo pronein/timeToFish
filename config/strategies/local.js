@@ -22,12 +22,12 @@ module.exports = function () {
         }, function (err, user) {
           if (err) {
             log.error({err: err}, 'Error while trying to find the user for authentication');
-            done(err);
+            return done(err);
           }
 
           if (!user) {
             log.debug('User does not exist [' + username + ']');
-            done(null, false);
+            return done(null, false);
           }
 
           if (validateUser(user, password))

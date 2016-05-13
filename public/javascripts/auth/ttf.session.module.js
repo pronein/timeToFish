@@ -1,6 +1,8 @@
 (function (ng) {
 
-  var dependencies = [];
+  var dependencies = [
+    'ttfUser'
+  ];
 
   ng.module('ttfSession', dependencies);
 

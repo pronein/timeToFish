@@ -16,16 +16,22 @@ router.get('/*', function (req, res) {
     angularAppScripts: [
       '/javascripts/ttf.app.module.js',
       '/javascripts/ttf.app.config.js',
+
       '/javascripts/auth/ttf.session.module.js',
       '/javascripts/auth/ttf.session-profile.controller.js',
       '/javascripts/auth/ttf.session-profile.directive.js',
+
       '/javascripts/ttf.rest-base.provider.js',
       '/javascripts/ttf.user.service.js',
+
       '/javascripts/menu/ttf.menu.controller.js',
+
       '/javascripts/prepare/ttf.prepare.module.js',
       '/javascripts/prepare/ttf.prepare.config.js',
       '/javascripts/prepare/ttf.prepare.controller.js',
-      '/javascripts/prepare/ttf.prepare.directive.js'
+      '/javascripts/prepare/ttf.prepare.directive.js',
+      '/javascripts/prepare/ttf.user-checklists.controller.js',
+      '/javascripts/prepare/ttf.user-checklists.directive.js'
     ],
     styles: [
       '/stylesheets/main.css',

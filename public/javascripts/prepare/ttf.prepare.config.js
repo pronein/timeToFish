@@ -11,7 +11,7 @@
       })
       .state('prepare.checklist', {
         url: '/checklists',
-        template: '<h1>Checklists</h1><h1>Checklists</h1><h1>Checklists</h1><h1>Checklists</h1><h1>Checklists</h1><h1>Checklists</h1>'
+        templateUrl: 'javascripts/prepare/views/prepare-checklist.html'
       });
   }
 

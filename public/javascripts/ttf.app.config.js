@@ -17,12 +17,7 @@
       .state('home', {
         url: '/',
         template: '<div>Home</div>'
-      })
-      // .state('prepare', {
-      //   url: '/prepare',
-      //   template: '<prepare></prepare>'
-      // })
-    ;
+      });
 
     function buildEnvironmentConfigOptions() {
       return {

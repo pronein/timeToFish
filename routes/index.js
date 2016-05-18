@@ -6,12 +6,7 @@ router.get('/*', function (req, res) {
   res.render('index', {
     title: 'Time To Fish',
     javascripts: [
-      '/bower_components/jquery/dist/jquery.js',
-      '/bower_components/angular/angular.js',
-      '/bower_components/angular-ui-router/release/angular-ui-router.js',
-      '/bower_components/bootstrap-sass/assets/javascripts/bootstrap.js',
-      '/bower_components/angular-environment/dist/angular-environment.js',
-      '/bower_components/moment/moment.js'
+      '/javascripts/vendor.min.js'
     ],
     angularAppScripts: [
       '/javascripts/ttf.app.module.js',

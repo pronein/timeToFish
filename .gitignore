@@ -4,3 +4,4 @@ public/bower_components
 logs/*.log
 *.css
 *.map
+*.min.*

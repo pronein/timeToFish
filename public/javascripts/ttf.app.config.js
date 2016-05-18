@@ -27,7 +27,7 @@
         },
         vars: {
           development: {
-            apiUrl: 'http://localhost:3000'
+            apiUrl: 'http://localhost:3010'
           },
           production: {
             apiUrl: 'http://fishing.ajschrader.com'

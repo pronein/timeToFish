@@ -4,257 +4,28 @@
 
 <user-checklists class="row"></user-checklists>
 
-<style type="text/css">
-  .my-input {
-    border-left-width: 0;
-    border-right-width: 0;
-    border-top-width: 0;
-    width: 100%;
-    border-bottom: 1px solid rgba(150, 150, 150, 0.5);
-    padding-left: 1px;
-    line-height: 1em;
-  }
-
-  .my-input:focus {
-    /*
-    box-shadow: 0 2px 0 rgba(0, 0, 255, 0.75);
-    */
-    box-shadow: 0 2px 0 rgba(51, 122, 183, 0.75);
-    border: none;
-    outline: none;
-  }
-
-  .my-label {
-    position: absolute;
-    color: rgba(150, 150, 150, 0.5);
-    transition-delay: 0s;
-    transition-duration: 0.25s;
-    transition-property: transform;
-    transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
-    /*
-    margin-top: -30px;
-    transform: matrix(1, 0, 0, 1, 0, 0);
-    */
-  }
-
-  .my-label.shrink {
-    /*
-    color: rgba(0, 0, 255, 0.75);
-    */
-    color: rgba(51, 122, 183, 0.75);
-    transform: matrix(0.75, 0, 0, 0.75, 0, -16);
-    margin-left: -2px;
-  }
-
-  .my-table tbody tr td {
-    /*
-    border: 1px solid black;
-    */
-    border: none;
-    line-height: 2em;
-    padding-top: 15px;
-    padding-bottom: 0;
-  }
-
-  .my-input:valid {
-    border: none;
-  }
-
-  .no-top-margin {
-    margin-top: 0;
-  }
-
-  .colored-strike {
-    /*
-    width: 100%;
-    position:absolute;
-    left: 46px;
-    */
-  }
-
-  .strike {
-    position: relative;
-  }
-
-  .strike::after {
-    border-bottom: 0.25em solid rgba(255, 0, 0, 0.3);
-    content: '';
-    left: 0;
-    line-height: 1em;
-    margin-top: calc(0.2em / 2 * -1);
-    position: absolute;
-    right: 0;
-    top: 50%;
-  }
-
-  .input-value {
-    color: black;
-  }
-
-  .hidden {
-    display: none;
-  }
-</style>
-
 <script type="application/javascript">
 
-  function onAnchorRemoveKeydown(evt) {
-    if ((evt.keyCode || evt.which) === 9 && // Tab key === 9
-        !evt.shiftKey) { // Shift key + 9 = cycling backwards, don't add a new item
-      var currentRow = $(evt.target).parents('tr'),
-          rowId = currentRow.data('itemId');
-      var itemNums = currentRow.parent().children('tr').map(function (idx, row) {
-            var itemId = $(row).data('itemId');
-            console.log('Item Ids #' + idx + ': ' + itemId + ' - ' + row.toString() + ' - ' + $(row));
-            return itemId;
-          }),
-          maxItemNum = Math.max.apply(null, itemNums);
-
-      console.log('Checking [tab] key press - rowId: ' + rowId + ' (' + itemNums + ') maxItemNum: ' + maxItemNum);
-      if (rowId == maxItemNum) {
-        evt.preventDefault();
-        var tBody = currentRow.parent();
-        window.checklists.addItem(tBody);
-      }
-    }
-  }
-
-  function onCheckboxChange() {
-    $(this).parents('tr')
-        .find('span.colored-strike')
-        .toggleClass('strike', this.checked);
-  }
-
-  function onMyInputBlur() {
-    var input = $(this);
-    var inputParent = input.parent();
-    var span = inputParent.find('span.colored-strike');
-    var label = inputParent.find('label[for="' + input.get(0).id + '"]');
-    var isValid = inputParent.find('input.my-input:valid').length > 0;
-
-    input.prev().toggleClass('shrink', false);
-
-    label.toggleClass('hidden', isValid);
-
-    toggleHiddenInput(isValid, input, span, false);
-  }
-
-  function onMyInputFocus() {
-    var input = $(this);
-
-    input.prev().toggleClass('shrink', true);
-  }
-
-  function onSpanClick() {
-    var span = $(this);
-    var input = span.parent().find('input.my-input');
-
-    toggleHiddenInput(false, input, span, true);
-  }
-
-  function toggleHiddenInput(hide, input, span, focusInput) {
-    var check = input.parents('tr').find('input[type="checkbox"]');
-
-    input.toggleClass('hidden', hide);
-    span.toggleClass('hidden', !hide);
-
-    if (hide) {
-      span.text(input.val());
-    } else if (focusInput) {
-      input.focus();
-    }
-
-    check[0].disabled = !hide;
-
-    if (!hide) {
-      check[0].checked = false;
-      span.toggleClass('strike', false);
-    }
-  }
-
   setTimeout(function () {
-    $('input[type="checkbox"]')
+    $('input[class="check-item"]')
         .on('change', onCheckboxChange);
+
+    $('input[class="check-all"]')
+        .on('change', onCheckAll);
 
     $('input.my-input')
         .on('blur', onMyInputBlur)
         .on('focus', onMyInputFocus);
 
     $('span.colored-strike')
-        .on('click', onSpanClick);
+        .on('click', onSpanClick)
+        .on('focus', onSpanClick);
 
     $('a > span.glyphicon.glyphicon-remove-sign').parent()
         .on('keydown', onAnchorRemoveKeydown);
 
+    $('#checklistTitle').val('Title');
   }, 0);
-
-  window.checklists = {
-    itemCount: 1,
-    remove: function (anchorTag) {
-      var row = $(anchorTag).parents('tr');
-      var tBody = row.parent();
-
-      var itemId = row.data('itemId');
-      var itemIds = tBody.children('tr').toArray().map(function (tr) {
-        return $(tr).data('itemId');
-      });
-      var maxId = Math.max.apply(null, itemIds);
-
-      if (itemId == maxId) { //deleting the item with the addNewItemAnchor, so move it first
-        var removeIdx = itemIds.indexOf(maxId);
-        itemIds.splice(removeIdx, 1);
-
-        if (itemIds.length === 0) {//this is the last item, so create a new one and then move the anchor
-          window.checklists.addItem(tBody);
-          itemIds.push(window.checklists.itemCount);
-        }
-
-        maxId = Math.max.apply(null, itemIds);
-        var addNewItemAnchor = tBody.find('#addNewItem');
-        addNewItemAnchor
-            .appendTo(tBody.find('tr[data-item-id="' + maxId + '"] > td > a').parent());
-      }
-
-      row.remove();
-    },
-    addItem: function (tBody) {
-      var itemNum = ++window.checklists.itemCount;
-
-      var row = $('<tr data-item-id="' + itemNum + '"></tr>');
-      tBody.append(row);
-
-      var checkCell = $('<td></td>');
-      var check = $('<input type="checkbox" disabled>');
-      check.on('change', onCheckboxChange);
-      checkCell.append(check);
-
-      var inputCell = $('<td></td>');
-      var label = $('<label for="item' + itemNum + '" class="my-label">Item ' + itemNum + '</label>');
-      var input = $('<input id="item' + itemNum + '" type="text" class="my-input" required>');
-      input.on('blur', onMyInputBlur);
-      input.on('focus', onMyInputFocus);
-      var span = $('<span class="colored-strike hidden"></span>');
-      span.on('click', onSpanClick);
-      inputCell.append(label).append(input).append(span);
-
-      var removeAnchor = $('<a href="#" onclick="window.checklists.remove(this)"></a>')
-          .append('<span class="glyphicon glyphicon-remove-sign"></span>');
-      removeAnchor.on('keydown', onAnchorRemoveKeydown);
-
-      var removeCell = $('<td></td>')
-          .append(removeAnchor);
-
-      row
-          .append(checkCell)
-          .append(inputCell)
-          .append(removeCell);
-
-      var addNewItemAnchor = tBody.find('#addNewItem');
-      addNewItemAnchor.appendTo(removeCell);
-
-      input.focus();
-    }
-  };
 
 </script>
 
@@ -264,23 +35,23 @@
       <thead>
       <tr>
         <th>
-          <input type="checkbox">
+          <input class="check-all" type="checkbox">
         </th>
         <th colspan="2">
-          <label for="checklistTitle">Title</label>
-          <input id="checklistTitle" type="text" class="">
+          <input id="checklistTitle" type="text" class="my-input" required>
+          <span tabindex="0" class="colored-strike hidden"></span>
         </th>
       </tr>
       </thead>
       <tbody>
       <tr data-item-id="1">
         <td>
-          <input type="checkbox" disabled>
+          <input class="check-item" type="checkbox" disabled>
         </td>
         <td>
           <label for="item1" class="my-label">Item 1</label>
           <input id="item1" type="text" class="my-input" required>
-          <span class="colored-strike hidden"></span>
+          <span tabindex="0" class="colored-strike hidden"></span>
         </td>
         <td>
           <a href="#" onclick="window.checklists.remove(this)">

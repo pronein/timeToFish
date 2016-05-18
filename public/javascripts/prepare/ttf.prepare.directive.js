@@ -6,6 +6,7 @@
     return {
       restrict: 'E',
       templateUrl: 'javascripts/prepare/views/prepare.html',
+      css: 'stylesheets/prepare.css',
       controller: 'PrepareController',
       controllerAs: 'vm'
     }

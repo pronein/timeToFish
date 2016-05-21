@@ -5,6 +5,7 @@
   function userRegisterDirective() {
     return {
       restrict: 'E',
+      replace: true,
       templateUrl: 'javascripts/user/views/register.html',
       controller: 'UserRegisterController',
       controllerAs: 'register'

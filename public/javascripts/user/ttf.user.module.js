@@ -1,6 +1,8 @@
 (function (ng) {
 
-  var dependencies = [];
+  var dependencies = [
+    'ui.router'
+  ];
 
   ng.module('ttfUser', dependencies);
 

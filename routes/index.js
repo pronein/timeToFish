@@ -27,6 +27,7 @@ router.get('/*', function (req, res) {
       '/javascripts/prepare/ttf.prepare.controller.js',
       '/javascripts/prepare/ttf.prepare.directive.js',
       '/javascripts/user/ttf.user.module.js',
+      '/javascripts/user/ttf.user.config.js',
       '/javascripts/user/ttf.user-register.controller.js',
       '/javascripts/user/ttf.user-register.directive.js'
     ],

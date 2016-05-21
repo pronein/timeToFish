@@ -30,7 +30,12 @@ router.get('/*', function (req, res) {
       '/javascripts/prepare/ttf.prepare-checklist-item.controller.js',
       '/javascripts/prepare/ttf.prepare-checklist-item.directive.js',
       '/javascripts/prepare/ttf.user-checklists.controller.js',
-      '/javascripts/prepare/ttf.user-checklists.directive.js'
+      '/javascripts/prepare/ttf.user-checklists.directive.js',
+
+      '/javascripts/user/ttf.user.module.js',
+      '/javascripts/user/ttf.user.config.js',
+      '/javascripts/user/ttf.user-register.controller.js',
+      '/javascripts/user/ttf.user-register.directive.js'
     ],
     styles: [
       '/stylesheets/main.css',

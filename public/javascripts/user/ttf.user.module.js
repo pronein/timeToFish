@@ -1,9 +1,9 @@
 (function (ng) {
 
   var dependencies = [
-    'ttfUser'
+    'ui.router'
   ];
 
-  ng.module('ttfSession', dependencies);
+  ng.module('ttfUser', dependencies);
 
 })(window.angular);

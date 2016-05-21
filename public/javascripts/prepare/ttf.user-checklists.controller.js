@@ -23,7 +23,9 @@
 
 })(window.angular);
 
-function onAnchorRemoveKeydown(evt) {
+//TODO: Delete once tested: Refactor javascript into controllers/directives/etc.
+/*
+function onAnchorRemoveKeydown(evt) { //ON TAB FROM (x), create new automatically for continuous user entry
   if ((evt.keyCode || evt.which) === 9 && // Tab key === 9
     !evt.shiftKey) { // Shift key + 9 = cycling backwards, don't add a new item
     var currentRow = $(evt.target).parents('tr'),
@@ -39,31 +41,35 @@ function onAnchorRemoveKeydown(evt) {
     if (rowId == maxItemNum) {
       evt.preventDefault();
       var tBody = currentRow.parent();
-      window.checklists.addItem(tBody);
+      window.checklists.addItemClicked(tBody);
     }
   }
 }
-
+*/
+/*
 function toggleStrikeThroughOnChecked(chk) {
   $(chk).parents('tr')
-    .find('span.colored-strike')
-    .toggleClass('strike', chk.checked);
+    .find('span.colored-checklist-item-strikethrough')
+    .toggleClass('checklist-item-strikethrough', chk.checked);
 }
-
+*/
+/*
 function setCheckAllChecked() {
   var checkAll = $('.check-all')[0];
   checkAll.checked = $('.check-item:enabled').length === $('.check-item:checked').length;
 }
-
+*/
+/*
 function onCheckboxChange() {
   toggleStrikeThroughOnChecked(this)
   setCheckAllChecked();
 }
-
+*/
+/*
 function onCheckAll() {
   var checkAll = this;
   var enabledCheckBoxes = $(this)
-    .parents('table').find('tbody input.my-input:valid')
+    .parents('table').find('tbody input.checklist-item-input-text:valid')
     .parents('tr').find('.check-item');
 
   enabledCheckBoxes
@@ -73,13 +79,14 @@ function onCheckAll() {
       toggleStrikeThroughOnChecked(chk);
     });
 }
-
+*/
+/*
 function onMyInputBlur() {
   var input = $(this);
   var inputParent = input.parent();
-  var span = inputParent.find('span.colored-strike');
+  var span = inputParent.find('span.colored-checklist-item-strikethrough');
   var label = inputParent.find('label[for="' + input.get(0).id + '"]');
-  var isValid = inputParent.find('input.my-input:valid').length > 0;
+  var isValid = inputParent.find('input.checklist-item-input-text:valid').length > 0;
 
   input.prev().toggleClass('shrink', false);
 
@@ -88,20 +95,23 @@ function onMyInputBlur() {
   toggleHiddenInput(isValid, input, span, false);
   setCheckAllChecked();
 }
-
+*/
+/*
 function onMyInputFocus() {
   var input = $(this);
 
   input.prev().toggleClass('shrink', true);
 }
-
+*/
+/*
 function onSpanClick() {
   var span = $(this);
-  var input = span.parent().find('input.my-input');
+  var input = span.parent().find('input.checklist-item-input-text');
 
   toggleHiddenInput(false, input, span, true);
 }
-
+*/
+/*
 function toggleHiddenInput(hide, input, span, focusInput) {
   var check = input.parents('tr').find('input[type="checkbox"]');
 
@@ -118,10 +128,11 @@ function toggleHiddenInput(hide, input, span, focusInput) {
 
   if (!hide) {
     check[0].checked = false;
-    span.toggleClass('strike', false);
+    span.toggleClass('checklist-item-strikethrough', false);
   }
 }
-
+*/
+/*
 window.checklists = {
   itemCount: 1,
   remove: function (anchorTag) {
@@ -139,7 +150,7 @@ window.checklists = {
       itemIds.splice(removeIdx, 1);
 
       if (itemIds.length === 0) {//this is the last item, so create a new one and then move the anchor
-        window.checklists.addItem(tBody);
+        window.checklists.addItemClicked(tBody);
         itemIds.push(window.checklists.itemCount);
       }
 
@@ -164,11 +175,11 @@ window.checklists = {
     checkCell.append(check);
 
     var inputCell = $('<td></td>');
-    var label = $('<label for="item' + itemNum + '" class="my-label">Item ' + itemNum + '</label>');
-    var input = $('<input id="item' + itemNum + '" type="text" class="my-input" required>');
+    var label = $('<label for="item' + itemNum + '" class="checklist-item-label">Item ' + itemNum + '</label>');
+    var input = $('<input id="item' + itemNum + '" type="text" class="checklist-item-input-text" required>');
     input.on('blur', onMyInputBlur);
     input.on('focus', onMyInputFocus);
-    var span = $('<span tabindex="0" class="colored-strike hidden"></span>');
+    var span = $('<span tabindex="0" class="colored-checklist-item-strikethrough hidden"></span>');
     span.on('click', onSpanClick);
     inputCell.append(label).append(input).append(span);
 
@@ -190,3 +201,4 @@ window.checklists = {
     input.focus();
   }
 };
+*/

@@ -11,7 +11,7 @@
       })
       .state('prepare.checklist', {
         url: '/checklists',
-        templateUrl: 'javascripts/prepare/views/prepare-checklist.html'
+        templateUrl: 'javascripts/prepare/views/partial-prepare-checklist.html'
       });
   }
 

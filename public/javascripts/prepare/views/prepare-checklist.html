@@ -1,68 +1,23 @@
-<div class="row">
-  <h1>Manage Lists</h1>
-</div>
-
-<user-checklists class="row"></user-checklists>
-
-<script type="application/javascript">
-
-  setTimeout(function () {
-    $('input[class="check-item"]')
-        .on('change', onCheckboxChange);
-
-    $('input[class="check-all"]')
-        .on('change', onCheckAll);
-
-    $('input.my-input')
-        .on('blur', onMyInputBlur)
-        .on('focus', onMyInputFocus);
-
-    $('span.colored-strike')
-        .on('click', onSpanClick)
-        .on('focus', onSpanClick);
-
-    $('a > span.glyphicon.glyphicon-remove-sign').parent()
-        .on('keydown', onAnchorRemoveKeydown);
-
-    $('#checklistTitle').val('Title');
-  }, 0);
-
-</script>
-
-<div class="row" ui-view>
-  <div class="col-md-6">
-    <table class="table my-table">
-      <thead>
-      <tr>
-        <th>
-          <input class="check-all" type="checkbox">
-        </th>
-        <th colspan="2">
-          <input id="checklistTitle" type="text" class="my-input" required>
-          <span tabindex="0" class="colored-strike hidden"></span>
-        </th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr data-item-id="1">
-        <td>
-          <input class="check-item" type="checkbox" disabled>
-        </td>
-        <td>
-          <label for="item1" class="my-label">Item 1</label>
-          <input id="item1" type="text" class="my-input" required>
-          <span tabindex="0" class="colored-strike hidden"></span>
-        </td>
-        <td>
-          <a href="#" onclick="window.checklists.remove(this)">
-            <span class="glyphicon glyphicon-remove-sign"></span>
-          </a>
-          <a id="addNewItem" href="#" onclick="window.checklists.addItem($(this).parents('tbody'))">
-            <span class="glyphicon glyphicon-plus-sign"></span>
-          </a>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+<div class="col-md-6">
+  <table class="table checklist-table">
+    <thead>
+    <tr style="background-color: pink;">
+      <th>
+        <input class="check-all" type="checkbox"
+               ng-model="vm.allChecked" ng-change="vm.checkStateChanged()">
+      </th>
+      <th colspan="2">
+        <input id="checklistTitle" type="text" class="checklist-item-input-text"
+               ng-blur="vm.inputBlurred()"
+               ng-model="vm.listTitle" ng-show="vm.isEditable">
+        <span tabindex="0" class="colored-strike"
+              focus-on-events="['click', 'focus']" focus-on-id="checklistTitle"
+              ng-click="vm.spanFocused()" ng-focus="vm.spanFocused()"
+              ng-hide="vm.isEditable"></span>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
 </div>

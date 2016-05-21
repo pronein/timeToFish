@@ -1,4 +1,10 @@
-.my-table {
+/*
+  Checklists
+*/
+
+$margin-top-shift: 0.2em;
+
+.checklist-table {
   th {
     font-size: 3em;
     width: 20px;
@@ -15,78 +21,64 @@
   }
 }
 
-.my-input {
+.checklist-item-input-text {
   border-left-width: 0;
   border-right-width: 0;
   border-top-width: 0;
-  width: 100%;
   border-bottom: 1px solid rgba(150, 150, 150, 0.5);
+  width: 100%;
   padding-left: 1px;
   line-height: 1em;
+
+  &:focus {
+    box-shadow: 0 2px 0 rgba(51, 122, 183, 0.75);
+    border: none;
+    outline: none;
+  }
+
+  &:valid {
+    border: none;
+  }
 }
 
-.my-input:focus {
+.checklist-item-label {
   /*
-  box-shadow: 0 2px 0 rgba(0, 0, 255, 0.75);
+  margin-top: -30px;
+  transform: matrix(1, 0, 0, 1, 0, 0);
   */
-  box-shadow: 0 2px 0 rgba(51, 122, 183, 0.75);
-  border: none;
-  outline: none;
-}
-
-.my-label {
   position: absolute;
   color: rgba(150, 150, 150, 0.5);
   transition-delay: 0s;
   transition-duration: 0.25s;
   transition-property: transform;
   transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
-  /*
-  margin-top: -30px;
-  transform: matrix(1, 0, 0, 1, 0, 0);
-  */
+
+  &.shrink {
+    /*
+    color: rgba(0, 0, 255, 0.75);
+    */
+    color: rgba(51, 122, 183, 0.75);
+    transform: matrix(0.75, 0, 0, 0.75, 0, -16);
+    margin-left: -2px;
+  }
 }
 
-.my-label.shrink {
-  /*
-  color: rgba(0, 0, 255, 0.75);
-  */
-  color: rgba(51, 122, 183, 0.75);
-  transform: matrix(0.75, 0, 0, 0.75, 0, -16);
-  margin-left: -2px;
-}
-
-.my-input:valid {
-  border: none;
-}
-
-.no-top-margin {
-  margin-top: 0;
-}
-
-.colored-strike {
-  /*
-  width: 100%;
-  position:absolute;
-  left: 46px;
-  */
-}
-
-.strike {
+.checklist-item-strikethrough {
   position: relative;
+
+  &::after {
+    border-bottom: 0.25em solid rgba(255, 0, 0, 0.3);
+    content: '';
+    left: 0;
+    line-height: 1em;
+    margin-top: calc(#{$margin-top-shift} / 2 * -1);
+    position: absolute;
+    right: 0;
+    top: 50%;
+  }
 }
 
-.strike::after {
-  border-bottom: 0.25em solid rgba(255, 0, 0, 0.3);
-  content: '';
-  left: 0;
-  line-height: 1em;
-  margin-top: calc(0.2em / 2 * -1);
-  position: absolute;
-  right: 0;
-  top: 50%;
-}
-
+/*
 .input-value {
   color: black;
 }
@@ -94,6 +86,11 @@
 .hidden {
   display: none;
 }
+
+.no-top-margin {
+  margin-top: 0;
+}
+*/
 
 /*
  * Global add-ons
@@ -160,25 +157,5 @@
   @media (min-width: 768px){
     padding-right: 40px;
     padding-left: 40px;
-  }
-}
-
-/*
- * Placeholder dashboard ideas
- */
-
-.placeholders {
-  margin-bottom: 30px;
-  text-align: center;
-  h4 {
-    margin-bottom: 0;
-  }
-}
-
-.placeholder {
-  margin-bottom: 20px;
-  img {
-    display: inline-block;
-    border-radius: 50%;
   }
 }

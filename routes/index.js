@@ -25,6 +25,10 @@ router.get('/*', function (req, res) {
       '/javascripts/prepare/ttf.prepare.config.js',
       '/javascripts/prepare/ttf.prepare.controller.js',
       '/javascripts/prepare/ttf.prepare.directive.js',
+      '/javascripts/prepare/ttf.prepare-checklist.controller.js',
+      '/javascripts/prepare/ttf.prepare-checklist.directive.js',
+      '/javascripts/prepare/ttf.prepare-checklist-item.controller.js',
+      '/javascripts/prepare/ttf.prepare-checklist-item.directive.js',
       '/javascripts/prepare/ttf.user-checklists.controller.js',
       '/javascripts/prepare/ttf.user-checklists.directive.js'
     ],

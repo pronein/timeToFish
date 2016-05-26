@@ -12,6 +12,11 @@ router.get('/*', function (req, res) {
       '/javascripts/ttf.app.module.js',
       '/javascripts/ttf.app.config.js',
 
+      '/javascripts/auxiliary/focus/ttf.focus-on-events.directive.js',
+      '/javascripts/auxiliary/focus/ttf.focus.service.js',
+      
+      '/javascripts/auxiliary/compareTo/ttf.compare-to.directive.js',
+
       '/javascripts/auth/ttf.session.module.js',
       '/javascripts/auth/ttf.session-profile.controller.js',
       '/javascripts/auth/ttf.session-profile.directive.js',

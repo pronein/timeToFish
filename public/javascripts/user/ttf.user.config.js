@@ -6,9 +6,10 @@
   function configSetup($stateProvider) {
     $stateProvider
       .state('register', {
-        restrict: 'E',
         url: '/register',
-        templateUrl: 'javascripts/user/views/partial-register.html'
+        templateUrl: 'javascripts/user/views/partial-register.html',
+        controller: 'UserRegisterController',
+        controllerAs: 'vm'
       });
   }
 

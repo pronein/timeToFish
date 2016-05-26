@@ -1,4 +1,4 @@
-(function (ng) {
+(function(ng) {
   'use strict';
 
   var inject = ['restBase'];
@@ -12,19 +12,29 @@
       firstName: '',
       lastName: '',
       middleName: '',
-      
+
       menu: [],
-      
+
       isAuthenticated: isAuthenticated,
       signIn: signIn,
       logOut: logOut,
-      loadMenuFor: loadMenu
+      loadMenuFor: loadMenu,
+      registerNewUser: registerUser,
+      validateUserName: doesUserNameAlreadyExist
     };
 
     return service;
 
+    function registerUser(userModel) {
+
+    }
+
+    function doesUserNameAlreadyExist(username) {
+
+    }
+
     function loadMenu(stateName) {
-      var request = restBase.get(restBase.urls.getUserMenuFor, {ownerState: stateName});
+      var request = restBase.get(restBase.urls.getUserMenuFor, { ownerState: stateName });
       return _handleMenuResponse(request);
     }
 
@@ -37,15 +47,15 @@
       return _handleUserResponse(request);
     }
 
-    function logOut(){
+    function logOut() {
       return restBase.post(restBase.urls.logout)
-          .then(function(response){
+        .then(function(response) {
 
-          }).catch(function(error){
+        }).catch(function(error) {
 
-          }).finally(function(){
-            _isAuthenticated = false;
-          });
+        }).finally(function() {
+          _isAuthenticated = false;
+        });
     }
 
     function _setUser(userData) {
@@ -61,23 +71,23 @@
     }
 
     function _handleUserResponse(request) {
-      return request.then(function (response) {
-        if(response.status === 200) {
+      return request.then(function(response) {
+        if (response.status === 200) {
           _setUser(response.data);
           _isAuthenticated = true;
         }
-      }).catch(function (err) {
+      }).catch(function(err) {
         console.log('_handleUserResponse: ' + err);
         _isAuthenticated = false;
       });
     }
 
     function _handleMenuResponse(request) {
-      return request.then(function(response){
-        if(response.status === 200) {
+      return request.then(function(response) {
+        if (response.status === 200) {
           _setMenu(response.data);
         }
-      }).catch(function(err){
+      }).catch(function(err) {
         console.log('_handleMenuResponse: ' + err);
       });
     }
@@ -86,6 +96,6 @@
   userService.$inject = inject;
 
   ng.module('ttfApp')
-      .factory('userService', userService);
+    .factory('userService', userService);
 
 })(window.angular);

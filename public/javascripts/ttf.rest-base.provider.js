@@ -26,12 +26,12 @@
     this.post = post;
     this.get = get;
 
-    function post(urlPath, payload) {
+    function post(urlPath, payload, responseOnly) {
       var options = setupRestCall(urlPath, 'POST');
 
       options.data = ng.toJson(payload);
 
-      return callRestTarget(options);
+      return callRestTarget(options, responseOnly);
     }
 
     function get(urlPath, paramsObj) {
@@ -51,10 +51,12 @@
       };
     }
 
-    function callRestTarget(options) {
+    function callRestTarget(options, responseOnly) {
       return $http(options)
         .then(function (response) {
-          return response.data;
+          console.info(options.method.toUpperCase() + ' ' + options.url + ' ' + response.status);
+          
+          return responseOnly ? response.data : response;
         });
     }
 
@@ -62,7 +64,8 @@
       authenticate: '/api/authenticate',
       logout: '/api/authenticate/release',
       getUserMenuFor: '/api/users/current/menu',
-      validateUsername: '/api/users/usernameExists'
+      validateUsername: '/api/users/usernameExists',
+      registerUser: '/api/users'
     };
   }
 

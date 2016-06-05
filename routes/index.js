@@ -45,7 +45,8 @@ router.get('/*', function (req, res) {
       
       '/javascripts/admin/permissions/ttf.permissions.module.js',
       '/javascripts/admin/permissions/ttf.permissions.controller.js',
-      '/javascripts/admin/permissions/ttf.permissions.directive.js'
+      '/javascripts/admin/permissions/ttf.permissions.directive.js',
+      '/javascripts/admin/permissions/ttf.permissions.service.js'
     ],
     styles: [
       '/stylesheets/main.css',

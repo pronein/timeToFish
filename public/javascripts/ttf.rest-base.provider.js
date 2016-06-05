@@ -34,12 +34,15 @@
       return callRestTarget(options, responseOnly);
     }
 
-    function get(urlPath, paramsObj) {
+    function get(urlPath, paramsObj, responseOnly) {
       var options = setupRestCall(urlPath, 'GET');
 
-      options.params = paramsObj;
+      if (paramsObj === true)
+        responseOnly = true;
+      else if (paramsObj)
+        options.params = paramsObj;
 
-      return callRestTarget(options);
+      return callRestTarget(options, responseOnly);
     }
 
     function setupRestCall(url, method) {
@@ -55,7 +58,7 @@
       return $http(options)
         .then(function (response) {
           console.info(options.method.toUpperCase() + ' ' + options.url + ' ' + response.status);
-          
+
           return responseOnly ? response.data : response;
         });
     }

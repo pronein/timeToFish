@@ -12,12 +12,12 @@
       </h3>
     </div>
     <div class="panel-body">
-      <form name="addNewPermission" class="form-horizontal">
+      <form name="permissionForm" class="form-horizontal" ng-submit="vm.addNewPermission(permissionForm)" novalidate>
         <!-- Name -->
         <div class="form-group">
           <label for="name" class="col-sm-3 control-label">Name</label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" id="name">
+            <input type="text" class="form-control" id="name" ng-model="vm.newPermission.name" required>
           </div>
         </div>
 
@@ -25,7 +25,7 @@
         <div class="form-group">
           <label for="desc" class="col-sm-3 control-label">Description</label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" id="desc">
+            <input type="text" class="form-control" id="desc" ng-model="vm.newPermission.description" required>
           </div>
         </div>
 
@@ -33,21 +33,21 @@
         <div class="form-group">
           <label for="category" class="col-sm-3 control-label">Category</label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" id="category">
+            <input type="text" class="form-control" id="category" ng-model="vm.newPermission.category" required>
           </div>
         </div>
 
         <!-- Add Permission -->
         <div class="form-group">
           <div class="col-sm-offset-9 col-sm-3">
-            <button type="submit" class="btn btn-primary form-control">Add</button>
+            <button type="submit" class="btn btn-primary form-control" ng-disabled="!permissionForm.$valid">Add</button>
           </div>
         </div>
       </form>
     </div>
   </div>
 
-  <div class="alert alert-success alert-dismissible" role="alert">
+  <div class="alert alert-success alert-dismissible" role="alert" ng-show="vm.show.insertSuccess">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -70,7 +70,7 @@
     </div>
   </div>
 
-  <div class="alert alert-success alert-dismissible" role="alert">
+  <div class="alert alert-success alert-dismissible" role="alert" ng-show="vm.show.removeSuccess">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>

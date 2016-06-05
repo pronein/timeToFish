@@ -9,7 +9,8 @@
     ctrl.user = userService;
     ctrl.credentials = {
       username: '',
-      password: ''
+      password: '',
+      requestIsFromUser: false
     };
     ctrl.signedIn = userService.isAuthenticated();
     ctrl.errorMessage = '';
@@ -23,12 +24,12 @@
     signin(false);
 
     function signin(requestIsFromUser) {
+      ctrl.credentials.requestIsFromUser = requestIsFromUser;
       userService.signIn(ctrl.credentials)
           .then(function(){
             ctrl.signedIn = userService.isAuthenticated();
 
             if(requestIsFromUser && !ctrl.signedIn){
-              //ctrl.errorMessage = 'Invalid Credentials';
               ctrl.usernameHasError = true;
               ctrl.passwordHasError = true;
             }

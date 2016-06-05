@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
 var log = require('../auxiliary/logger');
+var hasher = require('../auxiliary/hasher');
 
 module.exports = {
   create: createUser,
@@ -10,34 +11,40 @@ module.exports = {
 };
 
 function createUser(req, res, next) {
-  var user = new User(req.body);
+  var user = new User(req.body),
+    generatedSalt = hasher.generateSalt(),
+    generatedHash = hasher.generateHash(req.body.password, generatedSalt);
 
+  user.password = {
+    salt: generatedSalt,
+    hash: generatedHash
+  };
+  
   user.save(function (err) {
     if (err) {
       log.error({err: err}, 'Error during creation of user.');
 
       res.status(500).json({msg: 'Failed to create new user.'});
-    }
-    else {
+    } else
       res.send(user);
-    }
   });
 }
 
 function setSessionUser(req, res, next) {
-  var session = req.session;
+  var userId =
+    req.session &&
+    req.session.passport &&
+    req.session.passport.user;
 
-  if (session && session.passport && session.passport.user) {
-    User.findById(session.passport.user, function (err, user) {
-      if (!err) {
+  if (userId)
+    User.findById(userId, function (err, user) {
+      if (!err)
         req.user = user;
-      }
 
       next();
     });
-  } else {
+  else
     next();
-  }
 }
 
 function validateUsernameIsAvailable(req, res, next) {

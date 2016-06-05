@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="stylesheets/register.css">
+
 <div class="col-md-offset-4">
   <h2>Register New User</h2>
 </div>
@@ -73,7 +75,7 @@
       <span class="help-block col-md-offset-1" ng-show="vm.validate.firstName.isMissing(registerForm)">First name is required.</span>
     </div>
     <div class="col-sm-1">
-      <input type="text" class="form-control" name="middleName" placeholder="M." ng-model="vm.user.name.middle">
+      <input type="text" class="form-control ignore-padding-right" name="middleName" placeholder="M." ng-model="vm.user.name.middle" maxlength="1">
     </div>
     <div class="col-sm-4">
       <div class="input-group">

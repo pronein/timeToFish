@@ -8,13 +8,14 @@
     <label for="username" class="col-sm-2 control-label">Desired Username</label>
     <div class="col-sm-4">
       <div class="input-group">
-        <input type="text" class="form-control" name="username" placeholder="Username" ng-model="vm.user.username" required>
+        <input type="text" class="form-control" id="username" name="username"
+               placeholder="Username" ng-model="vm.user.username" required username>
         <span class="input-group-addon">
           <i ng-class="vm.validate.username.getInputCss(registerForm)"></i>
         </span>
       </div>
       <span class="help-block col-md-offset-1" ng-show="vm.validate.username.isMissing(registerForm)">Username is required.</span>
-      <span class="help-block col-md-offset-1" ng-show="vm.validate.username.isInvalid(registerForm)">Username is unavailable.</span>
+      <span class="help-block col-md-offset-1" ng-hide="vm.validate.username.isValid(registerForm)">Username is unavailable.</span>
       <span class="help-block col-md-offset-1" ng-show="vm.validate.username.isQuerying(registerForm)">Verifying username...</span>
     </div>
   </div>
@@ -24,7 +25,7 @@
     <label for="email" class="col-sm-2 control-label">Email Address</label>
     <div class="col-sm-4">
       <div class="input-group">
-        <input type="email" class="form-control" name="email" placeholder="Email" ng-model="vm.user.email" required>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Email" ng-model="vm.user.email" required>
         <span class="input-group-addon">
           <i ng-class="vm.validate.email.getInputCss(registerForm)"></i>
         </span>
@@ -39,7 +40,7 @@
     <label for="password" class="col-sm-2 control-label">Password</label>
     <div class="col-sm-4">
       <div class="input-group">
-        <input type="password" class="form-control" name="password" placeholder="Password" ng-model="vm.user.password" required>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Password" ng-model="vm.user.password" required>
         <span class="input-group-addon">
           <i ng-class="vm.validate.password.getInputCss(registerForm)"></i>
         </span>
@@ -63,7 +64,7 @@
     <label for="firstName" class="col-sm-2 control-label">Name</label>
     <div class="col-sm-4">
       <div class="input-group">
-        <input type="text" class="form-control" name="firstName" placeholder="First" ng-model="vm.user.name.first" required>
+        <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First" ng-model="vm.user.name.first" required>
         <span class="input-group-addon">
           <i ng-class="vm.validate.firstName.getInputCss(registerForm)"></i>
         </span>

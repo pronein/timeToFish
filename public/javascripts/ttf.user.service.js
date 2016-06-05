@@ -20,17 +20,17 @@
       logOut: logOut,
       loadMenuFor: loadMenu,
       registerNewUser: registerUser,
-      validateUserName: doesUserNameAlreadyExist
+      validateUsername: doesUsernameAlreadyExist
     };
 
     return service;
 
     function registerUser(userModel) {
-
+      alert('registering...');
     }
 
-    function doesUserNameAlreadyExist(username) {
-
+    function doesUsernameAlreadyExist(username) {
+      console.log('checking if username (' + username + ') already exists...');
     }
 
     function loadMenu(stateName) {

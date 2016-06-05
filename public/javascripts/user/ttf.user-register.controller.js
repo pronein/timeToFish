@@ -16,7 +16,7 @@
         middle: '',
         last: ''
       }
-    }
+    };
 
     ctrl.validate = {
       username: {
@@ -54,7 +54,7 @@
         isMissing: _lastNameIsMissing,
         getInputCss: _getCssForLastNameInput
       }
-    }
+    };
 
     ctrl.registerUser = _registerUser;
 
@@ -89,19 +89,22 @@
 
     function _usernameIsMissing(form) {
       return _shouldValidate(form, 'username') &&
-        form.username.$error.required &&
         !_usernameIsQuerying(form) &&
-        !_usernameIsUnavailable(form);
+        !_usernameIsUnavailable(form) &&
+        form.username.$error.required;
     }
 
     function _usernameIsQuerying(form) {
-      //shouldValidate && isQueryingForUsernameValidity
-      return false;
+      return _shouldValidate(form, 'username') && 
+        !form.username.$error.required &&
+        form.username.$pending;
     }
 
     function _usernameIsUnavailable(form) {
-      //shouldValidate && isQueryingForUsernameValidity returned false
-      return false;
+      return _shouldValidate(form, 'username') &&
+          !form.username.$error.required &&
+          !form.username.$pending &&
+          form.username.$error.username;
     }
 
     function _usernameIsValid(form) {

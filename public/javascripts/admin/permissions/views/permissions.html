@@ -1,0 +1,127 @@
+<div class="row">
+  <div class="page-header">
+    <h1>Permission Manager</h1>
+  </div>
+</div>
+
+<div class="col-sm-7">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        Add New Permission
+      </h3>
+    </div>
+    <div class="panel-body">
+      <form name="addNewPermission" class="form-horizontal">
+        <!-- Name -->
+        <div class="form-group">
+          <label for="name" class="col-sm-3 control-label">Name</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="name">
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="form-group">
+          <label for="desc" class="col-sm-3 control-label">Description</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="desc">
+          </div>
+        </div>
+
+        <!-- Category -->
+        <div class="form-group">
+          <label for="category" class="col-sm-3 control-label">Category</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="category">
+          </div>
+        </div>
+
+        <!-- Add Permission -->
+        <div class="form-group">
+          <div class="col-sm-offset-9 col-sm-3">
+            <button type="submit" class="btn btn-primary form-control">Add</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <strong>Success!</strong> New permission has been added!
+  </div>
+</div>
+
+<div class="col-sm-5">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h1 class="panel-title">Category Filter</h1>
+    </div>
+    <div class="panel-body">
+      <a href><span class="badge">All</span></a>
+      <a href><span class="badge">Category a</span></a>
+      <a href><span class="badge badge-primary">Category b</span></a>
+      <a href><span class="badge">Category c</span></a>
+      <a href><span class="badge badge-primary">Category d</span></a>
+      <a href><span class="badge">Category e</span></a>
+    </div>
+  </div>
+
+  <div class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <strong>Success!</strong> Permission removed!
+  </div>
+
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h1 class="panel-title">Permissions</h1>
+    </div>
+    <ul class="list-group">
+      <li class="list-group-item">
+        <a class="pull-left" href>
+          <span class="glyphicon glyphicon-remove"></span>
+        </a>
+        <strong class="text-uppercase col-sm-offset-1">Permission 1</strong>
+        <span class="badge pull-right">category a</span>
+        <div class="small col-sm-offset-2">description 1: this one talks about the first permission and what it does,
+          briefly
+        </div>
+      </li>
+      <li class="list-group-item">
+        <a class="pull-left" href>
+          <span class="glyphicon glyphicon-remove"></span>
+        </a>
+        <strong class="text-uppercase col-sm-offset-1">Permission 1</strong>
+        <span class="badge pull-right">category a</span>
+        <div class="small col-sm-offset-2">description 1: this one talks about the first permission and what it does,
+          briefly
+        </div>
+      </li>
+      <li class="list-group-item">
+        <a class="pull-left" href>
+          <span class="glyphicon glyphicon-remove"></span>
+        </a>
+        <strong class="text-uppercase col-sm-offset-1">Permission 1</strong>
+        <span class="badge pull-right">category a</span>
+        <div class="small col-sm-offset-2">description 1: this one talks about the first permission and what it does,
+          briefly
+        </div>
+      </li>
+      <li class="list-group-item">
+        <a class="pull-left" href>
+          <span class="glyphicon glyphicon-remove"></span>
+        </a>
+        <strong class="text-uppercase col-sm-offset-1">Permission 1</strong>
+        <span class="badge pull-right">category a</span>
+        <div class="small col-sm-offset-2">description 1: this one talks about the first permission and what it does,
+          briefly
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

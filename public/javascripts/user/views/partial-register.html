@@ -1,0 +1,99 @@
+<link rel="stylesheet" href="stylesheets/register.css">
+
+<div class="col-md-offset-4">
+  <h2>Register New User</h2>
+</div>
+
+<form name="registerForm" class="form-horizontal" ng-submit="vm.registerUser(registerForm)" novalidate>
+  <!-- username -->
+  <div class="form-group has-feedback" ng-class="vm.validate.username.getCss(registerForm)">
+    <label for="username" class="col-sm-2 control-label">Desired Username</label>
+    <div class="col-sm-4">
+      <div class="input-group">
+        <input type="text" class="form-control" id="username" name="username"
+               placeholder="Username" ng-model="vm.user.username" required username
+               ng-model-options="{updateOn: 'default blur', debounce: {default: 1000, blur: 0} }">
+        <span class="input-group-addon">
+          <i ng-class="vm.validate.username.getInputCss(registerForm)"></i>
+        </span>
+      </div>
+      <span class="help-block col-md-offset-1" ng-show="vm.validate.username.isMissing(registerForm)">Username is required.</span>
+      <span class="help-block col-md-offset-1" ng-show="vm.validate.username.isUnavailable(registerForm)">Username is unavailable.</span>
+      <span class="help-block col-md-offset-1" ng-show="vm.validate.username.isQuerying(registerForm)">Verifying username...</span>
+    </div>
+  </div>
+
+  <!-- email -->
+  <div class="form-group has-feedback" ng-class="vm.validate.email.getCss(registerForm)">
+    <label for="email" class="col-sm-2 control-label">Email Address</label>
+    <div class="col-sm-4">
+      <div class="input-group">
+        <input type="email" class="form-control" id="email" name="email" placeholder="Email" ng-model="vm.user.email" required>
+        <span class="input-group-addon">
+          <i ng-class="vm.validate.email.getInputCss(registerForm)"></i>
+        </span>
+      </div>
+      <span class="help-block col-md-offset-1" ng-show="vm.validate.email.isMissing(registerForm)">Email is required.</span>
+      <span class="help-block col-md-offset-1" ng-show="vm.validate.email.hasFormatError(registerForm)">Enter a valid email address please.</span>
+    </div>
+  </div>
+
+  <!-- passwords -->
+  <div class="form-group has-feedback" ng-class="vm.validate.password.getCss(registerForm)">
+    <label for="password" class="col-sm-2 control-label">Password</label>
+    <div class="col-sm-4">
+      <div class="input-group">
+        <input type="password" class="form-control" id="password" name="password" placeholder="Password" ng-model="vm.user.password" required>
+        <span class="input-group-addon">
+          <i ng-class="vm.validate.password.getInputCss(registerForm)"></i>
+        </span>
+      </div>
+      <span class="help-block col-md-offset-1" ng-show="vm.validate.password.isMissing(registerForm)">Password is required</span>
+    </div>
+    <div class="col-sm-4">
+      <div class="input-group">
+        <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm Password" ng-model="vm.user.confirmPassword"
+        required compare-to="vm.user.password">
+        <span class="input-group-addon">
+          <i ng-class="vm.validate.confirmPassword.getInputCss(registerForm)"></i>
+        </span>
+      </div>
+      <span class="help-block col-md-offset-1" ng-show="!vm.validate.confirmPassword.passwordsMatch(registerForm)">Passwords must match.</span>
+    </div>
+  </div>
+
+  <!-- names -->
+  <div class="form-group has-feedback" ng-class="vm.validate.name.getCss(registerForm)">
+    <label for="firstName" class="col-sm-2 control-label">Name</label>
+    <div class="col-sm-4">
+      <div class="input-group">
+        <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First" ng-model="vm.user.name.first" required>
+        <span class="input-group-addon">
+          <i ng-class="vm.validate.firstName.getInputCss(registerForm)"></i>
+        </span>
+      </div>
+      <span class="help-block col-md-offset-1" ng-show="vm.validate.firstName.isMissing(registerForm)">First name is required.</span>
+    </div>
+    <div class="col-sm-1">
+      <input type="text" class="form-control ignore-padding-right" name="middleName" placeholder="M." ng-model="vm.user.name.middle" maxlength="1">
+    </div>
+    <div class="col-sm-4">
+      <div class="input-group">
+        <input type="text" class="form-control" name="lastName" placeholder="Last" ng-model="vm.user.name.last" required>
+        <span class="input-group-addon">
+          <i ng-class="vm.validate.lastName.getInputCss(registerForm)"></i>
+        </span>
+      </div>
+      <span class="help-block col-md-offset-1" ng-show="vm.validate.lastName.isMissing(registerForm)">Last name is required.</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-2 col-md-offset-4">
+      <a type="button" class="btn btn-default form-control" href ui-sref="home">Cancel</a>
+    </div>
+    <div class="col-sm-2">
+      <button type="submit" class="btn btn-primary form-control">Register</button>
+    </div>
+  </div>
+</form>

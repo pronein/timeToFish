@@ -15,7 +15,7 @@
     }
 
     function isAuthenticated() {
-      return userService.isAuthenticated();
+      return userService.user.isAuthenticated;
     }
     
     function calculateBrandTitle() {

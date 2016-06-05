@@ -5,32 +5,52 @@ var Role = mongoose.model('Role');
 var Permission = mongoose.model('Permission');
 var MenuItem = mongoose.model('MenuItem');
 
+/*
+ * Model Definition
+ */
+
 var UserSchema = new Schema({
   username: String,
-  firstName: String,
-  lastName: String,
-  middleName: String,
-  passwordHash: String,
-  email: String,
+  email: {type: String, lowercase: true},
+  name: {
+    first: String,
+    middle: String,
+    last: String
+  },
+  password: {
+    salt: String,
+    hash: String
+  },
   roles: [{type: Schema.Types.ObjectId, ref: 'Role'}]
 });
+
+/*
+ * Indexes
+ */
 
 UserSchema.index({username: 1}, {unique: true});
 UserSchema.index({email: 1}, {unique: true});
 
-UserSchema.pre('save', pre_save);
+/*
+ * Statics
+ */
 
-UserSchema.post('findById', post_load);
-UserSchema.post('findOne', post_load);
+UserSchema.statics.usernameExists = _usernameExists;
+
+/*
+ * Register Model
+ */
 
 mongoose.model('User', UserSchema);
 
-function pre_save(next) {
-  this.email = this.email.toLowerCase();
-  next();
-}
+/*
+ * Internals
+ */
 
-function post_load(user) {
-  if (user) {
-  }
+function _usernameExists(username, callback) {
+  return this.findOne({
+    username: new RegExp('^' + username + '$', 'i')
+  }, function (err, user) {
+    callback(err, user ? true : false);
+  });
 }

@@ -8,5 +8,11 @@ module.exports = {
       stream: process.stdout,
       level: 'trace'
     }]
+  },
+  crypto: {
+    digest: 'sha256',
+    saltLen: 256,
+    keyLen: 256,
+    stretch: 1000
   }
 };

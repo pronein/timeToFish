@@ -12,6 +12,11 @@ router.get('/*', function (req, res) {
       '/javascripts/ttf.app.module.js',
       '/javascripts/ttf.app.config.js',
 
+      '/javascripts/auxiliary/focus/ttf.focus-on-events.directive.js',
+      '/javascripts/auxiliary/focus/ttf.focus.service.js',
+      
+      '/javascripts/auxiliary/compareTo/ttf.compare-to.directive.js',
+
       '/javascripts/auth/ttf.session.module.js',
       '/javascripts/auth/ttf.session-profile.controller.js',
       '/javascripts/auth/ttf.session-profile.directive.js',
@@ -30,7 +35,13 @@ router.get('/*', function (req, res) {
       '/javascripts/prepare/ttf.prepare-checklist-item.controller.js',
       '/javascripts/prepare/ttf.prepare-checklist-item.directive.js',
       '/javascripts/prepare/ttf.user-checklists.controller.js',
-      '/javascripts/prepare/ttf.user-checklists.directive.js'
+      '/javascripts/prepare/ttf.user-checklists.directive.js',
+
+      '/javascripts/user/ttf.user.module.js',
+      '/javascripts/user/ttf.user.config.js',
+      '/javascripts/user/ttf.user-register.controller.js',
+      '/javascripts/user/ttf.user-register.directive.js',
+      '/javascripts/user/username/ttf.username-validation.directive.js'
     ],
     styles: [
       '/stylesheets/main.css',

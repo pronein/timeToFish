@@ -1,4 +1,4 @@
-(function(ng) {
+(function (ng) {
   'use strict';
 
   var inject = ['restBase'];
@@ -26,15 +26,17 @@
     return service;
 
     function registerUser(userModel) {
-      alert('registering...');
+      alert('registering account for ' + userModel.username);
     }
 
     function doesUsernameAlreadyExist(username) {
       console.log('checking if username (' + username + ') already exists...');
+
+      return restBase.post(restBase.urls.validateUsername, {username: username});
     }
 
     function loadMenu(stateName) {
-      var request = restBase.get(restBase.urls.getUserMenuFor, { ownerState: stateName });
+      var request = restBase.get(restBase.urls.getUserMenuFor, {ownerState: stateName});
       return _handleMenuResponse(request);
     }
 
@@ -49,11 +51,11 @@
 
     function logOut() {
       return restBase.post(restBase.urls.logout)
-        .then(function(response) {
+        .then(function (response) {
 
-        }).catch(function(error) {
+        }).catch(function (error) {
 
-        }).finally(function() {
+        }).finally(function () {
           _isAuthenticated = false;
         });
     }
@@ -71,23 +73,23 @@
     }
 
     function _handleUserResponse(request) {
-      return request.then(function(response) {
+      return request.then(function (response) {
         if (response.status === 200) {
           _setUser(response.data);
           _isAuthenticated = true;
         }
-      }).catch(function(err) {
+      }).catch(function (err) {
         console.log('_handleUserResponse: ' + err);
         _isAuthenticated = false;
       });
     }
 
     function _handleMenuResponse(request) {
-      return request.then(function(response) {
+      return request.then(function (response) {
         if (response.status === 200) {
           _setMenu(response.data);
         }
-      }).catch(function(err) {
+      }).catch(function (err) {
         console.log('_handleMenuResponse: ' + err);
       });
     }

@@ -29,7 +29,7 @@
     function post(urlPath, payload) {
       var options = setupRestCall(urlPath, 'POST');
 
-      options.data = payload;
+      options.data = ng.toJson(payload);
 
       return callRestTarget(options);
     }
@@ -51,20 +51,24 @@
       };
     }
 
-    function callRestTarget(options){
-      return $http(options);
+    function callRestTarget(options) {
+      return $http(options)
+        .then(function (response) {
+          return response.data;
+        });
     }
 
     RestBaseService.prototype.urls = {
       authenticate: '/api/authenticate',
       logout: '/api/authenticate/release',
-      getUserMenuFor: '/api/users/current/menu'
+      getUserMenuFor: '/api/users/current/menu',
+      validateUsername: '/api/users/usernameExists'
     };
   }
 
   restBaseProvider.$inject = providerInject;
 
   ng.module('ttfApp')
-      .provider('restBase', restBaseProvider);
+    .provider('restBase', restBaseProvider);
 
 })(window.angular);

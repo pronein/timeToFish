@@ -12,4 +12,6 @@ router.post('/', userController.create);
 
 router.get('/current/menu', menuItemController.getMenu);
 
+router.post('/usernameExists', userController.validateUsername);
+
 module.exports = router;

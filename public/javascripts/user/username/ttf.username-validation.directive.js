@@ -5,26 +5,26 @@
   function usernameValidation($q, userService) {
     return {
       require: 'ngModel',
-      link: function(scope, element, attrs, ngModelCtrl) {
-        ngModelCtrl.$asyncValidators.username = function(modelUsername, viewUsername) {
-          console.log('modelUsername: ' + modelUsername);
-          console.log('viewUsername: ' + viewUsername);
-          
-          if(ngModelCtrl.$isEmpty(modelUsername)){
+      link: function (scope, element, attrs, ngModelCtrl) {
+        ngModelCtrl.$asyncValidators.username = function (modelUsername) {
+          if (ngModelCtrl.$isEmpty(modelUsername)) {
             return $q.when();
           }
 
-          var def = $q.defer();
+          var verificationDeferment = $q.defer();
 
           userService.validateUsername(modelUsername)
-            .then(function(isValid) {
-              isValid ? def.resolve() : def.reject();
-            }, function(err) {
+            .then(function (isValid) {
+              isValid ?
+                verificationDeferment.resolve() :
+                verificationDeferment.reject();
+            })
+            .catch(function (err) {
               console.log(err);
-              def.reject();
+              verificationDeferment.reject();
             });
 
-          return def;
+          return verificationDeferment.promise;
         }
       }
     }

@@ -23,6 +23,7 @@
         getCss: _getCssForUsernameValidity,
         getInputCss: _getCssForUsernameInputValidity,
         isValid: _usernameIsValid,
+        isUnavailable: _usernameIsUnavailable,
         isQuerying: _usernameIsQuerying,
         isMissing: _usernameIsMissing
       },
@@ -95,7 +96,7 @@
     }
 
     function _usernameIsQuerying(form) {
-      return _shouldValidate(form, 'username') && 
+      return _shouldValidate(form, 'username') &&
         !form.username.$error.required &&
         form.username.$pending;
     }

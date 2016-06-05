@@ -5,7 +5,8 @@ var log = require('../auxiliary/logger');
 
 module.exports = {
   create: createUser,
-  setSessionUser: setSessionUser
+  setSessionUser: setSessionUser,
+  validateUsername: validateUsernameIsAvailable
 };
 
 function createUser(req, res, next) {
@@ -37,4 +38,15 @@ function setSessionUser(req, res, next) {
   } else {
     next();
   }
+}
+
+function validateUsernameIsAvailable(req, res, next) {
+  User.usernameExists(req.body.username, function (err, exists) {
+    if (err) {
+      log.error({err: err}, 'Error trying to validate username is available.');
+
+      res.status(500).json({msg: err.msg});
+    } else
+      res.send(!exists);
+  });
 }

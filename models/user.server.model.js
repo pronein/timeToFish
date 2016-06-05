@@ -20,8 +20,7 @@ UserSchema.index({email: 1}, {unique: true});
 
 UserSchema.pre('save', pre_save);
 
-UserSchema.post('findById', post_load);
-UserSchema.post('findOne', post_load);
+UserSchema.statics.usernameExists = usernameExists;
 
 mongoose.model('User', UserSchema);
 
@@ -30,7 +29,10 @@ function pre_save(next) {
   next();
 }
 
-function post_load(user) {
-  if (user) {
-  }
+function usernameExists(username, callback) {
+  return this.findOne({
+    username: new RegExp('^' + username + '$', 'i')
+  }, function(err, user) {
+    callback(err, user ? true : false);
+  });
 }

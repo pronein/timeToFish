@@ -9,13 +9,14 @@
     <div class="col-sm-4">
       <div class="input-group">
         <input type="text" class="form-control" id="username" name="username"
-               placeholder="Username" ng-model="vm.user.username" required username>
+               placeholder="Username" ng-model="vm.user.username" required username
+               ng-model-options="{updateOn: 'default blur', debounce: {default: 1000, blur: 0} }">
         <span class="input-group-addon">
           <i ng-class="vm.validate.username.getInputCss(registerForm)"></i>
         </span>
       </div>
       <span class="help-block col-md-offset-1" ng-show="vm.validate.username.isMissing(registerForm)">Username is required.</span>
-      <span class="help-block col-md-offset-1" ng-hide="vm.validate.username.isValid(registerForm)">Username is unavailable.</span>
+      <span class="help-block col-md-offset-1" ng-show="vm.validate.username.isUnavailable(registerForm)">Username is unavailable.</span>
       <span class="help-block col-md-offset-1" ng-show="vm.validate.username.isQuerying(registerForm)">Verifying username...</span>
     </div>
   </div>

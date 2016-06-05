@@ -9,6 +9,7 @@ var session = require('express-session');
 var indexRoutes = require('./routes/index');
 var userRoutes = require('./routes/users');
 var authRoutes = require('./routes/auth');
+var permissionRoutes = require('./routes/permissions');
 
 var userController = require('./controllers/user.server.controller');
 
@@ -51,6 +52,7 @@ app.use(userController.setSessionUser);
 // API
 app.use('/api/authenticate', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/permissions', permissionRoutes);
 
 // Main Page
 app.use('/', indexRoutes);

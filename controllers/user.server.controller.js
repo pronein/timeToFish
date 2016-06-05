@@ -19,14 +19,20 @@ function createUser(req, res, next) {
     salt: generatedSalt,
     hash: generatedHash
   };
-  
+
   user.save(function (err) {
     if (err) {
       log.error({err: err}, 'Error during creation of user.');
 
       res.status(500).json({msg: 'Failed to create new user.'});
-    } else
-      res.send(user);
+    } else {
+      req.login(user, function (err) {
+        if (err)
+          return next(err);
+
+        return res.status(201).send(user);
+      });
+    }
   });
 }
 

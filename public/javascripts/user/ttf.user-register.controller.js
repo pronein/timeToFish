@@ -1,9 +1,9 @@
-(function(ng) {
+(function (ng) {
   'use strict';
 
-  var inject = ['userService'];
+  var inject = ['userService', '$state'];
 
-  function UserRegisterController(userService) {
+  function UserRegisterController(userService, $state) {
     var ctrl = this;
 
     ctrl.user = {
@@ -61,7 +61,16 @@
 
     function _registerUser(form) {
       if (form.$valid) {
-        userService.registerNewUser(ctrl.user);
+        userService.registerNewUser(ctrl.user)
+          .then(function () {
+            $state.go('home', {}, {location: 'replace'})
+              .then(function () {
+                console.log('state transition accepted.');
+              })
+              .catch(function () {
+                console.error('state transition rejected.');
+              });
+          });
       }
     }
 
@@ -89,30 +98,22 @@
     }
 
     function _usernameIsMissing(form) {
-      return _shouldValidate(form, 'username') &&
-        !_usernameIsQuerying(form) &&
-        !_usernameIsUnavailable(form) &&
+      return _shouldValidate(form, 'username') && !_usernameIsQuerying(form) && !_usernameIsUnavailable(form) &&
         form.username.$error.required;
     }
 
     function _usernameIsQuerying(form) {
-      return _shouldValidate(form, 'username') &&
-        !form.username.$error.required &&
+      return _shouldValidate(form, 'username') && !form.username.$error.required &&
         form.username.$pending;
     }
 
     function _usernameIsUnavailable(form) {
-      return _shouldValidate(form, 'username') &&
-          !form.username.$error.required &&
-          !form.username.$pending &&
-          form.username.$error.username;
+      return _shouldValidate(form, 'username') && !form.username.$error.required && !form.username.$pending &&
+        form.username.$error.username;
     }
 
     function _usernameIsValid(form) {
-      return _shouldValidate(form, 'username') &&
-        !_usernameIsMissing(form) &&
-        !_usernameIsUnavailable(form) &&
-        !_usernameIsQuerying(form);
+      return _shouldValidate(form, 'username') && !_usernameIsMissing(form) && !_usernameIsUnavailable(form) && !_usernameIsQuerying(form);
     }
 
     /* Email
@@ -134,20 +135,16 @@
 
     function _emailIsMissing(form) {
       return _shouldValidate(form, 'email') &&
-        form.email.$error.required &&
-        !form.email.$error.email;
+        form.email.$error.required && !form.email.$error.email;
     }
 
     function _emailIsValid(form) {
-      return _shouldValidate(form, 'email') &&
-        !form.email.$error.required &&
-        !form.email.$error.email;
+      return _shouldValidate(form, 'email') && !form.email.$error.required && !form.email.$error.email;
     }
 
     function _emailHasFormatError(form) {
       return _shouldValidate(form, 'email') &&
-        form.email.$error.email &&
-        !form.email.$error.required;
+        form.email.$error.email && !form.email.$error.required;
     }
 
     /* Passwords
@@ -182,8 +179,7 @@
     }
 
     function _passwordIsValid(form) {
-      return _shouldValidate(form, 'password') &&
-        !form.password.$error.required;
+      return _shouldValidate(form, 'password') && !form.password.$error.required;
     }
 
     function _passwordIsMissing(form) {
@@ -193,8 +189,7 @@
 
     function _passwordsMatch(form) {
       return (_shouldValidate(form, 'confirmPassword') &&
-        ctrl.user.password === ctrl.user.confirmPassword &&
-        !form.confirmPassword.$error.required) || !_shouldValidate(form, 'confirmPassword');
+        ctrl.user.password === ctrl.user.confirmPassword && !form.confirmPassword.$error.required) || !_shouldValidate(form, 'confirmPassword');
     }
 
     /* Names
@@ -234,8 +229,7 @@
     }
 
     function _firstNameIsValid(form) {
-      return _shouldValidate(form, 'firstName') &&
-        !form.firstName.$error.required;
+      return _shouldValidate(form, 'firstName') && !form.firstName.$error.required;
     }
 
     function _lastNameIsMissing(form) {
@@ -244,8 +238,7 @@
     }
 
     function _lastNameIsValid(form) {
-      return _shouldValidate(form, 'lastName') &&
-        !form.lastName.$error.required;
+      return _shouldValidate(form, 'lastName') && !form.lastName.$error.required;
     }
   }
 

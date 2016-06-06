@@ -40,7 +40,8 @@
         <!-- Add Permission -->
         <div class="form-group">
           <div class="col-sm-offset-9 col-sm-3">
-            <button type="submit" class="btn btn-primary form-control" ng-disabled="!permissionForm.$valid">Add</button>
+            <button type="submit" class="btn btn-primary form-control"
+                    ng-disabled="!permissionForm.$valid">Add</button>
           </div>
         </div>
       </form>
@@ -61,12 +62,8 @@
       <h1 class="panel-title">Category Filter</h1>
     </div>
     <div class="panel-body">
-      <a href><span class="badge">All</span></a>
-      <a href><span class="badge">Category a</span></a>
-      <a href><span class="badge badge-primary">Category b</span></a>
-      <a href><span class="badge">Category c</span></a>
-      <a href><span class="badge badge-primary">Category d</span></a>
-      <a href><span class="badge">Category e</span></a>
+      <a class="_category" href ng-click="vm.toggleCategory($event)"><span class="badge">all</span></a>
+      <a class="_category" href ng-repeat="category in vm.getCategories()" ng-click="vm.toggleCategory($event)"><span class="badge">{{category}}</span></a>
     </div>
   </div>
 

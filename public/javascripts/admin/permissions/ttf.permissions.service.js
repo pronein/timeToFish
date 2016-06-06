@@ -5,8 +5,8 @@
   function PermissionsService(restBase) {
     var service = this;
 
-    service.getAllPermissions = _getAllPermissions;
-    service.getAllCategories = _getAllCategories;
+    service.getPermissions = _getAllPermissions;
+    service.getCategories = _getAllCategories;
     service.insertNewPermission = _insertNewPermission;
 
     function _insertNewPermission(permission) {

@@ -26,6 +26,7 @@
     ctrl.removeCategory = _removeCategory;
     ctrl.refresh = _refresh;
     ctrl.addNewPermission = _addNewPermission;
+    ctrl.toggleCategory = _toggleCategory;
 
     _init();
 
@@ -34,14 +35,31 @@
     }
 
     function _refresh() {
-      _values.permissions = permissionsService.getAllPermissions();
-      _values.categories = permissionsService.getAllCategories();
+      _values.permissions = permissionsService.getPermissions();
+      permissionsService.getCategories()
+        .then(function(categories) {
+          _values.categories = categories;
+          console.log('categories: ' + _values.categories);
+        })
+        .catch(function(err) {
+          console.log('failed to retrieve categories: ' + err.status + ' ' + err.statusText);
+        })
     }
 
+    function _toggleCategory(event) {
+      ng.element(event.target).toggleClass('badge-primary');
+    }
+    
     function _addNewPermission() {
       permissionsService.insertNewPermission(ctrl.newPermission)
         .then(function() {
+          ctrl.newPermission.name = '';
+          ctrl.newPermission.description = '';
+          ctrl.newPermission.category = '';
+
           _refresh();
+
+          ng.element('#name').focus();
         });
     }
     

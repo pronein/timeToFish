@@ -13,7 +13,7 @@
       removeSuccess: false,
       insertSuccess: false
     };
-    
+
     ctrl.newPermission = {
       name: '',
       description: '',
@@ -34,32 +34,64 @@
       _refresh();
     }
 
-    function _refresh() {
-      permissionsService.getPermissions()
-        .then(function(permissions) {
-          _values.permissions = permissions;
-          console.log('permissions: ' + _values.permissions);
-        })
-        .catch(function(err) {
-          console.log('failed to retrieve permissions: ' + err.status + ' ' + err.statusText);
-        });
+    function _refresh(selectedCategories) {
       permissionsService.getCategories()
-        .then(function(categories) {
-          _values.categories = categories;
+        .then(function (categories) {
+          _values.categories = categories.map(function (cat) {
+            var isSelected = !selectedCategories || (selectedCategories.indexOf(cat) > -1 && true);
+            return {
+              name: cat,
+              selected: isSelected
+            };
+          });
           console.log('categories: ' + _values.categories);
+
+          var filteredCategories = _values.categories
+            .filter(function (cat) {
+              return cat.selected;
+            }).map(function (cat) {
+              return cat.name;
+            });
+
+          if(!filteredCategories.length) filteredCategories.push(null);
+
+          permissionsService.getPermissionsByCategoryFilter(filteredCategories)
+            .then(function (permissions) {
+              _values.permissions = permissions;
+              console.log('permissions: ' + _values.permissions);
+            })
+            .catch(function (err) {
+              console.log('failed to retrieve permissions: ' + err.status + ' ' + err.statusText);
+            });
         })
-        .catch(function(err) {
+        .catch(function (err) {
           console.log('failed to retrieve categories: ' + err.status + ' ' + err.statusText);
         })
     }
 
     function _toggleCategory(event) {
       ng.element(event.target).toggleClass('badge-primary');
+
+      if(event.target.innerHTML === 'all')
+        ng.element('.badge').addClass('badge-primary');
+      
+      _filterPermissionsByCategories();
     }
-    
+
+    function _filterPermissionsByCategories() {
+      var selectedCategories = ng.element('.badge.badge-primary');
+      selectedCategories = selectedCategories
+        .toArray()
+        .map(function (elem) {
+          return elem.innerHTML;
+        });
+
+      _refresh(selectedCategories);
+    }
+
     function _addNewPermission() {
       permissionsService.insertNewPermission(ctrl.newPermission)
-        .then(function() {
+        .then(function () {
           ctrl.newPermission.name = '';
           ctrl.newPermission.description = '';
           ctrl.newPermission.category = '';
@@ -69,7 +101,7 @@
           ng.element('#name').focus();
         });
     }
-    
+
     function _getPermissions() {
       return _values.permissions;
     }
@@ -84,7 +116,7 @@
 
     function _removePermission(permission) {
       permissionsService.removePermission(permission.name)
-        .then(function() {
+        .then(function () {
           _refresh();
         });
     }

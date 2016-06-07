@@ -63,7 +63,9 @@
     </div>
     <div class="panel-body">
       <a class="_category" href ng-click="vm.toggleCategory($event)"><span class="badge">all</span></a>
-      <a class="_category" href ng-repeat="category in vm.getCategories()" ng-click="vm.toggleCategory($event)"><span class="badge">{{category}}</span></a>
+      <a class="_category" href ng-repeat="category in vm.getCategories()" ng-click="vm.toggleCategory($event)">
+        <span class="badge" ng-class="{'badge-primary':category.selected}">{{category.name}}</span>
+      </a>
     </div>
   </div>
 

@@ -79,45 +79,13 @@
       <h1 class="panel-title">Permissions</h1>
     </div>
     <ul class="list-group">
-      <li class="list-group-item">
-        <a class="pull-left" href>
+      <li class="list-group-item" ng-repeat="permission in vm.getPermissions()">
+        <a class="pull-left" href ng-click="vm.removePermission(permission)">
           <span class="glyphicon glyphicon-remove"></span>
         </a>
-        <strong class="text-uppercase col-sm-offset-1">Permission 1</strong>
-        <span class="badge pull-right">category a</span>
-        <div class="small col-sm-offset-2">description 1: this one talks about the first permission and what it does,
-          briefly
-        </div>
-      </li>
-      <li class="list-group-item">
-        <a class="pull-left" href>
-          <span class="glyphicon glyphicon-remove"></span>
-        </a>
-        <strong class="text-uppercase col-sm-offset-1">Permission 1</strong>
-        <span class="badge pull-right">category a</span>
-        <div class="small col-sm-offset-2">description 1: this one talks about the first permission and what it does,
-          briefly
-        </div>
-      </li>
-      <li class="list-group-item">
-        <a class="pull-left" href>
-          <span class="glyphicon glyphicon-remove"></span>
-        </a>
-        <strong class="text-uppercase col-sm-offset-1">Permission 1</strong>
-        <span class="badge pull-right">category a</span>
-        <div class="small col-sm-offset-2">description 1: this one talks about the first permission and what it does,
-          briefly
-        </div>
-      </li>
-      <li class="list-group-item">
-        <a class="pull-left" href>
-          <span class="glyphicon glyphicon-remove"></span>
-        </a>
-        <strong class="text-uppercase col-sm-offset-1">Permission 1</strong>
-        <span class="badge pull-right">category a</span>
-        <div class="small col-sm-offset-2">description 1: this one talks about the first permission and what it does,
-          briefly
-        </div>
+        <strong class="text-uppercase col-sm-offset-1">{{permission.name}}</strong>
+        <span class="badge pull-right">{{permission.category}}</span>
+        <div class="small col-sm-offset-2">{{permission.description}}</div>
       </li>
     </ul>
   </div>

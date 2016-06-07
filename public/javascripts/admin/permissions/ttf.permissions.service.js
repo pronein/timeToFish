@@ -8,6 +8,7 @@
     service.getPermissions = _getAllPermissions;
     service.getCategories = _getAllCategories;
     service.insertNewPermission = _insertNewPermission;
+    service.removePermission = _removePermission;
 
     function _insertNewPermission(permission) {
       console.log('Attempting to insert a new permission...');
@@ -23,12 +24,18 @@
       console.log('Getting all categories...');
       return restBase.get(service.uris.getAllCategories, true);
     }
+
+    function _removePermission(permissionName) {
+      console.log('Removing permission (' + permissionName + ')...');
+      return restBase.delete(service.uris.removePermissionByName, {name: permissionName});
+    }
   }
 
   PermissionsService.prototype.uris = {
     getAllPermissions: '/api/permissions',
     getAllCategories: '/api/permissions/categories',
-    insertPermission: '/api/permissions'
+    insertPermission: '/api/permissions',
+    removePermissionByName: '/api/permissions/:name'
   };
 
   PermissionsService.$inject = inject;

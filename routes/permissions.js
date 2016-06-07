@@ -7,7 +7,17 @@ module.exports = router;
 
 /* Routes */
 
+router.param('name', function(req, res, next, name) {
+  req.permissionParams = {
+    name: name
+  };
+  
+  next();
+});
+
 router.get('/', permissionsController.getAllPermissions);
 router.post('/', permissionsController.createPermission);
 
 router.get('/categories', permissionsController.getAllCategories);
+
+router.delete('/:name', permissionsController.deletePermission);

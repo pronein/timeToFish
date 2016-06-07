@@ -35,7 +35,14 @@
     }
 
     function _refresh() {
-      _values.permissions = permissionsService.getPermissions();
+      permissionsService.getPermissions()
+        .then(function(permissions) {
+          _values.permissions = permissions;
+          console.log('permissions: ' + _values.permissions);
+        })
+        .catch(function(err) {
+          console.log('failed to retrieve permissions: ' + err.status + ' ' + err.statusText);
+        });
       permissionsService.getCategories()
         .then(function(categories) {
           _values.categories = categories;
@@ -75,8 +82,11 @@
       alert('removing category id #' + categoryId + '...');
     }
 
-    function _removePermission(permissionId) {
-      alert('removing permission id #' + permissionId + '...');
+    function _removePermission(permission) {
+      permissionsService.removePermission(permission.name)
+        .then(function() {
+          _refresh();
+        });
     }
   }
 

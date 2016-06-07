@@ -23,10 +23,11 @@
   }
 
   function RestBaseService($http, baseUrl) {
-    this.post = post;
-    this.get = get;
+    this.post = _post;
+    this.get = _get;
+    this.delete = _delete;
 
-    function post(urlPath, payload, responseOnly) {
+    function _post(urlPath, payload, responseOnly) {
       var options = setupRestCall(urlPath, 'POST');
 
       options.data = ng.toJson(payload);
@@ -34,7 +35,7 @@
       return callRestTarget(options, responseOnly);
     }
 
-    function get(urlPath, paramsObj, responseOnly) {
+    function _get(urlPath, paramsObj, responseOnly) {
       var options = setupRestCall(urlPath, 'GET');
 
       if (paramsObj === true)
@@ -45,7 +46,17 @@
       return callRestTarget(options, responseOnly);
     }
 
-    function setupRestCall(url, method) {
+    function _delete(urlPath, iParams) {
+      var options = setupRestCall(urlPath, 'DELETE', iParams);
+
+      return callRestTarget(options);
+    }
+
+    function setupRestCall(url, method, iParams) {
+      url = url.replace(/:(\w+)/gi, function(match, prop) {
+        return iParams[prop];
+      });
+
       return {
         url: baseUrl + url,
         method: method,

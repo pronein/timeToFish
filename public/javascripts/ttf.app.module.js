@@ -5,7 +5,8 @@
     'ttfSession',
     'ui.router',
     'ttfPrepare',
-    'angularCSS'
+    'angularCSS',
+    'ttfPermissions'
   ];
 
   ng.module('ttfApp', dependencies);

@@ -20,7 +20,8 @@ module.exports = {
         }
     },
     "files": [
-      'public/stylesheets/*.css'
+      'public/stylesheets/*.css',
+      'public/**/*.html'
     ],
     "watchOptions": {},
     "server": false,

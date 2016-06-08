@@ -1,10 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var Role = mongoose.model('Role');
-var Permission = mongoose.model('Permission');
-var MenuItem = mongoose.model('MenuItem');
-
 /*
  * Model Definition
  */

@@ -25,24 +25,38 @@
   function RestBaseService($http, baseUrl) {
     this.post = post;
     this.get = get;
+    this.delete = remove;
 
     function post(urlPath, payload, responseOnly) {
-      var options = setupRestCall(urlPath, 'POST');
+      var options = _setupRestCall(urlPath, 'POST');
 
       options.data = ng.toJson(payload);
 
-      return callRestTarget(options, responseOnly);
+      return _callRestTarget(options, responseOnly);
     }
 
-    function get(urlPath, paramsObj) {
-      var options = setupRestCall(urlPath, 'GET');
+    function get(urlPath, paramsObj, responseOnly) {
+      var options = _setupRestCall(urlPath, 'GET');
 
-      options.params = paramsObj;
+      if (paramsObj === true)
+        responseOnly = true;
+      else if (paramsObj)
+        options.params = paramsObj;
 
-      return callRestTarget(options);
+      return _callRestTarget(options, responseOnly);
     }
 
-    function setupRestCall(url, method) {
+    function remove(urlPath, iParams) {
+      var options = _setupRestCall(urlPath, 'DELETE', iParams);
+
+      return _callRestTarget(options);
+    }
+
+    function _setupRestCall(url, method, iParams) {
+      url = url.replace(/:(\w+)/gi, function(match, prop) {
+        return iParams[prop];
+      });
+
       return {
         url: baseUrl + url,
         method: method,
@@ -51,11 +65,11 @@
       };
     }
 
-    function callRestTarget(options, responseOnly) {
+    function _callRestTarget(options, responseOnly) {
       return $http(options)
         .then(function (response) {
           console.info(options.method.toUpperCase() + ' ' + options.url + ' ' + response.status);
-          
+
           return responseOnly ? response.data : response;
         });
     }

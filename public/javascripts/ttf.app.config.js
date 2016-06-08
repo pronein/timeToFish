@@ -17,6 +17,10 @@
       .state('home', {
         url: '/',
         template: '<div>Home</div>'
+      })
+      .state('temp', {
+        url: '/temp',
+        template: '<permissions></permissions>'
       });
 
     function buildEnvironmentConfigOptions() {

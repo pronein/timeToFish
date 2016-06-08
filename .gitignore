@@ -6,4 +6,5 @@ logs/*.log
 *.css
 *.map
 *.min.*
+*site.angular.js
 public/images/timetofish.png

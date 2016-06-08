@@ -4,9 +4,11 @@
     <meta charset="utf-8">
 
     <title><%= title %></title>
+
     <% for(var i= 0; i < styles.length; i++) { %>
     <link rel="stylesheet" href="<%= styles[i] %>" />
     <% } %>
+
     <base href="/">
   </head>
   <body ng-app="ttfApp">
@@ -16,13 +18,8 @@
 
     <% include footer %>
 
-    <% for(var i = 0; i < javascripts.length; i++) { %>
-    <script type="text/javascript" src="<%= javascripts[i] %>"></script>
-    <% } %>
-
-    <% for(var i = 0; i < angularAppScripts.length; i++) { %>
-    <script type="text/javascript" src="<%= angularAppScripts[i] %>"></script>
-    <% } %>
+    <script type="text/javascript" src="/javascripts/vendor.min.js"></script>
+    <script type="text/javascript" src="javascripts/site.angular.js"></script>
 
     <script id="__bs_script__">
       //<![CDATA[

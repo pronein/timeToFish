@@ -3,9 +3,7 @@ var gulp = require('gulp'),
   uglify = require('gulp-uglify'),
   concat = require('gulp-concat');
 
-gulp.task('default', function () {
-
-});
+gulp.task('default',['minify', 'make-debug-site']);
 
 gulp.task('minify', function () {
   gulp.src([
@@ -18,5 +16,17 @@ gulp.task('minify', function () {
     'public/bower_components/angular-css/angular-css.js'
   ]).pipe(concat('vendor.min.js'))
     .pipe(uglify())
+    .pipe(gulp.dest('public/javascripts/'));
+});
+
+gulp.task('make-debug-site', function() {
+  gulp.src([
+    'public/javascripts/**/*.module.js',
+    'public/javascripts/**/*.config.js',
+    'public/javascripts/**/*.service.js',
+    'public/javascripts/**/*.controller.js',
+    'public/javascripts/**/*.directive.js',
+    'public/javascripts/**/*.provider.js'
+  ]).pipe(concat('site.angular.js'))
     .pipe(gulp.dest('public/javascripts/'));
 });

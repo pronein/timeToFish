@@ -1,7 +1,7 @@
 (function (ng) {
 
-  var dependencies = [];
+  var dependencies = ['angularCSS'];
 
-  ng.module('ttfPermissions', dependencies)
+  ng.module('ttfPermissions', dependencies);
 
 })(window.angular);

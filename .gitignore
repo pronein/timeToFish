@@ -6,3 +6,4 @@ logs/*.log
 *.css
 *.map
 *.min.*
+public/images/timetofish.png

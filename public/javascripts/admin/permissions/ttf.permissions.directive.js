@@ -6,7 +6,7 @@
     return {
       restrict: 'E',
       controller: 'PermissionsController',
-      controllerAs: 'vm',
+      controllerAs: 'ctrl',
       templateUrl: 'javascripts/admin/permissions/views/permissions.html',
       css: 'stylesheets/permissions.css'
     }

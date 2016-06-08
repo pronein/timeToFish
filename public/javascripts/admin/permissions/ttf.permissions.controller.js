@@ -1,130 +1,90 @@
 (function (ng) {
 
-  var inject = ['permissionsService'];
+  var inject = ['permissionsService', '$timeout'];
 
-  function permissionsController(permissionsService) {
-    var ctrl = this,
-      _values = {
-        permissions: [],
-        categories: []
-      };
+  function PermissionsController(permissionsService, $timeout) {
+    var ctrl = this;
 
-    ctrl.show = {
+    ctrl.vm = permissionsService.data;
+
+    ctrl.vm.show = {
       removeSuccess: false,
-      insertSuccess: false
+      removeFailed: false,
+      insertSuccess: false,
+      insertFailed: false
     };
 
-    ctrl.newPermission = {
+    ctrl.vm.new = {
       name: '',
       description: '',
       category: ''
     };
 
-    ctrl.getPermissions = _getPermissions;
-    ctrl.getCategories = _getCategories;
-    ctrl.removePermission = _removePermission;
-    ctrl.removeCategory = _removeCategory;
-    ctrl.refresh = _refresh;
-    ctrl.addNewPermission = _addNewPermission;
-    ctrl.toggleCategory = _toggleCategory;
+    ctrl.toggleCategory = toggleCategory;
+    ctrl.addNewPermission = addNewPermission;
+    ctrl.removePermission = removePermission;
 
-    _init();
-
-    function _init() {
-      _refresh();
-    }
-
-    function _refresh(selectedCategories) {
-      permissionsService.getCategories()
-        .then(function (categories) {
-          _values.categories = categories.map(function (cat) {
-            var isSelected = !selectedCategories || (selectedCategories.indexOf(cat) > -1 && true);
-            return {
-              name: cat,
-              selected: isSelected
-            };
-          });
-          console.log('categories: ' + _values.categories);
-
-          var filteredCategories = _values.categories
-            .filter(function (cat) {
-              return cat.selected;
-            }).map(function (cat) {
-              return cat.name;
-            });
-
-          if(!filteredCategories.length) filteredCategories.push(null);
-
-          permissionsService.getPermissionsByCategoryFilter(filteredCategories)
-            .then(function (permissions) {
-              _values.permissions = permissions;
-              console.log('permissions: ' + _values.permissions);
-            })
-            .catch(function (err) {
-              console.log('failed to retrieve permissions: ' + err.status + ' ' + err.statusText);
-            });
-        })
-        .catch(function (err) {
-          console.log('failed to retrieve categories: ' + err.status + ' ' + err.statusText);
-        })
-    }
-
-    function _toggleCategory(event) {
+    function toggleCategory(event) {
       ng.element(event.target).toggleClass('badge-primary');
 
-      if(event.target.innerHTML === 'all')
-        ng.element('.badge').addClass('badge-primary');
-      
       _filterPermissionsByCategories();
     }
 
     function _filterPermissionsByCategories() {
       var selectedCategories = ng.element('.badge.badge-primary');
-      selectedCategories = selectedCategories
-        .toArray()
+      selectedCategories = selectedCategories.toArray()
         .map(function (elem) {
-          return elem.innerHTML;
+          return elem.innerText;
         });
 
-      _refresh(selectedCategories);
+      permissionsService.loadPermissions(selectedCategories);
     }
 
-    function _addNewPermission() {
-      permissionsService.insertNewPermission(ctrl.newPermission)
-        .then(function () {
-          ctrl.newPermission.name = '';
-          ctrl.newPermission.description = '';
-          ctrl.newPermission.category = '';
+    function _resetNewPermissionForm() {
+      ctrl.vm.new.name = '';
+      ctrl.vm.new.description = '';
+      ctrl.vm.new.category = '';
 
-          _refresh();
-
-          ng.element('#name').focus();
-        });
+      ng.element('#name').focus();
     }
 
-    function _getPermissions() {
-      return _values.permissions;
+    function _showOperationStatusMessage(showProperty) {
+      var ctrl = this;
+      ctrl.vm.show[showProperty] = true;
+
+      $timeout(function () {
+        ctrl.vm.show[showProperty] = false;
+      }, 4000);
     }
 
-    function _getCategories() {
-      return _values.categories;
+    function addNewPermission(form) {
+      if (form.$valid) {
+        permissionsService.addPermission(ctrl.vm.new)
+          .then(function () {
+            _showOperationStatusMessage.call(ctrl, 'insertSuccess');
+
+            _resetNewPermissionForm();
+          })
+          .catch(function () {
+            _showOperationStatusMessage.call(ctrl, 'insertFailed');
+          });
+      }
     }
 
-    function _removeCategory(categoryId) {
-      alert('removing category id #' + categoryId + '...');
-    }
-
-    function _removePermission(permission) {
+    function removePermission(permission) {
       permissionsService.removePermission(permission.name)
         .then(function () {
-          _refresh();
+          _showOperationStatusMessage.call(ctrl, 'removeSuccess');
+        })
+        .catch(function () {
+          _showOperationStatusMessage.call(ctrl, 'removeFailed');
         });
     }
   }
 
-  permissionsController.$inject = inject;
+  PermissionsController.$inject = inject;
 
   ng.module('ttfPermissions')
-    .controller('PermissionsController', permissionsController);
+    .controller('PermissionsController', PermissionsController);
 
 })(window.angular);

@@ -15,6 +15,8 @@ var PermissionSchema = new Schema({
  * Indexes
  */
 
+PermissionSchema.index({name: 1}, {unique: true});
+
 /*
  * Statics
  */

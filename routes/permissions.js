@@ -15,7 +15,6 @@ router.param('name', function(req, res, next, name) {
   next();
 });
 
-router.get('/', permissionsController.getAllPermissions);
 router.get('/', permissionsController.getPermissionsByCategoryFilter);
 router.post('/', permissionsController.createPermission);
 

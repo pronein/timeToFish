@@ -23,36 +23,36 @@
   }
 
   function RestBaseService($http, baseUrl) {
-    this.post = _post;
-    this.get = _get;
-    this.delete = _delete;
+    this.post = post;
+    this.get = get;
+    this.delete = remove;
 
-    function _post(urlPath, payload, responseOnly) {
-      var options = setupRestCall(urlPath, 'POST');
+    function post(urlPath, payload, responseOnly) {
+      var options = _setupRestCall(urlPath, 'POST');
 
       options.data = ng.toJson(payload);
 
-      return callRestTarget(options, responseOnly);
+      return _callRestTarget(options, responseOnly);
     }
 
-    function _get(urlPath, paramsObj, responseOnly) {
-      var options = setupRestCall(urlPath, 'GET');
+    function get(urlPath, paramsObj, responseOnly) {
+      var options = _setupRestCall(urlPath, 'GET');
 
       if (paramsObj === true)
         responseOnly = true;
       else if (paramsObj)
         options.params = paramsObj;
 
-      return callRestTarget(options, responseOnly);
+      return _callRestTarget(options, responseOnly);
     }
 
-    function _delete(urlPath, iParams) {
-      var options = setupRestCall(urlPath, 'DELETE', iParams);
+    function remove(urlPath, iParams) {
+      var options = _setupRestCall(urlPath, 'DELETE', iParams);
 
-      return callRestTarget(options);
+      return _callRestTarget(options);
     }
 
-    function setupRestCall(url, method, iParams) {
+    function _setupRestCall(url, method, iParams) {
       url = url.replace(/:(\w+)/gi, function(match, prop) {
         return iParams[prop];
       });
@@ -65,7 +65,7 @@
       };
     }
 
-    function callRestTarget(options, responseOnly) {
+    function _callRestTarget(options, responseOnly) {
       return $http(options)
         .then(function (response) {
           console.info(options.method.toUpperCase() + ' ' + options.url + ' ' + response.status);

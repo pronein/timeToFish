@@ -1,6 +1,128 @@
-<!-- Header -->
 <div class="row">
-  <div class="page-header">
-    <h1>Roles Manager</h1>
+  <div class="col-sm-12">
+    <!-- Header -->
+    <div class="row">
+      <div class="page-header">
+        <h1>Roles Manager</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Left Column: Selected Role -->
+      <div class="col-sm-7">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              Selected Role
+            </h3>
+          </div>
+          <div class="panel-body">
+            <form name="roleForm" class="form-horizontal"
+                  ng-submit="" novalidate>
+              <!-- Name -->
+              <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="name" value="Role 1"
+                         ng-model="ctrl.vm.roleData.name" required>
+                </div>
+              </div>
+
+              <!-- Permissions -->
+              <ttf-roles-permissions-selector></ttf-roles-permissions-selector>
+
+              <!-- Members of Role -->
+              <div class="form-group">
+                <label for="members" class="col-sm-3 control-label">Members</label>
+                <div class="col-sm-9">
+                  <!-- Username -->
+                  <table id="members" class="table table-condensed">
+                    <tbody>
+                    <tr>
+                      <th scope="row"><input type="checkbox"></th>
+                      <td>pronein</td>
+                      <td>Adam J Schrader</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><input type="checkbox"></th>
+                      <td>starguy514</td>
+                      <td>Adam W Schrader</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><input type="checkbox"></th>
+                      <td>prizmatik</td>
+                      <td>Craig Schrader</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><input type="checkbox"></th>
+                      <td>DallasFan</td>
+                      <td>Jay Franceshina</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Role Options -->
+              <div class="form-group">
+                <div class="col-sm-offset-6 col-sm-6">
+                  <div class="btn-group pull-right">
+                    <button type="submit" class="btn btn-default"
+                            ng-class="{}">Remove
+                    </button>
+                    <button type="submit" class="btn btn-primary"
+                            ng-class="{'btn-primary': permissionForm.$valid, 'btn-default': permissionForm.$invalid}">
+                      Add
+                    </button>
+                    <button type="submit" class="btn btn-default"
+                            ng-class="{}">Update
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Role List -->
+      <div class="col-sm-5">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              Role List
+            </h3>
+          </div>
+
+          <div class="panel-body">
+            <div class="list-group">
+              <a href class="list-group-item active">
+                <span class="badge">4</span>
+                Role 1
+              </a>
+              <a href class="list-group-item">
+                <span class="badge">2</span>
+                Role 2
+              </a>
+              <a href class="list-group-item">
+                <span class="badge">8</span>
+                Role 3
+              </a>
+              <a href class="list-group-item">
+                <span class="badge">0</span>
+                Role 4
+              </a>
+              <a href class="list-group-item">
+                <span class="glyphicon glyphicon-plus pull-right"></span>
+                <i>Add new role...</i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel panel-primary">
+        </div>
+      </div>
+    </div>
   </div>
 </div>

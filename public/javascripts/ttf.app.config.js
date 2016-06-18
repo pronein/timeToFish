@@ -18,9 +18,13 @@
         url: '/',
         template: '<div>Home</div>'
       })
+      .state('permissions', {
+        url: '/permissions',
+        template: '<permissions></permissions>'
+      })
       .state('temp', {
         url: '/temp',
-        template: '<roles></roles>'
+        template: '<roles></roles><permissions></permissions>'
       });
 
     function buildEnvironmentConfigOptions() {

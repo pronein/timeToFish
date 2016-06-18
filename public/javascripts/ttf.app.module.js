@@ -6,7 +6,8 @@
     'ui.router',
     'ttfPrepare',
     'angularCSS',
-    'ttfPermissions'
+    'ttfPermissions',
+    'ttfRoles'
   ];
 
   ng.module('ttfApp', dependencies);

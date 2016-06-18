@@ -3,7 +3,7 @@
   var inject = ['$timeout', 'userService'];
 
   function MenuController($timeout, userService) {
-    var dateOfTrip = moment(new Date('2016-4-30'));
+    var dateOfTrip = moment(new Date('2017-5-02'));
     var ctrl = this;
     ctrl.brandTitle = '';
     ctrl.isAuthenticated = isAuthenticated;

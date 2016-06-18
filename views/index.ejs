@@ -19,7 +19,12 @@
     <% include footer %>
 
     <script type="text/javascript" src="/javascripts/vendor.min.js"></script>
+    <!--
     <script type="text/javascript" src="javascripts/site.angular.js"></script>
+    -->
+    <% for(var i = 0; i < scripts.length; i++) { %>
+    <script type="text/javascript" src="<%= scripts[i] %>"></script>
+    <% } %>
 
     <script id="__bs_script__">
       //<![CDATA[

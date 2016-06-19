@@ -11,12 +11,25 @@
 
     service.loadMembers = loadAllMembers;
 
+    _initializeService();
+
+    function _initializeService(){
+      console.info('service-init-members');
+      
+      service.loadMembers();
+    }
+
     function loadAllMembers() {
-      //TODO: Implement me
+      restBase.get(service.uris.getMemberData, true)
+        .then(function(users) {
+          service.data.members = users;
+        });
     }
   }
 
-  MembersService.prototype.uris = {};
+  MembersService.prototype.uris = {
+    /*GET*/ getMemberData: '/api/users'
+  };
 
   MembersService.$inject = inject;
 

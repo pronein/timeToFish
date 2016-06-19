@@ -13,7 +13,7 @@
     };
   }
 
-  ttfMembersSelector.$inject = inject;
+  ttfMembersSelectorDirective.$inject = inject;
 
   ng.module('ttfMembers')
     .directive('ttfMembersSelector', ttfMembersSelectorDirective);

@@ -20,7 +20,7 @@
     _initializeService();
 
     function _initializeService() {
-      console.info('service-init');
+      console.info('service-init-permissions');
 
       _refresh();
     }

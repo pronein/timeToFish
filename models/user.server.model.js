@@ -20,12 +20,24 @@ var UserSchema = new Schema({
   roles: [{type: Schema.Types.ObjectId, ref: 'Role'}]
 });
 
+UserSchema.set('toJSON', {virtuals: true});
+
 /*
  * Indexes
  */
 
 UserSchema.index({username: 1}, {unique: true});
 UserSchema.index({email: 1}, {unique: true});
+
+/*
+ * Virtuals
+ */
+
+UserSchema.virtual('name.full').get(function () {
+  return _toPascalCase(this.name.first) +
+    (this.name.middle ? ' ' + _toPascalCase(this.name.middle[0]) + '. ' : ' ') +
+    _toPascalCase(this.name.last);
+});
 
 /*
  * Statics
@@ -49,4 +61,11 @@ function _usernameExists(username, callback) {
   }, function (err, user) {
     callback(err, user ? true : false);
   });
+}
+
+function _toPascalCase(word) {
+  if (!word || !word.length) return word;
+  if (word.length === 1) return word.toUpperCase();
+
+  return word[0].toUpperCase() + word.substr(1);
 }

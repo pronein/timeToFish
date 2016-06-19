@@ -7,7 +7,8 @@ var hasher = require('../auxiliary/hasher');
 module.exports = {
   create: createUser,
   setSessionUser: setSessionUser,
-  validateUsername: validateUsernameIsAvailable
+  validateUsername: validateUsernameIsAvailable,
+  getAllUsers: getAllUsers
 };
 
 function createUser(req, res, next) {
@@ -62,4 +63,18 @@ function validateUsernameIsAvailable(req, res, next) {
     } else
       res.send(!exists);
   });
+}
+
+function getAllUsers(req, res, next){
+  User
+    .find()
+    .populate('roles')
+    .exec(function(err, users){
+      if(err){
+        log.error({err: err}, 'Error trying to retrieve all users.');
+
+        res.status(500).json({msg: err.msg});
+      } else
+        res.send(users);
+    });
 }

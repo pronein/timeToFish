@@ -9,8 +9,8 @@
                  ng-checked="ctrl.isMemberChecked(member.username)"
                  ng-click="ctrl.onMemberClicked($event)">
         </th>
-        <td>{{member.username}}</td>
-        <td>{{member.fullname}}</td>
+        <td><strong>{{member.username}}</strong></td>
+        <td>{{member.name.full}}</td>
       </tr>
       </tbody>
     </table>

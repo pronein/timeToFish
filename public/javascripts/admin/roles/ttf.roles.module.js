@@ -1,6 +1,9 @@
 (function (ng) {
 
-  var dependencies = ['ttfPermissions'];
+  var dependencies = [
+    'ttfPermissions',
+    'ttfMembers'
+  ];
 
   ng.module('ttfRoles', dependencies);
 

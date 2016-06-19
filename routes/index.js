@@ -54,6 +54,8 @@ router.get('/*', function (req, res) {
       roles + '/ttf.roles.service.js',
       roles + '/ttf.roles.controller.js',
       roles + '/ttf.roles.directive.js',
+      roles + '/ttf.roles-selector.controller.js',
+      roles + '/ttf.roles-selector.directive.js',
       permissions + '/ttf.permissions.module.js',
       permissions + '/ttf.permissions.controller.js',
       permissions + '/ttf.permissions.service.js',

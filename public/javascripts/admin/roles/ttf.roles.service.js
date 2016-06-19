@@ -7,7 +7,9 @@
     
     service.data = {
       name: '',
-      permissions: []
+      isDefault: false,
+      permissions: [],
+      members: []
     };
 
     service.loadRoleByName = loadRoleByName;

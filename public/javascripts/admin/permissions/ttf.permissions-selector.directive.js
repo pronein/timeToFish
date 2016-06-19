@@ -7,7 +7,7 @@
       restrict: 'E',
       replace: true,
       scope: true,
-      templateUrl: 'javascripts/admin/permissions/views/partial-roles-permissions-selector.html',
+      templateUrl: 'javascripts/admin/permissions/views/partial-permissions-selector.html',
       controller: 'PermissionsSelectorController',
       controllerAs: 'ctrl'
     }

@@ -31,6 +31,18 @@
               <!-- Permissions -->
               <ttf-permissions-selector></ttf-permissions-selector>
 
+              <!-- Default New Member Role -->
+              <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" id="defaultRole"
+                             ng-model="ctrl.vm.roleData.isDefault">Default role for new members?
+                    </label>
+                  </div>
+                </div>
+              </div>
+
               <!-- Members of Role -->
               <ttf-members-selector></ttf-members-selector>
 

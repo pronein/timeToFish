@@ -2,7 +2,7 @@
 
   var inject = ['permissionsService', 'rolesService'];
 
-  function rolesPermissionsSelectorController(permissionsService, rolesService) {
+  function PermissionsSelectorController(permissionsService, rolesService) {
     var ctrl = this;
 
     ctrl.vm = {
@@ -78,9 +78,9 @@
     }
   }
 
-  rolesPermissionsSelectorController.$inject = inject;
+  PermissionsSelectorController.$inject = inject;
 
   ng.module('ttfRoles')
-    .controller('RolesPermissionsSelectorController', rolesPermissionsSelectorController);
+    .controller('PermissionsSelectorController', PermissionsSelectorController);
 
 })(window.angular);

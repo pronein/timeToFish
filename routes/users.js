@@ -8,6 +8,7 @@ module.exports = router;
 
 /* Routes */
 
+router.get('/', userController.getAllUsers);
 router.post('/', userController.create);
 
 router.get('/current/menu', menuItemController.getMenu);

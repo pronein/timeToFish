@@ -15,10 +15,10 @@
     </ul>
 
     <!-- Tab Panels -->
-    <div class="row well well-sm">
+    <div class="well well-sm">
       <div class="tab-content">
         <div ng-repeat="category in ctrl.vm.categories"
-             class="tab-pane" id="permission_tabpane_{{category}}"
+             class="row tab-pane" id="permission_tabpane_{{category}}"
              ng-class="{active: ctrl.isSelectedCategory(category)}"
              role="tabpanel">
           <!-- Left Column Permissions (odd) -->

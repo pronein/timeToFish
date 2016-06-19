@@ -9,7 +9,8 @@
       replace: true,
       controller: 'RolesController',
       controllerAs: 'ctrl',
-      templateUrl: 'javascripts/admin/roles/views/roles.html'
+      templateUrl: 'javascripts/admin/roles/views/roles.html',
+      css: 'stylesheets/roles.css'
     }
   }
 

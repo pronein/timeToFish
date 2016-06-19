@@ -2,7 +2,8 @@
 
   var dependencies = [
     'ttfPermissions',
-    'ttfMembers'
+    'ttfMembers',
+    'angularCSS'
   ];
 
   ng.module('ttfRoles', dependencies);

@@ -26,6 +26,7 @@
     this.post = post;
     this.get = get;
     this.delete = remove;
+    this.put = put;
 
     function post(urlPath, payload, responseOnly) {
       var options = _setupRestCall(urlPath, 'POST');
@@ -50,6 +51,14 @@
       var options = _setupRestCall(urlPath, 'DELETE', iParams);
 
       return _callRestTarget(options);
+    }
+
+    function put(urlPath, payload, iParams, responseOnly) {
+      var options = _setupRestCall(urlPath, 'PUT', iParams);
+
+      options.data = ng.toJson(payload);
+
+      return _callRestTarget(options, responseOnly);
     }
 
     function _setupRestCall(url, method, iParams) {

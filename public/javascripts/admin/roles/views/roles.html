@@ -18,13 +18,22 @@
           </div>
           <div class="panel-body">
             <form name="roleForm" class="form-horizontal"
-                  ng-submit="" novalidate>
+                  ng-submit="ctrl.submitForm(roleForm.$valid)" novalidate>
               <!-- Name -->
               <div class="form-group">
                 <label for="name" class="col-sm-3 control-label">Name</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" id="name" value="Role 1"
+                  <input type="text" class="form-control" id="name"
                          ng-model="ctrl.vm.roleData.name" required>
+                </div>
+              </div>
+
+              <!-- Description -->
+              <div class="form-group">
+                <label for="description" class="col-sm-3 control-label">Description</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="description"
+                         ng-model="ctrl.vm.roleData.description">
                 </div>
               </div>
 
@@ -50,15 +59,29 @@
               <div class="form-group">
                 <div class="col-sm-offset-6 col-sm-6">
                   <div class="btn-group pull-right">
-                    <button type="submit" class="btn btn-default"
-                            ng-class="{}">Remove
-                    </button>
                     <button type="submit" class="btn btn-primary"
-                            ng-class="{'btn-primary': permissionForm.$valid, 'btn-default': permissionForm.$invalid}">
+                            ng-click="ctrl.setSubmissionType(ctrl.submitTypes.add)"
+                            ng-if="!ctrl.isEditing()"
+                            ng-disabled="roleForm.$invalid">
                       Add
                     </button>
                     <button type="submit" class="btn btn-default"
-                            ng-class="{}">Update
+                            name="action" value="remove"
+                            ng-click="ctrl.setSubmissionType(ctrl.submitTypes.remove)"
+                            ng-if="ctrl.isEditing()">
+                      Remove
+                    </button>
+                    <button type="submit" class="btn btn-primary"
+                            name="action" value="update"
+                            ng-if="ctrl.isEditing()"
+                            ng-click="ctrl.setSubmissionType(ctrl.submitTypes.update)"
+                            ng-disabled="roleForm.$invalid">
+                      Update
+                    </button>
+                    <button type="submit" class="btn btn-default"
+                            name="action" value="cancel"
+                            ng-click="ctrl.setSubmissionType(ctrl.submitTypes.cancel)">
+                      Cancel
                     </button>
                   </div>
                 </div>

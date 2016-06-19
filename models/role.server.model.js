@@ -7,6 +7,7 @@ var Schema = mongoose.Schema;
 
 var RoleSchema = new Schema({
   name: String,
+  isDefault: Boolean,
   description: String,
   permissions: [{type: Schema.Types.ObjectId, ref: 'Permission'}]
 });

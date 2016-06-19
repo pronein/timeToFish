@@ -44,7 +44,7 @@
       var user = service.findByUsername(username);
 
       return user.roles.some(function(userRole) {
-        return userRole && userRole.toLowerCase() === role.toLowerCase();
+        return userRole && typeof userRole.name === 'string' && userRole.name.toLowerCase() === role.toLowerCase();
       });
     }
   }

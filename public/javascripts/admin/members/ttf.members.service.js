@@ -10,6 +10,8 @@
     };
 
     service.loadMembers = loadAllMembers;
+    service.findByUsername = findByUsername;
+    service.userHasRole = userHasRole;
 
     _initializeService();
 
@@ -24,6 +26,26 @@
         .then(function(users) {
           service.data.members = users;
         });
+    }
+
+    function findByUsername(username) {
+      if(!username || typeof username !== 'string') return null;
+
+      var user = service.data.members.find(function(user) {
+        return user.username.toLowerCase() === username.toLowerCase();
+      });
+
+      return user;
+    }
+
+    function userHasRole(username, role) {
+      if(!role || typeof role !== 'string') return false;
+
+      var user = service.findByUsername(username);
+
+      return user.roles.some(function(userRole) {
+        return userRole && userRole.toLowerCase() === role.toLowerCase();
+      });
     }
   }
 

@@ -4,7 +4,7 @@
 
   function RolesService(restBase) {
     var service = this;
-    
+
     service.data = {
       name: '',
       isDefault: false,
@@ -13,12 +13,21 @@
     };
 
     service.loadRoleByName = loadRoleByName;
+    service.indexOfByUsername = indexOfByUsername;
 
     function loadRoleByName(roleName) {
       //TODO: Implement me
     }
+
+    function indexOfByUsername(username) {
+      if (!username || typeof username !== 'string') return -1;
+
+      return service.data.members.findIndex(function (member) {
+        return member.username.toLowerCase() === username.toLowerCase();
+      });
+    }
   }
-  
+
   RolesService.prototype.uris = {
     
   };

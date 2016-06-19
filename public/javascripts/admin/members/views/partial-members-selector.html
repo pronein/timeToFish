@@ -5,7 +5,7 @@
       <tbody>
       <tr ng-repeat="member in ctrl.vm.membersData.members">
         <th scope="row">
-          <input type="checkbox" id=""
+          <input type="checkbox" id="{{member.username.toLowerCase()}}"
                  ng-checked="ctrl.isMemberChecked(member.username)"
                  ng-click="ctrl.onMemberClicked($event)">
         </th>

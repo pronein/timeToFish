@@ -13,7 +13,8 @@ router.get('/*', function (req, res) {
     },
     prepare = baseJavascriptsPath + '/prepare',
     menu = baseJavascriptsPath + '/menu',
-    user = baseJavascriptsPath + '/user';
+    user = baseJavascriptsPath + '/user',
+    members = baseJavascriptsPath + '/admin/members';
 
   res.render('index', {
     title: 'Time To Fish',
@@ -58,7 +59,11 @@ router.get('/*', function (req, res) {
       permissions + '/ttf.permissions.module.js',
       permissions + '/ttf.permissions.controller.js',
       permissions + '/ttf.permissions.service.js',
-      permissions + '/ttf.permissions.directive.js'
+      permissions + '/ttf.permissions.directive.js',
+      members + '/ttf.members.module.js',
+      members + '/ttf.members.service.js',
+      members + '/ttf.members-selector.controller.js',
+      members + '/ttf.members-selector.directive.js'
     ]
   });
 });

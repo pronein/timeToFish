@@ -1,0 +1,18 @@
+<div class="form-group">
+  <label for="members_selector" class="col-sm-3 control-label">Members</label>
+  <div class="col-sm-9" id="members_selector">
+    <table class="table table-condensed">
+      <tbody>
+      <tr ng-repeat="member in ctrl.vm.membersData.members">
+        <th scope="row">
+          <input type="checkbox" id=""
+                 ng-checked="ctrl.isMemberChecked(member.username)"
+                 ng-click="ctrl.onMemberClicked($event)">
+        </th>
+        <td>{{member.username}}</td>
+        <td>{{member.fullname}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

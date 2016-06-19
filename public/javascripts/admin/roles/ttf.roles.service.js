@@ -32,8 +32,8 @@
       service.data.name = '';
       service.data.description = '';
       service.data.isDefault = false;
-      service.data.permissions = [];
-      service.data.members = [];
+      service.data.permissions.splice(0);
+      service.data.members.splice(0);
     }
 
     function loadRoleByName(roleName) {
@@ -80,7 +80,7 @@
         id: service.data.id
       })
         .then(function () {
-          usersService.removeRoleFromAllUsers(service.data.id);
+          //usersService.removeRoleFromAllUsers(service.data.id);
 
           _resetData();
         });
@@ -100,7 +100,7 @@
     }
 
     function _handleNewOrUpdatedRole(role) {
-      usersService.addRoleToUsers(service.data.members.map(_selectUsernames), role);
+      //usersService.addRoleToUsers(service.data.members.map(_selectUsernames), role);
 
       _resetData();
 

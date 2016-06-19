@@ -10,6 +10,7 @@ var indexRoutes = require('./routes/index');
 var userRoutes = require('./routes/users');
 var authRoutes = require('./routes/auth');
 var permissionRoutes = require('./routes/permissions');
+var roleRoutes = require('./routes/roles');
 
 var userController = require('./controllers/user.server.controller');
 
@@ -53,6 +54,7 @@ app.use(userController.setSessionUser);
 app.use('/api/authenticate', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/permissions', permissionRoutes);
+app.use('/api/roles', roleRoutes);
 
 // Main Page
 app.use('/', indexRoutes);

@@ -22,6 +22,8 @@
     service.addNewRole = addNewRole;
     service.removeRole = removeRole;
     service.updateRole = updateRole;
+    
+    service.resetRoleData = resetData;
 
     _activate();
 
@@ -29,12 +31,13 @@
       _refreshServiceData();
     }
 
+    
     function _refreshServiceData() {
-      _resetData();
+      resetData();
       _loadRoles();
     }
-    
-    function _resetData() {
+
+    function resetData() {
       service.data.id = '';
       service.data.name = '';
       service.data.description = '';
@@ -45,13 +48,13 @@
 
     function _loadRoles() {
       return restBase.get(service.uris.getRoles, true)
-        .then(function(roles) {
+        .then(function (roles) {
           service.data.roles = roles;
         })
     }
 
     function loadRoleByName(roleName) {
-      _resetData();
+      resetData();
 
       return restBase.get(
         service.uris.getRoleByName, {
@@ -59,7 +62,7 @@
         }, true)
         .then(function (roles) {
           var role = roles[0];
-          
+
           service.data.id = role.id;
           service.data.name = role.name;
           service.data.description = role.description;

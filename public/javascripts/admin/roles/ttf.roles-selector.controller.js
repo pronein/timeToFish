@@ -17,15 +17,17 @@
     _activate();
 
     function _activate() {
-
+      rolesService.resetRoleData();
     }
     
     function addNewRole() {
+      rolesService.resetRoleData();
       ctrl.vm.activeRoleName = ctrl.constants.NewRole;
       $rootScope.$emit(rolesService.events.AddNewRoleEvent)
     }
     
     function editRole(role) {
+      rolesService.resetRoleData();
       ctrl.vm.activeRoleName = role.name;
       $rootScope.$emit(rolesService.events.EditRoleEvent, role);
     }

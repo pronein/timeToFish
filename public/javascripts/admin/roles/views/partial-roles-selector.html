@@ -8,23 +8,16 @@
 
     <div class="panel-body">
       <div class="list-group">
-        <a href class="list-group-item active">
-          <span class="badge">4</span>
-          Role 1
+        <a href class="list-group-item"
+           ng-repeat="role in ctrl.vm.rolesData.roles"
+           ng-class="{active: ctrl.isActiveRole(role.name)}"
+           ng-click="ctrl.editRole(role)">
+          <span class="badge" ng-if="role.members.length > 0">{{role.members.length}}</span>
+          {{role.name}}
         </a>
-        <a href class="list-group-item">
-          <span class="badge">2</span>
-          Role 2
-        </a>
-        <a href class="list-group-item">
-          <span class="badge">8</span>
-          Role 3
-        </a>
-        <a href class="list-group-item">
-          <span class="badge">0</span>
-          Role 4
-        </a>
-        <a href class="list-group-item">
+        <a href class="list-group-item"
+           ng-class="{active: ctrl.isActiveRole(ctrl.constants.NewRole)}"
+           ng-click="ctrl.addNewRole()">
           <span class="glyphicon glyphicon-plus pull-right"></span>
           <i>Add new role...</i>
         </a>

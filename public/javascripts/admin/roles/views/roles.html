@@ -16,7 +16,7 @@
               Selected Role
             </h3>
           </div>
-          <div class="panel-body">
+          <div class="panel-body" ng-if="ctrl.isEditing() || ctrl.isCreatingNew()">
             <form name="roleForm" class="form-horizontal"
                   ng-submit="ctrl.submitForm(roleForm.$valid)" novalidate>
               <!-- Name -->

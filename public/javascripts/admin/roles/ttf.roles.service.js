@@ -11,7 +11,9 @@
       description: '',
       isDefault: false,
       permissions: [],
-      members: []
+      members: [],
+
+      roles: []
     };
 
     service.loadRoleByName = loadRoleByName;
@@ -24,9 +26,14 @@
     _activate();
 
     function _activate() {
-      _resetData();
+      _refreshServiceData();
     }
 
+    function _refreshServiceData() {
+      _resetData();
+      _loadRoles();
+    }
+    
     function _resetData() {
       service.data.id = '';
       service.data.name = '';
@@ -36,6 +43,13 @@
       service.data.members.splice(0);
     }
 
+    function _loadRoles() {
+      return restBase.get(service.uris.getRoles, true)
+        .then(function(roles) {
+          service.data.roles = roles;
+        })
+    }
+
     function loadRoleByName(roleName) {
       _resetData();
 
@@ -43,7 +57,9 @@
         service.uris.getRoleByName, {
           name: roleName
         }, true)
-        .then(function (role) {
+        .then(function (roles) {
+          var role = roles[0];
+          
           service.data.id = role.id;
           service.data.name = role.name;
           service.data.description = role.description;
@@ -82,7 +98,7 @@
         .then(function () {
           //usersService.removeRoleFromAllUsers(service.data.id);
 
-          _resetData();
+          _refreshServiceData();
         });
     }
 
@@ -102,7 +118,7 @@
     function _handleNewOrUpdatedRole(role) {
       //usersService.addRoleToUsers(service.data.members.map(_selectUsernames), role);
 
-      _resetData();
+      _refreshServiceData();
 
       return role;
     }
@@ -121,7 +137,13 @@
     /*POST*/    createNewRole: '/api/roles',
     /*DELETE*/  deleteRole: '/api/roles/:id',
     /*PUT*/     updateExistingRole: '/api/roles/:id',
-    /*GET*/     getRoleByName: '/api/roles'
+    /*GET*/     getRoleByName: '/api/roles',
+    /*GET*/     getRoles: '/api/roles'
+  };
+
+  RolesService.prototype.events = {
+    AddNewRoleEvent: 'add_new_role_event',
+    EditRoleEvent: 'edit_role_event'
   };
 
   RolesService.$inject = inject;

@@ -2,16 +2,17 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <base href="/">
 
     <title><%= title %></title>
 
-    <% for(var i= 0; i < styles.length; i++) { %>
-    <link rel="stylesheet" href="<%= styles[i] %>" />
+    <link rel="stylesheet" href="/stylesheets/vendor.min.css">
+
+    <% if (isDebugBuild) { %>
+      <script type="text/javascript" src="/javascripts/auxiliary/helpers.js"></script>
+    <% } else { %>
+      <script type="text/javascript" src="/javascripts/site.helpers.min.js"></script>
     <% } %>
-
-    <base href="/">
-
-    <script type="text/javascript" src="/javascripts/auxiliary/helpers.js"></script>
   </head>
   <body ng-app="ttfApp">
     <% include header %>
@@ -21,17 +22,23 @@
     <% include footer %>
 
     <script type="text/javascript" src="/javascripts/vendor.min.js"></script>
-    <!--
-    <script type="text/javascript" src="javascripts/site.angular.js"></script>
-    -->
-    <% for(var i = 0; i < scripts.length; i++) { %>
-    <script type="text/javascript" src="<%= scripts[i] %>"></script>
-    <% } %>
 
-    <script id="__bs_script__">
-      //<![CDATA[
-      document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.2.12.8.js'><\/script>".replace("HOST", location.hostname));
-      //]]>
-    </script>
+    <% if (isDebugBuild) { %>
+      <% for (var idx = 0, len = scripts.length; idx < len; idx++) { %>
+        <script type="text/javascript" src="<%= scripts[idx] %>"></script>
+      <% } %>
+
+      <script id="__bs_script__">
+        //<![CDATA[
+        var browserSyncUrl = 'http://HOST:3000/browser-sync/browser-sync-client.2.12.8.js'
+                .replace('HOST', window.location.hostname);
+
+        document.write('<script async src="SCRIPTSRC"><\/script>'
+                        .replace('SCRIPTSRC', browserSyncUrl));
+        //]]>
+      </script>
+    <% } else { %>
+      <script type="text/javascript" src="/javascripts/site.min.js"></script>
+    <% } %>
   </body>
 </html>

@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var config = require('../config/config');
 
 /* GET home page. */
 router.get('/*', function (req, res) {
@@ -18,10 +19,7 @@ router.get('/*', function (req, res) {
 
   res.render('index', {
     title: 'Time To Fish',
-    styles: [
-      '/stylesheets/main.css',
-      'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css'
-    ],
+    isDebugBuild: config.isDebugBuild,
     scripts: [
       baseJavascriptsPath + '/ttf.app.module.js',
       baseJavascriptsPath + '/ttf.app.config.js',

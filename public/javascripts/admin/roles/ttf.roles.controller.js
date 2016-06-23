@@ -125,8 +125,16 @@
     function _removeRole() {
       rolesService.removeRole()
         .then(function() {
+          ctrl.vm.show.success = true;
+          ctrl.vm.show.msg = 'Role was deleted!';
+
           ctrl.setMode(ctrl.modes.default);
-        });
+        })
+        .catch(function() {
+          ctrl.vm.show.failure = true;
+          ctrl.vm.show.msg = 'Role was not deleted!';
+        })
+        .finally(_showRoleStatus);
     }
 
     function _updateRole() {
@@ -137,7 +145,7 @@
 
           ctrl.setMode(ctrl.modes.default);
         })
-        .catch(function(err){
+        .catch(function(){
           ctrl.vm.show.failure = true;
           ctrl.vm.show.msg = 'Role was not modified!';
         })

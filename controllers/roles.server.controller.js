@@ -85,14 +85,14 @@ function _populateRoleAndSendResponse(role, res, resHttpCode) {
 }
 
 function updateRole(req, res, next) {
-  var query = {_id: mongoose.Types.ObjectId(req.roleParams.id)},
+  var query = {_id: req.roleParams.id},
     permissionNames = req.body.permissions,
     members = req.body.members;
 
   Role.findOne(query, function (err, role) {
-    if (err) {
+    if (err)
       _handleError(res, err, 'Failed to update role.');
-    } else {
+    else {
       role.name = req.body.name;
       role.isDefault = req.body.isDefault;
       role.description = req.body.description;
@@ -109,12 +109,24 @@ function updateRole(req, res, next) {
 }
 
 function deleteRole(req, res, next) {
-  var query = {_id: mongoose.Types.ObjectId(req.roleParams.id)};
+  var query = {_id: req.roleParams.id};
 
-  Role.remove(query, function (err) {
-    if (err)_handleError(res, err, 'Failed to delete role.');
+  Role.findOne(query, function (err, role) {
+    if (err)
+      _handleError(res, err, 'Failed to retrieve role.');
     else {
-      res.sendStatus(204);
+      User.removeRoleFromAll(role, function (removalErr) {
+        if (removalErr)
+          _handleError(res, removalErr, 'Failed to remove role from all users.');
+        else {
+          Role.remove(query, function (deletionErr) {
+            if (deletionErr)
+              _handleError(res, deletionErr, 'Failed to delete role.');
+            else
+              res.sendStatus(204);
+          });
+        }
+      })
     }
   });
 }
@@ -125,7 +137,8 @@ function getRole(req, res, next) {
   Role.find(query)
     .populate('permissions')
     .exec(function (err, roles) {
-      if (err) _handleError(res, err, 'Failed to retrieve role.');
+      if (err)
+        _handleError(res, err, 'Failed to retrieve role.');
       else {
         res.status(200).send(roles);
       }

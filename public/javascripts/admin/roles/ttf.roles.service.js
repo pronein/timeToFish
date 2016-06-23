@@ -81,7 +81,9 @@
             });
 
           console.log('Members for role [' + role.name + ']: ' +
-            JSON.stringify(service.data.members.map(function(member){return member.username;})));
+            JSON.stringify(service.data.members.map(function (member) {
+              return member.username;
+            })));
         });
     }
 
@@ -101,12 +103,11 @@
     }
 
     function removeRole() {
-      return restBase.delete(service.uris.deleteRole, {
-        id: service.data.id
-      })
+      return restBase.delete(
+        service.uris.deleteRole, {
+          id: service.data.id
+        })
         .then(function () {
-          //usersService.removeRoleFromAllUsers(service.data.id);
-
           _refreshServiceData();
         });
     }

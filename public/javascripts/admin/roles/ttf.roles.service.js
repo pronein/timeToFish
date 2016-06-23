@@ -22,7 +22,7 @@
     service.addNewRole = addNewRole;
     service.removeRole = removeRole;
     service.updateRole = updateRole;
-    
+
     service.resetRoleData = resetData;
 
     _activate();
@@ -31,7 +31,6 @@
       _refreshServiceData();
     }
 
-    
     function _refreshServiceData() {
       resetData();
       _loadRoles();
@@ -50,6 +49,7 @@
       return restBase.get(service.uris.getRoles, true)
         .then(function (roles) {
           service.data.roles = roles;
+          membersService.refresh();
         })
     }
 
@@ -72,10 +72,14 @@
             return permission.name;
           });
 
-          service.data.members = membersService.data.members.filter(
+          membersService.data.members.forEach(
             function (member) {
-              return membersService.userHasRole(member.username, role.name)
+              if (membersService.userHasRole(member.username, role.name)) {
+                service.data.members.push(member);
+              }
             });
+
+          console.log('Members for role [' + role.name + ']: ' + JSON.stringify(service.data.members));
         });
     }
 
@@ -131,7 +135,8 @@
         name: service.data.name,
         description: service.data.description,
         isDefault: service.data.isDefault,
-        permissions: service.data.permissions
+        permissions: service.data.permissions,
+        members: service.data.members
       };
     }
   }

@@ -9,19 +9,23 @@
       members: []
     };
 
-    service.loadMembers = loadAllMembers;
     service.findByUsername = findByUsername;
     service.userHasRole = userHasRole;
+    service.refresh = refreshService;
 
     _initializeService();
 
     function _initializeService(){
       console.info('service-init-members');
       
-      service.loadMembers();
+      service.refresh();
     }
 
-    function loadAllMembers() {
+    function refreshService() {
+      _loadAllMembers();
+    }
+
+    function _loadAllMembers() {
       restBase.get(service.uris.getMemberData, true)
         .then(function(users) {
           service.data.members = users;

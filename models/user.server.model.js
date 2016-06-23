@@ -43,7 +43,9 @@ UserSchema.virtual('name.full').get(function () {
  * Statics
  */
 
-UserSchema.statics.usernameExists = _usernameExists;
+UserSchema.statics.usernameExists = usernameExists;
+UserSchema.statics.removeRoleFromAll = removeRoleFromAllUsers;
+UserSchema.statics.addRoleToMembers = addRoleToMembers;
 
 /*
  * Register Model
@@ -55,7 +57,7 @@ mongoose.model('User', UserSchema);
  * Internals
  */
 
-function _usernameExists(username, callback) {
+function usernameExists(username, callback) {
   return this.findOne({
     username: new RegExp('^' + username + '$', 'i')
   }, function (err, user) {
@@ -68,4 +70,28 @@ function _toPascalCase(word) {
   if (word.length === 1) return word.toUpperCase();
 
   return word[0].toUpperCase() + word.substr(1);
+}
+
+function removeRoleFromAllUsers(role, callback) {
+  var criteria = {
+    roles: role.id
+  }, statement = {
+    $pull: {roles: role.id}
+  };
+
+  this.update(criteria, statement, {multi: true}, callback);
+}
+
+function addRoleToMembers(role, members, callback) {
+  var criteria = {
+    _id: {
+      $in: members.map(function (member) {
+        return member.id;
+      })
+    }
+  }, statement = {
+    $addToSet: {roles: role.id}
+  };
+
+  this.update(criteria, statement, {multi: true}, callback);
 }

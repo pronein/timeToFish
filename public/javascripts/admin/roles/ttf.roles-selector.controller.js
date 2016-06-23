@@ -2,19 +2,6 @@
 
   var inject = ['rolesService', '$rootScope'];
 
-  //TODO: Add/remove roles (on new/update) based on checked members
-  //TODO: Add default roles to new registered members
-  //TODO: Remove roles via Selected Role [Remove] button
-
-  //Other
-  //TODO: Add menu items (associate permissions with menu items)
-  //TODO: Allow menu items to nest (based on particular view/state
-  //TODO: Add photo update to user registration
-  //TODO: Add all these todos to youtrack site
-  //TODO: Rebuild memu directive/service/controller
-  //TODO: Refactor root level angular into /core, /etc...
-  //TODO: Finish checklists (prepare story)
-
   function RolesSelectorController(rolesService, $rootScope) {
     var ctrl = this;
 

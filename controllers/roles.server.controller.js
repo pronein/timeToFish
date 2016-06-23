@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Role = mongoose.model('Role');
 var Permission = mongoose.model('Permission');
+var User = mongoose.model('User');
 
 var log = require('../auxiliary/logger');
 
@@ -21,24 +22,48 @@ function createRole(req, res, next) {
       .exec(function (err, ids) {
         role.permissions = ids;
         role.save(function (err, newRole) {
-          _onSaveComplete(res, err, newRole);
+          _onSaveComplete(res, err, newRole, req.body.members);
         });
       })
   } else
     role.save(function (err, newRole) {
-      _onSaveComplete(res, err, newRole);
+      _onSaveComplete(res, err, newRole, req.body.members);
     });
 }
 
-function _onSaveComplete(res, err, role) {
+function _onSaveComplete(res, err, role, members) {
   if (err) _handleError(res, err, 'Failed to create new role');
   else {
-    role.populate({path: 'permissions', select: 'name'})
-      .execPopulate()
-      .then(function (populatedRole) {
-        res.status(201).send(populatedRole);
+    if (members && members.length) {
+      User.removeRoleFromAll(role, function (removalErr) {
+        if (removalErr) {
+          _handleError(res, removalErr, 'Failed to remove role from users.');
+        } else {
+          User.addRoleToMembers(role, members, function (addErr) {
+            if (addErr) {
+              _handleError(res, addErr, 'Failed to add role to users.');
+            } else {
+              _populateRoleAndSendCreatedResponse(role, res);
+            }
+          });
+        }
       });
+    } else {
+      _populateRoleAndSendCreatedResponse(role, res);
+    }
   }
+}
+
+function _populateRoleAndSendCreatedResponse(role, res) {
+  role
+    .populate({path: 'permissions', select: 'name'})
+    .execPopulate()
+    .then(function (populatedRole) {
+      res.status(201).send(populatedRole);
+    })
+    .catch(function (err) {
+      _handleError(res, err, 'Failed to populate role.');
+    })
 }
 
 function updateRole(req, res, next) {

@@ -1,13 +1,13 @@
 (function (ng) {
 
-  var inject = ['membersService', 'rolesService'];
+  var inject = ['membersService', 'rolesService', '$scope'];
 
-  function MembersSelectorController(membersService, rolesService) {
+  function MembersSelectorController(membersService, rolesService, $scope) {
     var ctrl = this;
 
     ctrl.vm = {
       membersData: membersService.data,
-      selectedMembers: rolesService.data.members
+      selectedMembers: $scope.selectedMembers
     };
 
     ctrl.isMemberChecked = isMemberChecked;
@@ -16,7 +16,6 @@
     _activate();
 
     function _activate() {
-
     }
 
     function isMemberChecked(username) {

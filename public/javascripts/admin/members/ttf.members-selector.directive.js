@@ -8,7 +8,9 @@
       templateUrl: 'javascripts/admin/members/views/partial-members-selector.html',
       controller: 'MembersSelectorController',
       controllerAs: 'ctrl',
-      scope: true,
+      scope: {
+        selectedMembers: '=selectedMembers'
+      },
       replace: true
     };
   }

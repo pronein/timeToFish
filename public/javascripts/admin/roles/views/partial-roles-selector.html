@@ -1,27 +1,25 @@
-<div class="col-sm-5">
-  <div class="panel panel-primary">
-    <div class="panel-heading">
-      <h3 class="panel-title">
-        Role List
-      </h3>
-    </div>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">
+      Role List
+    </h3>
+  </div>
 
-    <div class="panel-body">
-      <div class="list-group">
-        <a href class="list-group-item"
-           ng-repeat="role in ctrl.vm.rolesData.roles"
-           ng-class="{active: ctrl.isActiveRole(role.name)}"
-           ng-click="ctrl.editRole(role)">
-          <span class="badge" ng-if="role.members.length > 0">{{role.members.length}}</span>
-          {{role.name}}
-        </a>
-        <a href class="list-group-item"
-           ng-class="{active: ctrl.isActiveRole(ctrl.constants.NewRole)}"
-           ng-click="ctrl.addNewRole()">
-          <span class="glyphicon glyphicon-plus pull-right"></span>
-          <i>Add new role...</i>
-        </a>
-      </div>
+  <div class="panel-body">
+    <div class="list-group">
+      <a href class="list-group-item"
+         ng-repeat="role in ctrl.vm.rolesData.roles"
+         ng-class="{active: ctrl.isActiveRole(role.name)}"
+         ng-click="ctrl.editRole(role)">
+        <span class="badge" ng-if="role.members.length > 0">{{role.members.length}}</span>
+        {{role.name}}
+      </a>
+      <a href class="list-group-item"
+         ng-class="{active: ctrl.isActiveRole(ctrl.constants.NewRole)}"
+         ng-click="ctrl.addNewRole()">
+        <span class="glyphicon glyphicon-plus pull-right"></span>
+        <i>Add new role...</i>
+      </a>
     </div>
   </div>
 </div>

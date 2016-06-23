@@ -1,15 +1,20 @@
 (function (ng, ss) {
 
-  var inject = ['permissionsService', 'rolesService', '$stateParams', '$rootScope'];
+  var inject = ['permissionsService', 'rolesService', '$stateParams', '$rootScope', '$timeout'];
 
-  function RolesController(permissionsService, rolesService, $stateParams, $rootScope) {
+  function RolesController(permissionsService, rolesService, $stateParams, $rootScope, $timeout) {
     var ctrl = this,
       _editorMode = ctrl.modes.default,
       _submissionType = ctrl.submitTypes.none;
 
     ctrl.vm = {
       permData: permissionsService.data,
-      roleData: rolesService.data
+      roleData: rolesService.data,
+      show: {
+        success: false,
+        failure: false,
+        msg: ''
+      }
     };
 
     ctrl.isEditing = isEditing;
@@ -90,11 +95,27 @@
       }
     }
 
+    function _showRoleStatus() {
+      $timeout(function() {
+        ctrl.vm.show.failure = false;
+        ctrl.vm.show.success = false;
+        ctrl.vm.show.msg = '';
+      }, ctrl.constants.statusTimeout);
+    }
+
     function _addNewRole() {
       rolesService.addNewRole()
         .then(function() {
+          ctrl.vm.show.success = true;
+          ctrl.vm.show.msg = 'New role was added!';
+
           ctrl.setMode(ctrl.modes.default);
-        });
+        })
+        .catch(function(){
+          ctrl.vm.show.failure = true;
+          ctrl.vm.show.msg = 'New role was not created!'
+        })
+        .finally(_showRoleStatus);
     }
 
     function _cancelRoleModifications() {
@@ -111,24 +132,36 @@
     function _updateRole() {
       rolesService.updateRole()
         .then(function() {
+          ctrl.vm.show.success = true;
+          ctrl.vm.show.msg = 'Role was modified!';
+
           ctrl.setMode(ctrl.modes.default);
-        });
+        })
+        .catch(function(err){
+          ctrl.vm.show.failure = true;
+          ctrl.vm.show.msg = 'Role was not modified!';
+        })
+        .finally(_showRoleStatus);
     }
 
     function _onAddNewRoleEvent(event) {
-      console.log('AddNewRoleEvent received.');
+      console.log(event.name + ' received');
 
       ctrl.setMode(ctrl.modes.add);
     }
 
     function _onEditRoleEvent(event, role) {
-      console.log('EditRoleEvent received. (' + role.name + ')');
+      console.log(event.name + ' received. (' + role.name + ')');
       
       rolesService.loadRoleByName(role.name);
 
       ctrl.setMode(ctrl.modes.update);
     }
   }
+
+  RolesController.prototype.constants = {
+    statusTimeout: 5000
+  };
 
   RolesController.prototype.modes = {
     none: 0,

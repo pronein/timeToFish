@@ -8,8 +8,9 @@
     </div>
 
     <div class="row">
-      <!-- Left Column: Selected Role -->
+      <!-- Left Column: Selected Role, Status Alert -->
       <div class="col-sm-7">
+        <!-- Selected Role -->
         <div class="panel panel-primary">
           <div class="panel-heading">
             <h3 class="panel-title">
@@ -89,10 +90,22 @@
             </form>
           </div>
         </div>
+
+        <!-- Status Alert -->
+        <div class="alert alert-dismissible" role="alert"
+             ng-class="{'alert-success': ctrl.vm.show.success, 'alert-danger': ctrl.vm.show.failure}"
+             ng-show="ctrl.vm.show.success || ctrl.vm.show.failure">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <strong>{{ctrl.vm.show.success ? 'Success!' : 'Failure!'}}</strong> {{ctrl.vm.show.msg}}
+        </div>
       </div>
 
       <!-- Right Column: Role List -->
-      <ttf-roles-selector></ttf-roles-selector>
+      <div class="col-sm-5">
+        <ttf-roles-selector></ttf-roles-selector>
+      </div>
     </div>
   </div>
 </div>

@@ -41,6 +41,7 @@
       service.data.name = '';
       service.data.description = '';
       service.data.isDefault = false;
+
       service.data.permissions.splice(0);
       service.data.members.splice(0);
     }
@@ -63,13 +64,13 @@
         .then(function (roles) {
           var role = roles[0];
 
-          service.data.id = role.id;
+          service.data.id = role._id;
           service.data.name = role.name;
           service.data.description = role.description;
           service.data.isDefault = role.isDefault;
 
-          service.data.permissions = role.permissions.map(function (permission) {
-            return permission.name;
+          role.permissions.forEach(function (permission) {
+            service.data.permissions.push(permission.name);
           });
 
           membersService.data.members.forEach(
@@ -79,7 +80,8 @@
               }
             });
 
-          console.log('Members for role [' + role.name + ']: ' + JSON.stringify(service.data.members));
+          console.log('Members for role [' + role.name + ']: ' +
+            JSON.stringify(service.data.members.map(function(member){return member.username;})));
         });
     }
 
@@ -118,13 +120,7 @@
         .then(_handleNewOrUpdatedRole);
     }
 
-    function _selectUsernames(member) {
-      return member.username;
-    }
-
     function _handleNewOrUpdatedRole(role) {
-      //usersService.addRoleToUsers(service.data.members.map(_selectUsernames), role);
-
       _refreshServiceData();
 
       return role;

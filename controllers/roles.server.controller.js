@@ -13,53 +13,71 @@ module.exports = {
 };
 
 function createRole(req, res, next) {
-  var role = new Role(req.body);
+  var role = new Role(req.body),
+    permissionNames = req.body.permissions,
+    members = req.body.members;
 
-  if (req.body.permissions.length) {
-    Permission
-      .find({name: {$in: req.body.permissions}})
-      .select({_id: 1})
-      .exec(function (err, ids) {
-        role.permissions = ids;
-        role.save(function (err, newRole) {
-          _onSaveComplete(res, err, newRole, req.body.members);
-        });
-      })
+  if (permissionNames && permissionNames.length) {
+    _setRolePermissions(permissionNames, members, role, res, 201);
   } else
-    role.save(function (err, newRole) {
-      _onSaveComplete(res, err, newRole, req.body.members);
+    _saveRole(role, res, members, 201);
+}
+
+function _setRolePermissions(permissionNames, members, role, res, resHttpCode) {
+  Permission
+    .find({name: {$in: permissionNames}})
+    .select({_id: 1})
+    .exec(function (err, ids) {
+      if (err) {
+        _handleError(res, err, 'Failed to set role permissions.');
+      } else {
+        role.permissions = ids;
+
+        _saveRole(role, res, members, resHttpCode);
+      }
     });
 }
 
-function _onSaveComplete(res, err, role, members) {
-  if (err) _handleError(res, err, 'Failed to create new role');
-  else {
-    if (members && members.length) {
-      User.removeRoleFromAll(role, function (removalErr) {
-        if (removalErr) {
-          _handleError(res, removalErr, 'Failed to remove role from users.');
-        } else {
-          User.addRoleToMembers(role, members, function (addErr) {
-            if (addErr) {
-              _handleError(res, addErr, 'Failed to add role to users.');
-            } else {
-              _populateRoleAndSendCreatedResponse(role, res);
-            }
-          });
-        }
-      });
-    } else {
-      _populateRoleAndSendCreatedResponse(role, res);
-    }
+function _saveRole(role, res, members, resHttpCode) {
+  role.save(function (err, newRole) {
+    _onSaveComplete(res, err, newRole, members, resHttpCode);
+  })
+}
+
+function _onSaveComplete(res, err, role, members, resHttpCode) {
+  if (err) {
+    _handleError(res, err, 'Failed to ' + (resHttpCode === 201 ? 'create' : 'update') + ' role');
+  } else {
+    _updateMemberRoles(members, role, res, resHttpCode)
   }
 }
 
-function _populateRoleAndSendCreatedResponse(role, res) {
+function _updateMemberRoles(members, role, res, resHttpCode) {
+  if (members && members.length) {
+    User.removeRoleFromAll(role, function (removalErr) {
+      if (removalErr) {
+        _handleError(res, removalErr, 'Failed to remove role from users.');
+      } else {
+        User.addRoleToMembers(role, members, function (addErr) {
+          if (addErr) {
+            _handleError(res, addErr, 'Failed to add role to users.');
+          } else {
+            _populateRoleAndSendResponse(role, res, resHttpCode);
+          }
+        });
+      }
+    });
+  } else {
+    _populateRoleAndSendResponse(role, res, resHttpCode);
+  }
+}
+
+function _populateRoleAndSendResponse(role, res, resHttpCode) {
   role
     .populate({path: 'permissions', select: 'name'})
     .execPopulate()
     .then(function (populatedRole) {
-      res.status(201).send(populatedRole);
+      res.status(resHttpCode).send(populatedRole);
     })
     .catch(function (err) {
       _handleError(res, err, 'Failed to populate role.');
@@ -67,15 +85,25 @@ function _populateRoleAndSendCreatedResponse(role, res) {
 }
 
 function updateRole(req, res, next) {
-  var updatedRole = new Role(req.body),
-    query = {_id: mongoose.Types.ObjectId(req.roleParams.id)};
+  var query = {_id: mongoose.Types.ObjectId(req.roleParams.id)},
+    permissionNames = req.body.permissions,
+    members = req.body.members;
 
-  //TODO: May need to load permissions to get ObjectIds
+  Role.findOne(query, function (err, role) {
+    if (err) {
+      _handleError(res, err, 'Failed to update role.');
+    } else {
+      role.name = req.body.name;
+      role.isDefault = req.body.isDefault;
+      role.description = req.body.description;
 
-  Role.findOneAndUpdate(query, updatedRole, function (err, role) {
-    if (err)_handleError(res, err, 'Failed to update role.');
-    else {
-      res.status(200).send(role);
+      if (permissionNames && permissionNames.length) {
+        _setRolePermissions(permissionNames, members, role, res, 200);
+      } else {
+        role.permissions = [];
+
+        _saveRole(role, res, members, 200);
+      }
     }
   });
 }

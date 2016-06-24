@@ -1,0 +1,111 @@
+<div class="row">
+  <div class="col-sm-12">
+    <!-- Header -->
+    <div class="row">
+      <div class="page-header">
+        <h1>Roles Manager</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Left Column: Selected Role, Status Alert -->
+      <div class="col-sm-7">
+        <!-- Selected Role -->
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              Selected Role
+            </h3>
+          </div>
+          <div class="panel-body" ng-if="ctrl.isEditing() || ctrl.isCreatingNew()">
+            <form name="roleForm" class="form-horizontal"
+                  ng-submit="ctrl.submitForm(roleForm.$valid)" novalidate>
+              <!-- Name -->
+              <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="name"
+                         ng-model="ctrl.vm.roleData.name" required>
+                </div>
+              </div>
+
+              <!-- Description -->
+              <div class="form-group">
+                <label for="description" class="col-sm-3 control-label">Description</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="description"
+                         ng-model="ctrl.vm.roleData.description">
+                </div>
+              </div>
+
+              <!-- Permissions -->
+              <ttf-permissions-selector></ttf-permissions-selector>
+
+              <!-- Default New Member Role -->
+              <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" id="defaultRole"
+                             ng-model="ctrl.vm.roleData.isDefault">Default role for new members?
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Members of Role -->
+              <ttf-members-selector selected-members="ctrl.vm.roleData.members"></ttf-members-selector>
+
+              <!-- Role Options -->
+              <div class="form-group">
+                <div class="col-sm-offset-6 col-sm-6">
+                  <div class="btn-group pull-right">
+                    <button type="submit" class="btn btn-primary"
+                            ng-click="ctrl.setSubmissionType(ctrl.submitTypes.add)"
+                            ng-if="!ctrl.isEditing()"
+                            ng-disabled="roleForm.$invalid">
+                      Add
+                    </button>
+                    <button type="submit" class="btn btn-warning"
+                            name="action" value="remove"
+                            ng-click="ctrl.setSubmissionType(ctrl.submitTypes.remove)"
+                            ng-if="ctrl.isEditing()">
+                      Remove
+                    </button>
+                    <button type="submit" class="btn btn-primary"
+                            name="action" value="update"
+                            ng-if="ctrl.isEditing()"
+                            ng-click="ctrl.setSubmissionType(ctrl.submitTypes.update)"
+                            ng-disabled="roleForm.$invalid">
+                      Update
+                    </button>
+                    <button type="submit" class="btn btn-default"
+                            name="action" value="cancel"
+                            ng-click="ctrl.setSubmissionType(ctrl.submitTypes.cancel)">
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Status Alert -->
+        <div class="alert alert-dismissible" role="alert"
+             ng-class="{'alert-success': ctrl.vm.show.success, 'alert-danger': ctrl.vm.show.failure}"
+             ng-show="ctrl.vm.show.success || ctrl.vm.show.failure">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <strong>{{ctrl.vm.show.success ? 'Success!' : 'Failure!'}}</strong> {{ctrl.vm.show.msg}}
+        </div>
+      </div>
+
+      <!-- Right Column: Role List -->
+      <div class="col-sm-5">
+        <ttf-roles-selector></ttf-roles-selector>
+      </div>
+    </div>
+  </div>
+</div>

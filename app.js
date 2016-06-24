@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -5,18 +7,39 @@ var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var middleware = require('swagger-express-middleware');
 
 var indexRoutes = require('./routes/index');
 var userRoutes = require('./routes/users');
 var authRoutes = require('./routes/auth');
 var permissionRoutes = require('./routes/permissions');
+var roleRoutes = require('./routes/roles');
 
-var userController = require('./controllers/user.server.controller');
+var userController = require('./api/controllers/user.server.controller');
 
 var passport = require('passport');
 var localStrategy = require('./config/strategies/local');
 
 var app = express();
+
+module.exports = app;
+
+// setup swagger
+middleware('./api/swagger/swagger.yaml', function(err, middleware){
+  if(err)
+    throw err;
+
+  app.use(
+    middleware.metadata(),
+    middleware.CORS(),
+    middleware.files(),
+    middleware.parseRequest(),
+    middleware.validateRequest(),
+    middleware.mock()
+  );
+
+  console.log('swagger express middleware established.');
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -53,6 +76,7 @@ app.use(userController.setSessionUser);
 app.use('/api/authenticate', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/permissions', permissionRoutes);
+app.use('/api/roles', roleRoutes);
 
 // Main Page
 app.use('/', indexRoutes);
@@ -87,6 +111,3 @@ app.use(function (err, req, res) {
     error: {}
   });
 });
-
-
-module.exports = app;

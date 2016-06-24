@@ -1,4 +1,4 @@
-var log = require('../auxiliary/logger');
+var log = require('../../auxiliary/logger');
 var Permission = require('mongoose').model('Permission');
 
 module.exports = {
@@ -9,7 +9,14 @@ module.exports = {
 };
 
 function _getPermissionsByCategoryFilter(req, res, next) {
-  Permission.find({category: {$in: req.query.categories}}, function(err, permissions) {
+  var categories = Array.isArray(req.query.categories) ? req.query.categories : [req.query.categories];
+  var criteria = {category: {$in: categories}};
+
+  if(categories.length === 1 && categories[0] === 'null') {
+    criteria = {};
+  }
+
+  Permission.find(criteria, function(err, permissions) {
     if(err) {
       log.error({err: err}, 'Error during retrieval of permissions.');
       return res.status(500).json({msg: 'Failed to retrieve permissions.'});

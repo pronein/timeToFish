@@ -20,7 +20,7 @@
     _initializeService();
 
     function _initializeService() {
-      console.info('service-init');
+      console.info('service-init-permissions');
 
       _refresh();
     }
@@ -36,7 +36,7 @@
       categoryFilter = categoryFilter.length ? categoryFilter : [null];
       _filter = categoryFilter;
 
-      restBase.get(service.uris.getFilteredPermissions, {categories: _filter}, true)
+      return restBase.get(service.uris.getFilteredPermissions, {categories: _filter}, true)
         .then(function (permissions) {
           service.data.permissions = permissions;
         })

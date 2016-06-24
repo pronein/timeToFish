@@ -5,7 +5,7 @@ var Role = mongoose.model('Role');
 var Permission = mongoose.model('Permission');
 var MenuItem = mongoose.model('MenuItem');
 
-var log = require('../auxiliary/logger');
+var log = require('../../auxiliary/logger');
 
 module.exports = {
   getMenu: getUserMenu

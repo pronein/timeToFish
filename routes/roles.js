@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var rolesController = require('../controllers/roles.server.controller');
+var rolesController = require('../api/controllers/roles.server.controller');
 
 module.exports = router;
 

@@ -1,4 +1,4 @@
-var log = require('../auxiliary/logger');
+var log = require('../../auxiliary/logger');
 var Permission = require('mongoose').model('Permission');
 
 module.exports = {

@@ -1,10 +1,13 @@
 {
   "name": "timeToFish",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
+  "author": "Adam Schrader",
+  "main": "bin/www",
   "scripts": {
     "prestart": "gulp default",
-    "start": "node bin/www"
+    "start": "node bin/www",
+    "test": "swagger-project test"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
@@ -20,7 +23,8 @@
     "node-sass-middleware": "0.8.0",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "swagger-express-middleware": "^1.0.0-alpha.12"
   },
   "devDependencies": {
     "gulp": "^3.9.1",

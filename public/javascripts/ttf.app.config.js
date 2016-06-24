@@ -24,7 +24,7 @@
       })
       .state('temp', {
         url: '/temp',
-        template: '<roles></roles><permissions></permissions>'
+        template: '<menu-viewer></menu-viewer>'
       });
 
     function buildEnvironmentConfigOptions() {

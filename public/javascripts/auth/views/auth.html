@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="stylesheets/auth.css">
 
 <!-- Default -->
-<ul ng-if="!session.signedIn" class="nav navbar-nav pull-right">
+<ul ng-if="!session.user.isAuthenticated" class="nav navbar-nav pull-right">
   <li>
     <form class="navbar-form navbar-right" ng-submit="session.signin(true)">
       <!-- Username -->
@@ -24,12 +24,13 @@
 
       <!-- Submit -->
       <button class="btn btn-primary" type="submit">Sign in</button>
+      <user-register></user-register>
     </form>
   </li>
 </ul>
 
 <!-- User Authenticated -->
-<ul ng-if="session.signedIn" class="nav navbar-nav pull-right">
+<ul ng-if="session.user.isAuthenticated" class="nav navbar-nav pull-right">
   <li>
     <span class="navbar-text">Welcome {{session.user.username}}</span>
   </li>

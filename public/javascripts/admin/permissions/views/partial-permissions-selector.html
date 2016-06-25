@@ -1,0 +1,51 @@
+<div class="form-group">
+  <label for="role_permissions" class="col-sm-3 control-label">Permissions</label>
+  <div class="col-sm-9" id="role_permissions">
+    <!-- Tabs -->
+    <ul class="nav nav-pills" role="tablist">
+      <li ng-repeat="category in ctrl.vm.categories"
+          ng-class="{active: ctrl.isSelectedCategory(category)}"
+          role="presentation">
+        <a href="#permission_tabpane_{{category}}" role="tab"
+           data-toggle="tab"
+           aria-controls="permission_tabpane_{{category}}">
+          {{category}}
+        </a>
+      </li>
+    </ul>
+
+    <!-- Tab Panels -->
+    <div class="well well-sm">
+      <div class="tab-content">
+        <div ng-repeat="category in ctrl.vm.categories"
+             class="row tab-pane" id="permission_tabpane_{{category}}"
+             ng-class="{active: ctrl.isSelectedCategory(category)}"
+             role="tabpanel">
+          <!-- Left Column Permissions (odd) -->
+          <div class="col-sm-6">
+            <div ng-repeat="permission in ctrl.getOddPermissions(category)"
+                 class="checkbox">
+              <label>
+                <input type="checkbox" id="{{permission.name}}"
+                       ng-click="ctrl.onPermissionClicked($event)"
+                       ng-checked="ctrl.isPermissionChecked(permission.name)">{{permission.name}}
+              </label>
+            </div>
+          </div>
+
+          <!-- Right Column Permissions (even) -->
+          <div class="col-sm-6">
+            <div ng-repeat="permission in ctrl.getEvenPermissions(category)"
+                 class="checkbox">
+              <label>
+                <input type="checkbox" id="{{permission.name}}"
+                       ng-click="ctrl.onPermissionClicked($event)"
+                       ng-checked="ctrl.isPermissionChecked(permission.name)">{{permission.name}}
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

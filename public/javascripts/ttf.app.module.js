@@ -4,7 +4,10 @@
     'environment',
     'ttfSession',
     'ui.router',
-    'ttfPrepare'
+    'ttfPrepare',
+    'angularCSS',
+    'ttfPermissions',
+    'ttfRoles'
   ];
 
   ng.module('ttfApp', dependencies);

@@ -25,24 +25,47 @@
   function RestBaseService($http, baseUrl) {
     this.post = post;
     this.get = get;
+    this.delete = remove;
+    this.put = put;
 
-    function post(urlPath, payload) {
-      var options = setupRestCall(urlPath, 'POST');
+    function post(urlPath, payload, responseOnly) {
+      var options = _setupRestCall(urlPath, 'POST');
 
-      options.data = payload;
+      options.data = ng.toJson(payload);
 
-      return callRestTarget(options);
+      return _callRestTarget(options, responseOnly);
     }
 
-    function get(urlPath, paramsObj) {
-      var options = setupRestCall(urlPath, 'GET');
+    function get(urlPath, paramsObj, responseOnly) {
+      var options = _setupRestCall(urlPath, 'GET');
 
-      options.params = paramsObj;
+      if (paramsObj === true)
+        responseOnly = true;
+      else if (paramsObj)
+        options.params = paramsObj;
 
-      return callRestTarget(options);
+      return _callRestTarget(options, responseOnly);
     }
 
-    function setupRestCall(url, method) {
+    function remove(urlPath, iParams) {
+      var options = _setupRestCall(urlPath, 'DELETE', iParams);
+
+      return _callRestTarget(options);
+    }
+
+    function put(urlPath, payload, iParams, responseOnly) {
+      var options = _setupRestCall(urlPath, 'PUT', iParams);
+
+      options.data = ng.toJson(payload);
+
+      return _callRestTarget(options, responseOnly);
+    }
+
+    function _setupRestCall(url, method, iParams) {
+      url = url.replace(/:(\w+)/gi, function(match, prop) {
+        return iParams[prop];
+      });
+
       return {
         url: baseUrl + url,
         method: method,
@@ -51,20 +74,27 @@
       };
     }
 
-    function callRestTarget(options){
-      return $http(options);
+    function _callRestTarget(options, responseOnly) {
+      return $http(options)
+        .then(function (response) {
+          console.info(options.method.toUpperCase() + ' ' + options.url + ' ' + response.status);
+
+          return responseOnly ? response.data : response;
+        });
     }
 
     RestBaseService.prototype.urls = {
       authenticate: '/api/authenticate',
       logout: '/api/authenticate/release',
-      getUserMenuFor: '/api/users/current/menu'
+      getUserMenuFor: '/api/users/current/menu',
+      validateUsername: '/api/users/usernameExists',
+      registerUser: '/api/users'
     };
   }
 
   restBaseProvider.$inject = providerInject;
 
   ng.module('ttfApp')
-      .provider('restBase', restBaseProvider);
+    .provider('restBase', restBaseProvider);
 
 })(window.angular);

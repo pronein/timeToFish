@@ -1,9 +1,17 @@
+var config = require('../config/config').crypto;
+var crypto = require('crypto');
 
 module.exports = {
-  hash: hash
+  generateHash: _hashClearTextPassword,
+  generateSalt: _generatePsuedoRandomSalt
 };
 
-function hash(textToHash) {
-  //TODO: Implement me - hasher.hash(textToHash)
-  return textToHash;
+function _hashClearTextPassword(password, salt) {
+  var hash = crypto.pbkdf2Sync(password, salt, config.stretch, config.keyLen, config.digest);
+
+  return hash.toString('hex');
+}
+
+function _generatePsuedoRandomSalt() {
+  return crypto.randomBytes(config.saltLen).toString('hex');
 }

@@ -1,6 +1,16 @@
-node_modules
+# dev-environments
 .idea
-public/bower_components
-logs/*.log
+.vscode
+
+# files
+*.log
 *.css
 *.map
+*.min.*
+
+# directories
+node_modules
+
+public/bower_components
+public/images/*
+public/fonts/*

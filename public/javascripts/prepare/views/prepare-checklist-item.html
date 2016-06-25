@@ -1,0 +1,31 @@
+<tr style="background-color: darkseagreen;">
+  <td>
+    <input class="check-item" type="checkbox"
+           ng-model="vm.checked"
+           ng-change="vm.checkStateChanged()"
+           ng-disabled="vm.isEditable || !vm.itemText.length">
+  </td>
+  <td>
+    <label for="item{{vm.id}}" class="checklist-item-label"
+           ng-class="{shrink: vm.shrinkLabel}"
+           ng-show="vm.isEditable">Enter item description...</label>
+    <input id="item{{vm.id}}" type="text" class="checklist-item-input-text"
+           ng-show="vm.isEditable" ng-model="vm.itemText"
+           ng-focus="vm.inputFocused()" ng-blur="vm.inputBlurred()">
+    <span tabindex="0" class="colored-strike"
+          focus-on-events="['click', 'focus']" focus-on-id="item{{vm.id}}"
+          ng-click="vm.spanFocused()" ng-focus="vm.spanFocused()"
+          ng-hide="vm.isEditable" ng-class="{strike: vm.checked}">{{vm.itemText}}</span>
+  </td>
+  <td>
+    <a href ng-click="vm.removeItemClicked()">
+      <span class="glyphicon glyphicon-remove-sign"></span>
+    </a>
+    <a id="addNewItem" href
+       ng-keydown="vm.addItemKeyDown($event)"
+       ng-show="vm.showAddNewItem"
+       ng-click="vm.addItemClicked()">
+      <span class="glyphicon glyphicon-plus-sign"></span>
+    </a>
+  </td>
+</tr>

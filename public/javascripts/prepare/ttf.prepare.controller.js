@@ -1,5 +1,8 @@
 (function (ng) {
-
+  //TODO: Add functionality to create/delete/view lists (clientside + serverside)
+  //TODO: Add functionality to save list state
+  //TODO: Add functionality to toggle lists/list-items as public/private/secret(public, but hidden)
+  //TODO: Add functionality to toggle list user permissions (modify/delete/view)
   var inject = ['userService'];
 
   function PrepareController(userService) {

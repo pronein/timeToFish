@@ -18,11 +18,14 @@
         url: '/',
         template: '<div>Home</div>'
       })
-      // .state('prepare', {
-      //   url: '/prepare',
-      //   template: '<prepare></prepare>'
-      // })
-    ;
+      .state('permissions', {
+        url: '/permissions',
+        template: '<permissions></permissions>'
+      })
+      .state('temp', {
+        url: '/temp',
+        template: '<menu-viewer></menu-viewer>'
+      });
 
     function buildEnvironmentConfigOptions() {
       return {
@@ -32,7 +35,7 @@
         },
         vars: {
           development: {
-            apiUrl: 'http://localhost:3000'
+            apiUrl: 'http://localhost:3010'
           },
           production: {
             apiUrl: 'http://fishing.ajschrader.com'

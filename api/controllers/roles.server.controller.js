@@ -3,7 +3,7 @@ var Role = mongoose.model('Role');
 var Permission = mongoose.model('Permission');
 var User = mongoose.model('User');
 
-var log = require('../auxiliary/logger');
+var log = require('../../auxiliary/logger');
 
 module.exports = {
   create: createRole,

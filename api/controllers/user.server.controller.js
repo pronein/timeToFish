@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
-var log = require('../auxiliary/logger');
-var hasher = require('../auxiliary/hasher');
+var log = require('../../auxiliary/logger');
+var hasher = require('../../auxiliary/hasher');
 
 module.exports = {
   create: createUser,

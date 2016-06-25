@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var permissionsController = require('../controllers/permissions.server.controller');
+var permissionsController = require('../api/controllers/permissions.server.controller');
 
 module.exports = router;
 

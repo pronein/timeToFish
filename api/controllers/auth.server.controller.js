@@ -1,5 +1,5 @@
 var passport = require('passport');
-var log = require('../auxiliary/logger');
+var log = require('../../auxiliary/logger');
 var User = require('mongoose').model('User');
 
 module.exports = {

@@ -1,122 +1,128 @@
-<!-- Header -->
 <div class="row">
-  <div class="page-header">
-    <h1>Permission Manager</h1>
-  </div>
-</div>
-
-<!-- Left Column: Add New Permission, Status Alerts -->
-<div class="col-sm-7">
-  <div class="panel panel-primary">
-    <div class="panel-heading">
-      <h3 class="panel-title">
-        Add New Permission
-      </h3>
+  <div class="col-sm-12">
+    <!-- Header -->
+    <div class="row">
+      <div class="page-header">
+        <h1>Permission Manager</h1>
+      </div>
     </div>
-    <div class="panel-body">
-      <form name="permissionForm" class="form-horizontal"
-            ng-submit="ctrl.addNewPermission(permissionForm)" novalidate>
-        <!-- Name -->
-        <div class="form-group">
-          <label for="name" class="col-sm-3 control-label">Name</label>
-          <div class="col-sm-9">
-            <input type="text" class="form-control" id="name"
-                   ng-model="ctrl.vm.new.name" required>
+
+    <div class="row">
+      <!-- Left Column: Add New Permission, Status Alerts -->
+      <div class="col-sm-7">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              Add New Permission
+            </h3>
+          </div>
+          <div class="panel-body">
+            <form name="permissionForm" class="form-horizontal"
+                  ng-submit="ctrl.addNewPermission(permissionForm)" novalidate>
+              <!-- Name -->
+              <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="name"
+                         ng-model="ctrl.vm.new.name" required>
+                </div>
+              </div>
+
+              <!-- Description -->
+              <div class="form-group">
+                <label for="desc" class="col-sm-3 control-label">Description</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="desc"
+                         ng-model="ctrl.vm.new.description" required>
+                </div>
+              </div>
+
+              <!-- Category -->
+              <div class="form-group">
+                <label for="category" class="col-sm-3 control-label">Category</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="category"
+                         ng-model="ctrl.vm.new.category" required>
+                </div>
+              </div>
+
+              <!-- Add Permission -->
+              <div class="form-group">
+                <div class="col-sm-offset-9 col-sm-3">
+                  <button type="submit" class="btn btn-primary form-control"
+                          ng-class="{'btn-primary': permissionForm.$valid, 'btn-default': permissionForm.$invalid}">Add</button>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
 
-        <!-- Description -->
-        <div class="form-group">
-          <label for="desc" class="col-sm-3 control-label">Description</label>
-          <div class="col-sm-9">
-            <input type="text" class="form-control" id="desc"
-                   ng-model="ctrl.vm.new.description" required>
+        <div class="alert alert-success alert-dismissible" role="alert"
+             ng-show="ctrl.vm.show.insertSuccess">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <strong>Success!</strong> New permission has been added!
+        </div>
+
+        <div class="alert alert-danger alert-dismissible" role="alert"
+             ng-show="ctrl.vm.show.insertFailed">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <strong>Failure!</strong> New permission has not been added!
+        </div>
+
+        <div class="alert alert-success alert-dismissible" role="alert"
+             ng-show="ctrl.vm.show.removeSuccess">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <strong>Success!</strong> Permission removed!
+        </div>
+
+        <div class="alert alert-danger alert-dismissible" role="alert"
+             ng-show="ctrl.vm.show.removeFailed">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <strong>Failure!</strong> Permission was not removed!
+        </div>
+
+      </div>
+
+      <!-- Right Column: Category Filter, Permissions -->
+      <div class="col-sm-5">
+        <!-- Category Filter -->
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h1 class="panel-title">Category Filter</h1>
+          </div>
+          <div class="panel-body">
+            <a class="_category" href ng-repeat="category in ctrl.vm.categories" ng-click="ctrl.toggleCategory($event)">
+              <span class="badge">{{category}}</span>
+            </a>
           </div>
         </div>
 
-        <!-- Category -->
-        <div class="form-group">
-          <label for="category" class="col-sm-3 control-label">Category</label>
-          <div class="col-sm-9">
-            <input type="text" class="form-control" id="category"
-                   ng-model="ctrl.vm.new.category" required>
+        <!-- Permissions -->
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h1 class="panel-title">Permissions</h1>
           </div>
+          <ul class="list-group">
+            <li class="list-group-item" ng-repeat="permission in ctrl.vm.permissions">
+              <a class="pull-left" href
+                 ng-click="ctrl.removePermission(permission)">
+                <span class="glyphicon glyphicon-remove"></span>
+              </a>
+              <strong class="text-uppercase col-sm-offset-1">{{permission.name}}</strong>
+              <span class="badge pull-right">{{permission.category}}</span>
+              <div class="small col-sm-offset-2">{{permission.description}}</div>
+            </li>
+          </ul>
         </div>
-
-        <!-- Add Permission -->
-        <div class="form-group">
-          <div class="col-sm-offset-9 col-sm-3">
-            <button type="submit" class="btn btn-primary form-control"
-                    ng-class="{'btn-primary': permissionForm.$valid, 'btn-default': permissionForm.$invalid}">Add</button>
-          </div>
-        </div>
-      </form>
+      </div>
     </div>
-  </div>
-
-  <div class="alert alert-success alert-dismissible" role="alert"
-       ng-show="ctrl.vm.show.insertSuccess">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-    <strong>Success!</strong> New permission has been added!
-  </div>
-
-  <div class="alert alert-danger alert-dismissible" role="alert"
-       ng-show="ctrl.vm.show.insertFailed">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-    <strong>Failure!</strong> New permission has not been added!
-  </div>
-
-  <div class="alert alert-success alert-dismissible" role="alert"
-       ng-show="ctrl.vm.show.removeSuccess">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-    <strong>Success!</strong> Permission removed!
-  </div>
-
-  <div class="alert alert-danger alert-dismissible" role="alert"
-       ng-show="ctrl.vm.show.removeFailed">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-    <strong>Failure!</strong> Permission was not removed!
-  </div>
-
-</div>
-
-<!-- Right Column: Category Filter, Permissions -->
-<div class="col-sm-5">
-  <!-- Category Filter -->
-  <div class="panel panel-primary">
-    <div class="panel-heading">
-      <h1 class="panel-title">Category Filter</h1>
-    </div>
-    <div class="panel-body">
-      <a class="_category" href ng-repeat="category in ctrl.vm.categories" ng-click="ctrl.toggleCategory($event)">
-        <span class="badge">{{category}}</span>
-      </a>
-    </div>
-  </div>
-
-  <!-- Permissions -->
-  <div class="panel panel-primary">
-    <div class="panel-heading">
-      <h1 class="panel-title">Permissions</h1>
-    </div>
-    <ul class="list-group">
-      <li class="list-group-item" ng-repeat="permission in ctrl.vm.permissions">
-        <a class="pull-left" href
-           ng-click="ctrl.removePermission(permission)">
-          <span class="glyphicon glyphicon-remove"></span>
-        </a>
-        <strong class="text-uppercase col-sm-offset-1">{{permission.name}}</strong>
-        <span class="badge pull-right">{{permission.category}}</span>
-        <div class="small col-sm-offset-2">{{permission.description}}</div>
-      </li>
-    </ul>
   </div>
 </div>

@@ -1,56 +1,69 @@
 var express = require('express');
 var router = express.Router();
+var config = require('../config/config');
 
 /* GET home page. */
 router.get('/*', function (req, res) {
+  var baseJavascriptsPath = '/javascripts',
+    permissions = baseJavascriptsPath + '/admin/permissions',
+    roles = baseJavascriptsPath + '/admin/roles',
+    auth = baseJavascriptsPath + '/auth',
+    aux = {
+      compareTo: baseJavascriptsPath + '/auxiliary/compareTo',
+      focus: baseJavascriptsPath + '/auxiliary/focus'
+    },
+    prepare = baseJavascriptsPath + '/prepare',
+    menu = baseJavascriptsPath + '/menu',
+    user = baseJavascriptsPath + '/user',
+    members = baseJavascriptsPath + '/admin/members';
+
   res.render('index', {
     title: 'Time To Fish',
-    javascripts: [
-      '/javascripts/vendor.min.js'
-    ],
-    angularAppScripts: [
-      '/javascripts/ttf.app.module.js',
-      '/javascripts/ttf.app.config.js',
-
-      '/javascripts/auxiliary/focus/ttf.focus-on-events.directive.js',
-      '/javascripts/auxiliary/focus/ttf.focus.service.js',
-      
-      '/javascripts/auxiliary/compareTo/ttf.compare-to.directive.js',
-
-      '/javascripts/auth/ttf.session.module.js',
-      '/javascripts/auth/ttf.session-profile.controller.js',
-      '/javascripts/auth/ttf.session-profile.directive.js',
-
-      '/javascripts/ttf.rest-base.provider.js',
-      '/javascripts/ttf.user.service.js',
-
-      '/javascripts/menu/ttf.menu.controller.js',
-
-      '/javascripts/prepare/ttf.prepare.module.js',
-      '/javascripts/prepare/ttf.prepare.config.js',
-      '/javascripts/prepare/ttf.prepare.controller.js',
-      '/javascripts/prepare/ttf.prepare.directive.js',
-      '/javascripts/prepare/ttf.prepare-checklist.controller.js',
-      '/javascripts/prepare/ttf.prepare-checklist.directive.js',
-      '/javascripts/prepare/ttf.prepare-checklist-item.controller.js',
-      '/javascripts/prepare/ttf.prepare-checklist-item.directive.js',
-      '/javascripts/prepare/ttf.user-checklists.controller.js',
-      '/javascripts/prepare/ttf.user-checklists.directive.js',
-
-      '/javascripts/user/ttf.user.module.js',
-      '/javascripts/user/ttf.user.config.js',
-      '/javascripts/user/ttf.user-register.controller.js',
-      '/javascripts/user/ttf.user-register.directive.js',
-      '/javascripts/user/username/ttf.username-validation.directive.js',
-      
-      '/javascripts/admin/permissions/ttf.permissions.module.js',
-      '/javascripts/admin/permissions/ttf.permissions.controller.js',
-      '/javascripts/admin/permissions/ttf.permissions.directive.js',
-      '/javascripts/admin/permissions/ttf.permissions.service.js'
-    ],
-    styles: [
-      '/stylesheets/main.css',
-      'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css'
+    isDebugBuild: config.isDebugBuild,
+    scripts: [
+      baseJavascriptsPath + '/ttf.app.module.js',
+      baseJavascriptsPath + '/ttf.app.config.js',
+      baseJavascriptsPath + '/ttf.rest-base.provider.js',
+      baseJavascriptsPath + '/ttf.user.service.js',
+      user + '/ttf.user.module.js',
+      user + '/ttf.user.config.js',
+      user + '/ttf.user-register.controller.js',
+      user + '/ttf.user-register.directive.js',
+      user + '/username/ttf.username-validation.directive.js',
+      menu + '/ttf.menu.controller.js',
+      prepare + '/ttf.prepare.module.js',
+      prepare + '/ttf.prepare.config.js',
+      prepare + '/ttf.prepare.directive.js',
+      prepare + '/ttf.prepare.controller.js',
+      prepare + '/ttf.prepare-checklist.controller.js',
+      prepare + '/ttf.prepare-checklist.directive.js',
+      prepare + '/ttf.prepare-checklist-item.controller.js',
+      prepare + '/ttf.prepare-checklist-item.directive.js',
+      prepare + '/ttf.user-checklists.controller.js',
+      prepare + '/ttf.user-checklists.directive.js',
+      aux.compareTo + '/ttf.compare-to.directive.js',
+      aux.focus + '/ttf.focus.service.js',
+      aux.focus + '/ttf.focus-on-events.directive.js',
+      auth + '/ttf.session.module.js',
+      auth + '/ttf.session-profile.controller.js',
+      auth + '/ttf.session-profile.directive.js',
+      roles + '/ttf.roles.module.js',
+      roles + '/ttf.roles.config.js',
+      roles + '/ttf.roles.service.js',
+      roles + '/ttf.roles.controller.js',
+      roles + '/ttf.roles.directive.js',
+      roles + '/ttf.roles-selector.controller.js',
+      roles + '/ttf.roles-selector.directive.js',
+      permissions + '/ttf.permissions.module.js',
+      permissions + '/ttf.permissions.controller.js',
+      permissions + '/ttf.permissions.service.js',
+      permissions + '/ttf.permissions.directive.js',
+      permissions + '/ttf.permissions-selector.controller.js',
+      permissions + '/ttf.permissions-selector.directive.js',
+      members + '/ttf.members.module.js',
+      members + '/ttf.members.service.js',
+      members + '/ttf.members-selector.controller.js',
+      members + '/ttf.members-selector.directive.js'
     ]
   });
 });

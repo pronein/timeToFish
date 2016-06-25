@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var authController = require('../controllers/auth.server.controller');
+var authController = require('../api/controllers/auth.server.controller');
 
 module.exports = router;
 

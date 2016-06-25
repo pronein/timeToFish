@@ -14,5 +14,6 @@ module.exports = {
     saltLen: 256,
     keyLen: 256,
     stretch: 1000
-  }
+  },
+  isDebugBuild: true
 };

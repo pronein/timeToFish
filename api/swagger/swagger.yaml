@@ -11,51 +11,78 @@ consumes:
   - application/json
 produces:
   - application/json
+  
 paths:
   /menus:
-    x-swagger-router-controller: menu-item.server.controller
+    x-swagger-router-controller: menus.server.controller
     get:
-      summary: Returns the user's menu
-      operationId: getUserMenu
-      parameters:
-        - name: ownerState
-          in: query
-          description: menu item key
-          required: false
-          type: string
+      summary: 'Returns all menu items, sorted by: key, parent->child, sequence, name (alphabetical)'
+      operationId: getAllMenus
       responses:
         "200":
           description: Success
           schema:
-            $ref: '#/definitions/GetUserMenuResponse'
+            $ref: '#/definitions/GetMenuItemsResponse'
         default:
           description: Error
           schema:
             $ref: '#/definitions/ErrorResponse'
+            
 # complex object schema definitions
 definitions:
-  GetUserMenuResponse:
+  MenuItem:
+    required:
+      - key
+      - name
+      - sequence
+    properties:
+      key:
+        type: string
+      name:
+        type: string
+      sequence:
+        type: integer
+        format: int32
+      description:
+        type: string
+      parent:
+        $ref: '#/definitions/MenuItem'
+      state:
+        type: string
+      permissions:
+        type: array
+        items:
+          type: string
+          format: hex
+
+  GetMenuResponse:
     required:
       - menuItems
+      - key
+    properties:
+      key:
+        type: string
+      menuItems:
+        type: array
+        items:
+          $ref: '#/definitions/MenuItem'
+
+  GetMenuItemResponse:
+    required:
+      - menuItem
+    properties:
+      menuItem:
+        $ref: '#/definitions/MenuItem'
+
+  GetMenuItemsResponse:
+    required:
+      -menuItems
     properties:
       menuItems:
         type: array
         items:
-          type: object
-          properties:
-            menuId:
-              type: number
-            permissionsRequired:
-              type: string
-            name:
-              type: object
-              properties:
-                state:
-                  type: string
-                display:
-                  type: string
-            owner:
-              type: string
+          $ref: '#/definitions/MenuItem'
+
   ErrorResponse:
     required:
       - message

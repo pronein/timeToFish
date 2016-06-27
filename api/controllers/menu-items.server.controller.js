@@ -43,6 +43,7 @@ function _handleError(err, res, msg) {
 
 function _doMenuItemSort(menuItems) {
   menuItems.sort(function (left, right) {
+
     //check keys for equality
     if (left.key !== right.key)
       return left.key.localeCompare(right.key);

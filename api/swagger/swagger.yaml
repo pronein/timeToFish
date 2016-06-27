@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: '0.0.1'
+  version: '0.1.2'
   title: Time To Fish
 host: localhost:3010
 basePath: /api
@@ -11,13 +11,12 @@ consumes:
   - application/json
 produces:
   - application/json
-  
 paths:
   /menus:
     x-swagger-router-controller: menus.server.controller
     get:
+      operationId: getAll
       summary: 'Returns all menu items, sorted by: key, parent->child, sequence, name (alphabetical)'
-      operationId: getAllMenus
       responses:
         "200":
           description: Success
@@ -27,7 +26,8 @@ paths:
           description: Error
           schema:
             $ref: '#/definitions/ErrorResponse'
-            
+  /swagger:
+    x-swagger-pipe: swagger_raw
 # complex object schema definitions
 definitions:
   MenuItem:
@@ -54,35 +54,14 @@ definitions:
         items:
           type: string
           format: hex
-
-  GetMenuResponse:
-    required:
-      - menuItems
-      - key
-    properties:
-      key:
-        type: string
-      menuItems:
-        type: array
-        items:
-          $ref: '#/definitions/MenuItem'
-
-  GetMenuItemResponse:
-    required:
-      - menuItem
-    properties:
-      menuItem:
-        $ref: '#/definitions/MenuItem'
-
   GetMenuItemsResponse:
     required:
-      -menuItems
+      - menuItems
     properties:
       menuItems:
         type: array
         items:
           $ref: '#/definitions/MenuItem'
-
   ErrorResponse:
     required:
       - message

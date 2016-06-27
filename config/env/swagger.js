@@ -16,5 +16,6 @@ module.exports = {
     stretch: 1000
   },
   isDebugBuild: true,
-  port: 3010
+  port: 3010,
+  debugKeys: 'timeToFish:*,swagger:*'
 };

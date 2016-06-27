@@ -7,12 +7,15 @@
 process.env.NODE_CONFIG_DIR = './config/env';
 process.env.NODE_ENV = process.env.NODE_ENV || 'swagger';
 
+var config = require('../config/config');
+
+process.env.DEBUG = process.env.DEBUG || config.debugKeys;
+
 require('../config/mongoose')();
 
 var app = require('../app');
 var debug = require('debug')('timeToFish:server');
 var http = require('http');
-var config = require('../config/config');
 
 debug('Using ' + process.env.NODE_ENV + ' environment...');
 

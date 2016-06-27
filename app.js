@@ -18,17 +18,17 @@ if (app.get('env') === 'swagger') {
       throw err;
     }
 
+    app.all('/api/*', function (req, res, next) {
+      res.header('Access-Control-Allow-Origin', '*');
+      res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+      res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+
+      next();
+    });
+
     swaggerExpress.register(app);
 
     require('debug')('timeToFish:swagger')('Swagger express registered.');
-  });
-
-  app.all('/api/*', function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-
-    next();
   });
 } else {
   var path = require('path');

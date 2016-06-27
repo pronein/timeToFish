@@ -29,6 +29,7 @@ paths:
   /menus/{key}:
     x-swagger-router-controller: menu-items.server.controller
     get:
+      operationId: getByKey
       summary: 'Returns all menu items, with the given key, sorted by: parent->child, sequence, name (alphabetical)'
       parameters:
         - name: key

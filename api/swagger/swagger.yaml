@@ -13,7 +13,7 @@ produces:
   - application/json
 paths:
   /menus:
-    x-swagger-router-controller: menus.server.controller
+    x-swagger-router-controller: menu-items.server.controller
     get:
       operationId: getAll
       summary: 'Returns all menu items, sorted by: key, parent->child, sequence, name (alphabetical)'

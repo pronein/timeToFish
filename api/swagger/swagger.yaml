@@ -17,6 +17,11 @@ paths:
     get:
       operationId: getAll
       summary: 'Returns all menu items, sorted by: key, parent->child, sequence, name (alphabetical)'
+      parameters:
+        - name: key
+          type: string
+          in: query
+          required: false
       responses:
         "200":
           description: Success
@@ -26,13 +31,12 @@ paths:
           description: Error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /menus/{key}:
+  /menus/{id}:
     x-swagger-router-controller: menu-items.server.controller
     get:
-      operationId: getByKey
-      summary: 'Returns all menu items, with the given key, sorted by: parent->child, sequence, name (alphabetical)'
+      summary: 'Returns a single menu item with the given key'
       parameters:
-        - name: key
+        - name: id
           type: string
           in: path
           required: true
@@ -40,7 +44,7 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: '#/definitions/GetMenuItemsResponse'
+            $ref: '#/definitions/GetMenuItemResponse'
         default:
           description: Error
           schema:
@@ -73,6 +77,10 @@ definitions:
         items:
           type: string
           format: hex
+  GetMenuItemResponse:
+    properties:
+      menuItem:
+        $ref: '#/definitions/MenuItem'
   GetMenuItemsResponse:
     required:
       - menuItems

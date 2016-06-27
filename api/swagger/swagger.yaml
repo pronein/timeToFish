@@ -26,6 +26,24 @@ paths:
           description: Error
           schema:
             $ref: '#/definitions/ErrorResponse'
+  /menus/{key}:
+    x-swagger-router-controller: menu-items.server.controller
+    get:
+      summary: 'Returns all menu items, with the given key, sorted by: parent->child, sequence, name (alphabetical)'
+      parameters:
+        - name: key
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/GetMenuItemsResponse'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex object schema definitions

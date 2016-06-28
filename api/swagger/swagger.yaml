@@ -34,6 +34,7 @@ paths:
   /menus/{id}:
     x-swagger-router-controller: menu-items.server.controller
     get:
+      operationId: getById
       summary: 'Returns a single menu item with the given key'
       parameters:
         - name: id

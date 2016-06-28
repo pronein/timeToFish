@@ -4,11 +4,15 @@ var log = require('../../auxiliary/logger');
 
 module.exports = {
   getAll: getAll,
-  getByKey: getByKey
+  getById: getById
 };
 
 function getAll(req, res, next) {
-  MenuItem.find({})
+  var criteria = {};
+  if (req.swagger.params.key.value)
+    criteria.key = req.swagger.params.key.value;
+
+  MenuItem.find(criteria)
     .populate('permissions')
     .populate('parent')
     .exec(function (err, menuItems) {
@@ -21,17 +25,15 @@ function getAll(req, res, next) {
     });
 }
 
-function getByKey(req, res, next) {
-  MenuItem.find({key: req.swagger.params.key.value})
+function getById(req, res, next) {
+  MenuItem.findOne({_id: req.swagger.params.id.value})
     .populate('permissions')
     .populate('parent')
-    .exec(function(err, menuItems) {
-      if(err)
-        _handleError(err, res, 'Failed to retrieve menu items by key.');
+    .exec(function (err, menuItem) {
+      if (err)
+        _handleError(err, res, 'Failed to retrieve menu items by id.');
 
-      _doMenuItemSort(menuItems);
-
-      res.json(menuItems);
+      res.json({menuItem: menuItem});
     });
 }
 

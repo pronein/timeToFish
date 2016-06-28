@@ -39,6 +39,7 @@ paths:
       parameters:
         - name: id
           type: string
+          format: hex
           in: path
           required: true
       responses:

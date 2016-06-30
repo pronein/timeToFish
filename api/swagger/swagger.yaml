@@ -70,6 +70,29 @@ paths:
           description: Error
           schema:
             $ref: '#/definitions/ErrorResponse'
+    delete:
+      summary: 'Delete a menu item with the given id. If [deleteChildren: false] is true, then all children of the deleted item are also deleted (this goes one level deep). If [recursive: false] is true, then the "one level deep" rule is ignored. Any children that remain after the delete have their parent set to the parent of the deleted item (the recursive rule applies here as well).'
+      parameters:
+        - name: id
+          type: string
+          format: hex
+          in: path
+          required: true
+        - name: deleteChildren
+          type: boolean
+          in: query
+          required: false
+        - name: recursive
+          type: boolean
+          in: query
+          required: false
+      responses:
+        "204":
+          description: Success
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex object schema definitions

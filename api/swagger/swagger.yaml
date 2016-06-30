@@ -32,6 +32,7 @@ paths:
           schema:
             $ref: '#/definitions/ErrorResponse'
     post:
+      operationId: create
       summary: 'Create a new menu item. The newly created item is returned with the response'
       parameters:
         - name: menuItem

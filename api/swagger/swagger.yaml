@@ -31,6 +31,24 @@ paths:
           description: Error
           schema:
             $ref: '#/definitions/ErrorResponse'
+    post:
+      summary: 'Create a new menu item. The newly created item is returned with the response'
+      parameters:
+        - name: menuItem
+          description: 'Menu item definition'
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/MenuItem'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/GetMenuItemResponse'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
   /menus/{id}:
     x-swagger-router-controller: menu-items.server.controller
     get:

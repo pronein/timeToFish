@@ -1,7 +1,8 @@
 module.exports = {
   getAll: getAll,
   getById: getById,
-  create: create
+  create: create,
+  delete: deleteMenuItem
 };
 
 var _internalCollection = [
@@ -83,4 +84,12 @@ function create(req, res, next) {
       permissions: req.body.permissions || []
     }
   });
+}
+
+function deleteMenuItem(req, res, next) {
+  var item = _internalCollection.filter(function(mItem){
+    return mItem.id === req.swagger.params.id.value;
+  });
+
+  res.sendStatus(204);
 }

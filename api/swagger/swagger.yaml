@@ -42,7 +42,7 @@ paths:
           schema:
             $ref: '#/definitions/MenuItem'
       responses:
-        "200":
+        "201":
           description: Success
           schema:
             $ref: '#/definitions/GetMenuItemResponse'

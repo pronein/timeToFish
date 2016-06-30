@@ -4,7 +4,8 @@ var log = require('../../auxiliary/logger');
 
 module.exports = {
   getAll: getAll,
-  getById: getById
+  getById: getById,
+  create: createMenuItem
 };
 
 function getAll(req, res, next) {
@@ -35,6 +36,26 @@ function getById(req, res, next) {
 
       res.json({menuItem: menuItem});
     });
+}
+
+function createMenuItem(req, res, next) {
+  var menuItem = new MenuItem(req.body);
+
+  menuItem.save(function(err){
+    if(err)
+      _handleError(err, res, 'Failed to create a new menu item.');
+
+    menuItem
+      .populate('parent')
+      .populate('permissions')
+      .execPopulate()
+      .then(function(populatedMenuItem) {
+        res.status(201).json({menuItem: populatedMenuItem});
+      })
+      .catch(function(populationErr){
+        _handleError(populationErr, res, 'Failed to populate the new menu item.');
+      });
+  });
 }
 
 function _handleError(err, res, msg) {

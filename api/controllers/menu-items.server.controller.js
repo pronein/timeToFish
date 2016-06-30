@@ -38,7 +38,7 @@ function getById(req, res, next) {
     });
 }
 
-function createMenuItem(req, res, next) {
+function createMenuItem(req, res, next)  {
   var menuItem = new MenuItem(req.body);
 
   menuItem.save(function(err){

@@ -1,8 +1,9 @@
 module.exports = {
   getAll: getAll,
   getById: getById,
-  create: create,
-  delete: deleteMenuItem
+  create: createMenuItem,
+  deleteById: deleteMenuItemById,
+  deleteByKey: deleteMenuItemByKey
 };
 
 var _internalCollection = [
@@ -62,7 +63,7 @@ function getById(req, res, next) {
   });
 }
 
-function create(req, res, next) {
+function createMenuItem(req, res, next) {
   var parent = _internalCollection.filter(function(mItem){
     return mItem.id === req.body.parent;
   });
@@ -86,9 +87,17 @@ function create(req, res, next) {
   });
 }
 
-function deleteMenuItem(req, res, next) {
+function deleteMenuItemById(req, res, next) {
   var item = _internalCollection.filter(function(mItem){
     return mItem.id === req.swagger.params.id.value;
+  });
+
+  res.sendStatus(204);
+}
+
+function deleteMenuItemByKey(req, res, next) {
+  var item = _internalCollection.filter(function(mItem){
+    return mItem.key === req.swagger.params.key.value;
   });
 
   res.sendStatus(204);

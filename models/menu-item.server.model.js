@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var utils = require('../auxiliary/utils');
 
 /*
  * Model Definition
@@ -10,7 +11,7 @@ var MenuItemSchema = new Schema({
   description: String,
   parent: {type: Schema.Types.ObjectId, ref: 'MenuItem', default: null},
   permissions: [{type: Schema.Types.ObjectId, ref: 'Permission'}],
-  key: {type: String, required: true, lowercase: true, trim: true, set: replaceSpaces},
+  key: {type: String, required: true, lowercase: true, trim: true, set: utils.replaceWsWith},
   sequence: {type: Number, default: 10, required: true, set: integerOnly},
   state: {type: String, trim: true}
 }, {collection: 'menuItems'});
@@ -44,10 +45,4 @@ function integerOnly(val) {
   }
 
   return val;
-}
-
-function replaceSpaces(val) {
-  if (typeof val === 'string') {
-    return val.replace(/\s+/g, '_');
-  }
 }
